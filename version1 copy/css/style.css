@@ -1,0 +1,158 @@
+/******************************/
+/********** Set-Up **********/
+/******************************/
+
+:root {
+     --hex-color1: rgba(247, 216, 87, 0.8);
+    --hex-color2: rgba(245, 200, 13, 1);
+    --hex-color3: rgba(194, 158, 10, 0.8);
+   
+    --ocean-color1: rgba(123, 201, 236, 0.8);
+    --ocean-color2: rgba(52, 178, 234, 1);
+    --ocean-color3: rgba(41, 139, 183, .8);
+    --ocean-color4: rgba(56, 91, 106, .8);
+    --ocean-color5: rgba(24, 81, 106, .8);
+
+    --road-color1: rgba(117, 103, 41, 0.8);
+    --road-color2: rgba(117, 96, 6, 0.8);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+/******************************/
+/********** Reusable **********/
+/******************************/
+
+
+/******************************/
+/********** Header **********/
+/******************************/
+
+
+/******************************/
+/********** Main **********/
+/******************************/
+
+main {
+    
+}
+
+/********** Boardgame **********/
+.hexes {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+    height: 42rem;
+    width: 42rem; */
+    position: relative; /*test*/
+    background-color: var(--ocean-color2);
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hex {
+    /* position: relative; */
+    height: 6rem;
+    width: 6rem;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background-color: var(--hex-color2);
+}
+
+/* .hex:not(:last) {
+    margin-right: 2rem;
+} */
+
+.road--left {
+    transform: rotate(65deg);
+}
+
+.road--left:not(:last-child) {
+    margin-right: 2rem;
+}
+
+.road--right {
+    transform: rotate(-65deg);
+    
+}
+
+.road--right:not(:first-child) {
+    margin-right: 2rem;
+}
+
+
+/* TEST */
+#row1 {
+    top: 1.5rem;
+    background-color: var(--ocean-color4);
+}
+
+.road--left1 {
+    height: 6rem;
+    width: 3rem;
+    background-color: var(--ocean-color1);
+    clip-path: polygon(100% -75%, 0 -100%,  100% -100%);
+}
+
+.road--right1 {
+    height: 6rem;
+    width: 3rem;
+    background-color: var(--ocean-color3);
+}
+
+/* END TEST*/
+/* #row1,
+#row3,
+#row5,
+#row7,
+#row9 {
+    position: relative;
+    top: 1.3rem;
+    left: .4rem;
+} */
+
+#row1 .road1 {
+
+}
+
+#row3,
+#row9 {
+
+}
+
+#row5,
+#row7 {
+
+}
+
+
+.road {
+    /* position: absolute; */
+    top: 1.5rem;
+    height: 3rem;
+    width: 1rem;
+    background-color: var(--road-color1);
+}
+
+/********** Player Section **********/
+
+
+/********** Opponent Section **********/
+
+
+/******************************/
+/********** Footer **********/
+/******************************/

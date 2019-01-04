@@ -108,6 +108,13 @@ main {
     background-color: var(--ocean-color4);
 }
 
+.road {
+    top: 1.5rem;
+    height: 3rem;
+    width: 1rem;
+    background-color: var(--road-color1);
+}
+
 .road--left1 {
     height: 2.7rem;
     width: 2.5rem;
@@ -142,39 +149,6 @@ main {
 
 /* END TEST*/
 
-
-/* #row1,
-#row3,
-#row5,
-#row7,
-#row9 {
-    position: relative;
-    top: 1.3rem;
-    left: .4rem;
-} */
-
-#row1 .road1 {
-
-}
-
-#row3,
-#row9 {
-
-}
-
-#row5,
-#row7 {
-
-}
-
-
-.road {
-    /* position: absolute; */
-    top: 1.5rem;
-    height: 3rem;
-    width: 1rem;
-    background-color: var(--road-color1);
-}
 
 /********** Player Section **********/
 

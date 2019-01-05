@@ -48,16 +48,16 @@
     5g. allot victory points accordingly
     5h. calculate if there is winner
         5hi. if yes, find winner & end game
-        5hii. if no continute
+        5hii. if no continue
 6. change player turn
     6a. repeat step 5
 
 */
 
-let turn = 1;
+let turn = 2;
 $('.hexes').on('click', function (e) {
     console.log($(e.target).attr('class'));
-    if ($(e.target).attr('class') !== "row" || $(e.target).attr('class') !== "hex") {
+    if ($(e.target).attr('class') !== "row" && $(e.target).attr('class') !== "hex") {
       $(e.target)
         .css("background-color", `var(--player${turn}-color)`)
         .css("opacity", "1")

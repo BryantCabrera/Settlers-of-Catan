@@ -50,13 +50,23 @@ html {
 /******************************/
 
 main {
-    
+    display: grid;
+    grid-template-columns: 1fr, 1fr, 1fr, 1fr;
+    grid-template-rows: 1fr, 4fr, 4fr, 1fr;
+    grid-template-areas: "player-1 controls controls player-2"
+                         "player-1 boardgame boardgame player-2"
+                         "player-3 boardgame boardgame player-4"
+                         "player-3 bank cheat-sheet player-4";
 }
 
-/********** Boardgame **********/
+/********** Boardgame Section **********/
+#boardgame {
+    grid-area: boardgame;
+}
+
 .hexes {
     position: relative; /*test*/
-    height: 33rem; /*was 31.2rem*/
+    height: 30rem; /*was 31.2rem*/
     width: 36rem;
     background-color: var(--ocean-color2);
 }
@@ -141,9 +151,6 @@ main {
     background-color: var(--hex-color2);
 }
 
-
-/* TEST */
-
 .road--vertical {
     height: 6rem;
     width: 1rem;
@@ -203,13 +210,47 @@ main {
     background-color: var(--player1-color);
 }
 
-/* END TEST*/
+/********** Controls Section **********/
+#controls {
+    grid-area: controls;
+    background-color: var(--road-color1);
+}
 
+/********** Player 1 Section **********/
+#player-1 {
+    grid-area: player-1;
+    background-color: var(--player1-color);
+}
 
-/********** Player Section **********/
+/********** Player 2 Section **********/
+#player-2 {
+    grid-area: player-2;
+    background-color: var(--player2-color);
+}
 
+/********** Player 3 Section **********/
+#player-3 {
+    grid-area: player-3;
+    background-color: var(--player3-color);
+}
 
-/********** Opponent Section **********/
+/********** Player 4 Section **********/
+#player-4 {
+    grid-area: player-4;
+    background-color: var(--player4-color);
+}
+
+/********** Cheat Sheet Section **********/
+#cheat-sheet {
+    grid-area: cheat-sheet;
+    background-color: var(--road-color1);
+}
+
+/********** Bank Section **********/
+#bank {
+    grid-area: bank;
+    background-color: var(--ocean-color5);
+}
 
 
 /******************************/

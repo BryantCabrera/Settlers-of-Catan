@@ -1,7 +1,6 @@
 /******************************/
 /********** Set-Up **********/
 /******************************/
-
 :root {
     --hex-color1: rgba(247, 216, 87, 0.8);
     --hex-color2: rgba(245, 200, 13, 1);
@@ -35,6 +34,10 @@ html {
     font-size: 62.5%;
 }
 
+body {
+    
+}
+
 /******************************/
 /********** Reusable **********/
 /******************************/
@@ -48,7 +51,6 @@ html {
 /******************************/
 /********** Main **********/
 /******************************/
-
 main {
     display: grid;
     grid-template-columns: 1fr, 1fr, 1fr, 1fr;
@@ -62,6 +64,10 @@ main {
 /********** Boardgame Section **********/
 #boardgame {
     grid-area: boardgame;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ocean-color2);
 }
 
 .hexes {
@@ -75,25 +81,25 @@ main {
 #row1 {
     position: absolute;
     top: 0;
-    left: 7rem;
+    /* left: 7rem; */
     z-index: 2;
 }
 #row2 {
     position: absolute;
     top: 1rem;
-    left: 7rem;
+    /* left: 7rem; */
     z-index: 1;
 }
 #row3 {
     position: absolute;
     top: 5.3rem;
-    left: 3.5rem;
+    /* left: 3.5rem; */
     z-index: 2;
 }
 #row4 {
     position: absolute;
     top: 6.2rem;
-    left: 3.5rem;
+    /* left: 3.5rem; */
     z-index: 1;
 }
 #row5 {
@@ -114,25 +120,25 @@ main {
 #row8 {
     position: absolute;
     top: 16.6rem;
-    left: 3.5rem;
+    /* left: 3.5rem; */
     z-index: 1;
 }
 #row9 {
     position: absolute;
     top: 20.8rem;
-    left: 3.5rem;
+    /* left: 3.5rem; */
     z-index: 2;
 }
 #row10 {
     position: absolute;
     top: 21.8rem;
-    left: 7rem;
+    /* left: 7rem; */
     z-index: 1;
 }
 #row11 {
     position: absolute;
     top: 26rem;
-    left: 7rem;
+    /* left: 7rem; */
     z-index: 2;
 }
 
@@ -208,6 +214,42 @@ main {
 .settlement--top:hover {
     opacity: 1;
     background-color: var(--player1-color);
+}
+
+.ocean__full {
+    height: 6rem;
+    width: 6rem;
+    background-color: transparent;
+}
+
+.ocean__road {
+    height: 6rem;
+    width: 1rem;
+    background-color: transparent;
+}
+
+.ocean__full--short {
+    height: 2.7rem;
+    width: 6rem;
+    background-color: transparent;
+}
+
+.ocean__road--short {
+    height: 2.7rem;
+    width: 1rem;
+    background-color: transparent;
+}
+
+.ocean__half {
+    height: 6rem;
+    width: 3.5rem;
+    background-color: transparent;
+}
+
+.ocean__half--short {
+    height: 2.7rem;
+    width: 3.5rem;
+    background-color: transparent;
 }
 
 /********** Controls Section **********/

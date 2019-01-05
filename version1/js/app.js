@@ -54,10 +54,22 @@
 
 */
 
+const game = {
+    init () {
+
+    },
+    render () {
+
+    }
+};
+
 let turn = 2;
+
+//Places current player's appropriate piece on the gameboard
 $('.hexes').on('click', function (e) {
+    console.log(e.target);
     console.log($(e.target).attr('class'));
-    if ($(e.target).attr('class') !== "row" && $(e.target).attr('class') !== "hex") {
+    if ($(e.target).attr('class') !== "row" && $(e.target).attr('class') !== "hex" && $(e.target).attr('class') !== "hexes") {
       $(e.target)
         .css("background-color", `var(--player${turn}-color)`)
         .css("opacity", "1")

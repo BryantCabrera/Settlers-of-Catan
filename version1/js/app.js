@@ -53,3 +53,7 @@
     6a. repeat step 5
 
 */
+
+$('.hexes').on('click', function (e) {
+    console.log($(e.target).attr('class'));
+});

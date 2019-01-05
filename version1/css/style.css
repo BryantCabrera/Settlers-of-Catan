@@ -144,42 +144,44 @@ main {
 
 /* TEST */
 
-.road {
+.road--vertical {
     height: 6rem;
     width: 1rem;
     -webkit-clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
     clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
     background-color: var(--road-color1);
+    opacity: .6;
+    transition: all .1s;
 }
-/* .road {
-    top: 1.5rem;
-    height: 3rem;
-    width: 1rem;
-    background-color: var(--road-color1);
-} */
 
-.road--left1 {
+.road--left {
     height: 2.7rem;
     width: 2.5rem;
     -webkit-clip-path: polygon(0 55.5%, 100% 0, 100% 44.4%, 0% 100%);
     clip-path: polygon(0 55.5%, 100% 0, 100% 44.4%, 0% 100%);
     background-color: var(--road-color1);
+    opacity: .6;
+    transition: all .1s;
 }
 
-.road--right1 {
+.road--right {
     height: 2.7rem;
     width: 2.5rem;
     -webkit-clip-path: polygon(0 0, 100% 55.55%, 100% 100%, 0 44.44%);
     clip-path: polygon(0 0, 100% 55.55%, 100% 100%, 0 44.44%);
     background-color: var(--road-color1);
+    opacity: .6;
+    transition: all .1s;
 }
 
-.settlement {
+.settlement--side {
     height: 2.7rem;
     width: 1rem;
     -webkit-clip-path: polygon(0 55.55%, 100% 55.55%, 100% 100%, 0 100%);
     clip-path: polygon(0 55.55%, 100% 55.55%, 100% 100%, 0 100%);
     background-color: var(--settlement-color1);
+    opacity: .6;
+    transition: all .1s;
 }
 
 .settlement--top {
@@ -188,6 +190,17 @@ main {
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 44.44%, 0 44.44%);
     clip-path: polygon(0 0, 100% 0, 100% 44.44%, 0 44.44%);
     background-color: var(--settlement-color1);
+    opacity: .6;
+    transition: all .1s;
+}
+
+.road--vertical:hover,
+.road--left:hover,
+.road--right:hover,
+.settlement--side:hover,
+.settlement--top:hover {
+    opacity: 1;
+    background-color: var(--player1-color);
 }
 
 /* END TEST*/

@@ -46,7 +46,9 @@ body {
 /******************************/
 /********** Header **********/
 /******************************/
-
+header {
+    height: 10vh;
+}
 
 /******************************/
 /********** Main **********/
@@ -59,6 +61,7 @@ main {
                          "player-1 boardgame boardgame player-2"
                          "player-3 boardgame boardgame player-4"
                          "player-3 bank cheat-sheet player-4";
+    height: 80vh;
 }
 
 /********** Boardgame Section **********/
@@ -298,3 +301,6 @@ main {
 /******************************/
 /********** Footer **********/
 /******************************/
+footer {
+    height: 10vh;
+}

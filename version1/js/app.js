@@ -56,8 +56,8 @@
 
 let turn = 1;
 $('.hexes').on('click', function (e) {
-    console.log($(e.target).attr('class'))
-    if ($(e.target).attr("class") !== "row" || $(e.target).attr("class") !== "hex") {
+    console.log($(e.target).attr('class'));
+    if ($(e.target).attr('class') !== "row" || $(e.target).attr('class') !== "hex") {
       $(e.target)
         .css("background-color", `var(--player${turn}-color)`)
         .css("opacity", "1")

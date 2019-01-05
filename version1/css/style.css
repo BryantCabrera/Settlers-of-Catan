@@ -55,14 +55,75 @@ main {
 
 /********** Boardgame **********/
 .hexes {
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: row wrap;
-    height: 42rem;
-    width: 42rem; */
     position: relative; /*test*/
+    height: 33rem; /*was 31.2rem*/
+    width: 36rem;
     background-color: var(--ocean-color2);
+}
+
+/*Changes the position of each row -- moves thema ll up so every div connects*/
+#row1 {
+    position: absolute;
+    top: 0;
+    left: 7rem;
+    z-index: 2;
+}
+#row2 {
+    position: absolute;
+    top: 1rem;
+    left: 7rem;
+    z-index: 1;
+}
+#row3 {
+    position: absolute;
+    top: 5.3rem;
+    left: 3.5rem;
+    z-index: 2;
+}
+#row4 {
+    position: absolute;
+    top: 6.2rem;
+    left: 3.5rem;
+    z-index: 1;
+}
+#row5 {
+    position: absolute;
+    top: 10.4rem;
+    z-index: 2;
+}
+#row6 {
+    position: absolute;
+    top: 11.4rem;
+    z-index: 1;
+}
+#row7 {
+    position: absolute;
+    top: 15.6rem;
+    z-index: 2;
+}
+#row8 {
+    position: absolute;
+    top: 16.6rem;
+    left: 3.5rem;
+    z-index: 1;
+}
+#row9 {
+    position: absolute;
+    top: 20.8rem;
+    left: 3.5rem;
+    z-index: 2;
+}
+#row10 {
+    position: absolute;
+    top: 21.8rem;
+    left: 7rem;
+    z-index: 1;
+}
+#row11 {
+    position: absolute;
+    top: 26rem;
+    left: 7rem;
+    z-index: 2;
 }
 
 .row {
@@ -80,40 +141,22 @@ main {
     background-color: var(--hex-color2);
 }
 
-/* .hex:not(:last) {
-    margin-right: 2rem;
-} */
-
-.road--left {
-    transform: rotate(65deg);
-}
-
-.road--left:not(:last-child) {
-    margin-right: 2rem;
-}
-
-.road--right {
-    transform: rotate(-65deg);
-    
-}
-
-.road--right:not(:first-child) {
-    margin-right: 2rem;
-}
-
 
 /* TEST */
-#row1 {
-    top: 1.5rem;
-    background-color: var(--ocean-color4);
-}
 
 .road {
+    height: 6rem;
+    width: 1rem;
+    -webkit-clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+    clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+    background-color: var(--road-color1);
+}
+/* .road {
     top: 1.5rem;
     height: 3rem;
     width: 1rem;
     background-color: var(--road-color1);
-}
+} */
 
 .road--left1 {
     height: 2.7rem;

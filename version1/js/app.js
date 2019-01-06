@@ -54,10 +54,34 @@
 
 */
 
+/******************************/
+/********** Constants **********/
+/******************************/
+
+/******************************/
+/********** App's State (Variables) **********/
+/******************************/
+
+/******************************/
+/********** Cached Element References **********/
+/******************************/
+
+
+/******************************/
+/********** Event Listeners **********/
+/******************************/
+
+
+/******************************/
+/********** Functions **********/
+/******************************/
+
+
+
 class Player {
     constructor(name) {
         this.name = name;
-        this.player = game.players.length + 1;
+        this.player = game.players.length - 1;
         this.victoryPoints = 0;
         this.special = {
             roadSize: 0,
@@ -85,39 +109,115 @@ const catan = {
     hexes: {
         desert: {
             quantity: 1,
-            img: ''
+            img: '../resources/imgs/hexes/vector/desert.png'
         },
         forest: {
             quantity: 4,
-            img: ''
+            img: '../resources/imgs/hexes/vector/forest.png'
         },
         hill: {
             quantity: 3,
-            img: ''
+            img: '../resources/imgs/hexes/vector/hill.png'
         },
         pasture: {
             quantity: 4,
-            img: ''
+            img: '../resources/imgs/hexes/vector/pasture.png'
         },
         field: {
             quantity: 4,
-            img: ''
+            img: '../resources/imgs/hexes/vector/field.png'
         },
         mountain: {
             quantity: 3,
-            img: ''
-        },
+            img: '../resources/imgs/hexes/vector/mountain.png'
+        }
     },
     numberTokens: [
-
+        {a: 5},
+        {b: 2},
+        {c: 6},
+        {d: 3},
+        {e: 8},
+        {f: 10},
+        {g: 9},
+        {h: 12},
+        {i: 11},
+        {j: 4},
+        {k: 8},
+        {l: 10},
+        {m: 9},
+        {n: 4},
+        {o: 5},
+        {p: 6},
+        {q: 3},
+        {r: 11}, 
     ],
     resources: [
-
+        {
+            resource: 'lumber',
+            quantity: ,
+            img: ''
+        },
+        {
+            resource: 'brick',
+            quantity: ,
+            img: ''
+        },
+        {
+            resource: 'wool',
+            quantity: ,
+            img: ''
+        },
+        {
+            resource: 'grain',
+            quantity: ,
+            img: ''
+        },
+        {
+            resource: 'ore',
+            quantity: ,
+            img: ''
+        },
     ],
-    developmentCards: [
-
-    ]
-}
+    developmentCards: {
+        knight: {
+            quantity: 14,
+            img: ""
+        }, 
+        monopoly: {
+            quantity: 2,
+            img: ""
+        },
+        yearOfPlenty: {
+            quantity: 2,
+            img: ""
+        },
+        roadBuilding: {
+            quantity: 2,
+            img: ""
+        },
+        market: {
+            quantity: 1,
+            img: ""
+        },
+        chapel: {
+            quantity: 1,
+            img: ""
+        },
+        library: {
+            quantity: 1,
+            img: ""
+        },
+        university: {
+            quantity: 1,
+            img: ""
+        },
+        palace: {
+            quantity: 1,
+            img: ""
+        },
+    }
+};
 
 const game = {
     players: [],

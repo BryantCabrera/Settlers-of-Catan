@@ -77,3 +77,4 @@ $('.hexes').on('click', function (e) {
     }
     
 });
+

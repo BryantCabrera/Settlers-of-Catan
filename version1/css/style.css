@@ -264,9 +264,54 @@ main {
 /********** Player 1 Section **********/
 #player-1 {
     grid-area: player-1;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-areas: "name name name name name name name name name name"
+                        "vp vp vp vp vp vp vp vp vp vp"
+                        "road road road road road army army army army army"
+                        "road road road road road army army army army army"
+                        "pieces pieces pieces pieces pieces pieces pieces pieces pieces pieces"
+                        "totalResource totalResource totalResource totalResource totalResource totalResource totalResource totalResource totalResource totalResource"
+                        "resource resource resource resource resource resource resource resource resource resource"
+                        "resource resource resource resource resource resource resource resource resource resource"
+                        ". . . . dc dc . . . ."
+                        ". . . . dc dc . . . .";
+    align-items: center;
+    justify-items: center;
     background-color: var(--player1-color);
 }
 
+.player-1__name {
+    grid-area: name;
+}
+
+.player-1__vp {
+    grid-area: vp;
+}
+
+.player-1__road {
+    grid-area: road;
+}
+
+.player-1__army {
+    grid-area: army;
+}
+
+.player-1__pieces {
+    grid-area: pieces;
+}
+
+.player-1__resource--num {
+    grid-area: totalResource;
+}
+
+.player-1__resource {
+    grid-area: resource;
+}
+.player-1__dc {
+    grid-area: dc;
+}
 /********** Player 2 Section **********/
 #player-2 {
     grid-area: player-2;

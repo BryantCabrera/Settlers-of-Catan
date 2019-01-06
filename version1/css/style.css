@@ -22,6 +22,8 @@
     --player-1-color1: rgba(8, 69, 123, 1); /*#08457B*/
     --player-2-color1: rgba(25, 158, 60, 1); /*#199E3C*/
     --player-3-color1: rgba(239, 222, 202, 1); /*#EFDECA*/
+
+    --white: rgba(255, 255, 255, 1);
 }
 
 * {
@@ -35,13 +37,22 @@ html {
 }
 
 body {
-    
+    font-family: minion-pro, Arial;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.6rem;
+    color: var(--white);
 }
 
 /******************************/
 /********** Reusable **********/
 /******************************/
-
+h2 {
+    font-family: minion-pro, serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 2.4rem;
+}
 
 /******************************/
 /********** Header **********/
@@ -78,6 +89,18 @@ main {
     height: 30rem; /*was 31.2rem*/
     width: 36rem;
     background-color: var(--ocean-color2);
+}
+
+.card img {
+    height: 6rem;
+    width: auto;
+}
+
+.card ~ .text {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: .3rem;
 }
 
 /*Changes the position of each row -- moves thema ll up so every div connects*/
@@ -342,7 +365,53 @@ main {
 
 .player-0__resource {
     grid-area: resource;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 1rem;
+    grid-template-rows: 1fr;
+    grid-template-areas: "lumber brick wool grain ore";
 }
+
+    .player-0__resource__lumber--pic {
+        grid-area: lumber;
+    }
+
+    .player-0__resource__lumber--num {
+        grid-area: lumber;
+    }
+
+    .player-0__resource__brick--pic {
+        grid-area: brick;
+    }
+
+    .player-0__resource__brick--num {
+        grid-area: brick;
+    }
+
+    .player-0__resource__wool--pic {
+        grid-area: wool;
+    }
+
+    .player-0__resource__wool--num {
+        grid-area: wool;
+    }
+
+    .player-0__resource__grain--pic {
+        grid-area: grain;
+    }
+
+    .player-0__resource__grain--num {
+        grid-area: grain;
+    }
+
+    .player-0__resource__ore--pic {
+        grid-area: ore;
+    }
+
+    .player-0__resource__ore--num {
+        grid-area: ore;
+    }
+
 .player-0__dc {
     grid-area: dc;
 }

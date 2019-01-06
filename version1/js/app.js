@@ -1,3 +1,6 @@
+/******************************/
+/********** Pseudocode **********/
+/******************************/
 //JavaScript
 /*
 1. add event listeners to all road areas, settlement & port areas, buttons, robber, hexes, and cards
@@ -57,27 +60,6 @@
 /******************************/
 /********** Constants **********/
 /******************************/
-
-/******************************/
-/********** App's State (Variables) **********/
-/******************************/
-
-/******************************/
-/********** Cached Element References **********/
-/******************************/
-
-
-/******************************/
-/********** Event Listeners **********/
-/******************************/
-
-
-/******************************/
-/********** Functions **********/
-/******************************/
-
-
-
 class Player {
     constructor(name) {
         this.name = name;
@@ -106,84 +88,95 @@ class Player {
 }
 
 const catan = {
-    hexes: {
-        desert: {
+    hexes: [
+        {
+            area: 'desert',
             quantity: 1,
-            img: '../resources/imgs/hexes/vector/desert.png'
+            img: 'resources/imgs/hexes/vector/desert.png'
         },
-        forest: {
+        {
+            area: 'forest',
             quantity: 4,
-            img: '../resources/imgs/hexes/vector/forest.png'
+            img: 'resources/imgs/hexes/vector/forest.png'
         },
-        hill: {
+        {
+            area: 'hill',
             quantity: 3,
-            img: '../resources/imgs/hexes/vector/hill.png'
+            img: 'resources/imgs/hexes/vector/hill.png'
         },
-        pasture: {
+        {
+            area: 'pasture',
             quantity: 4,
-            img: '../resources/imgs/hexes/vector/pasture.png'
+            img: 'resources/imgs/hexes/vector/pasture.png'
         },
-        field: {
+        {
+            area: 'field',
             quantity: 4,
-            img: '../resources/imgs/hexes/vector/field.png'
+            img: 'resources/imgs/hexes/vector/field.png'
         },
-        mountain: {
+        {
+            area: 'mountain',
             quantity: 3,
-            img: '../resources/imgs/hexes/vector/mountain.png'
+            img: 'resources/imgs/hexes/vector/mountain.png'
         }
-    },
+    ],
     numberTokens: [
-        {a: 5},
-        {b: 2},
-        {c: 6},
-        {d: 3},
-        {e: 8},
-        {f: 10},
-        {g: 9},
-        {h: 12},
-        {i: 11},
-        {j: 4},
-        {k: 8},
-        {l: 10},
-        {m: 9},
-        {n: 4},
-        {o: 5},
-        {p: 6},
-        {q: 3},
-        {r: 11}, 
+        { a: 5 },
+        { b: 2 },
+        { c: 6 },
+        { d: 3 },
+        { e: 8 },
+        { f: 10 },
+        { g: 9 },
+        { h: 12 },
+        { i: 11 },
+        { j: 4 },
+        { k: 8 },
+        { l: 10 },
+        { m: 9 },
+        { n: 4 },
+        { o: 5 },
+        { p: 6 },
+        { q: 3 },
+        { r: 11 },
     ],
     resources: [
         {
+            resource: 'back',
+            quantity: 0,
+            img: 'resources/imgs/resources/vector/resources--back.png'
+        },
+        {
             resource: 'lumber',
-            quantity: ,
-            img: ''
+            quantity: 19,
+            img: 'resources/imgs/resources/vector/resources--lumber.png'
         },
         {
             resource: 'brick',
-            quantity: ,
-            img: ''
+            quantity: 19,
+            img: 'resources/imgs/resources/vector/resources--brick.png'
         },
         {
             resource: 'wool',
-            quantity: ,
-            img: ''
+            quantity: 19,
+            img: 'resources/imgs/resources/vector/resources--wool.png'
         },
         {
             resource: 'grain',
-            quantity: ,
-            img: ''
+            quantity: 19,
+            img: 'resources/imgs/resources/vector/resources--grain.png'
         },
         {
             resource: 'ore',
-            quantity: ,
-            img: ''
+            quantity: 19,
+            img: 'resources/imgs/resources/vector/resources--ore.png'
         },
     ],
     developmentCards: {
         knight: {
             quantity: 14,
             img: ""
-        }, 
+        },
         monopoly: {
             quantity: 2,
             img: ""
@@ -219,9 +212,159 @@ const catan = {
     }
 };
 
+
+
+
+
+/******************************/
+/********** App's State (Variables) **********/
+/******************************/
+
+
+
+
+
+/******************************/
+/********** Cached Element References **********/
+/******************************/
+
+
+
+
+
+/******************************/
+/********** Event Listeners **********/
+/******************************/
+
+
+
+
+
+/******************************/
+/********** Functions **********/
+/******************************/
 const game = {
     players: [],
+    hexes: [
+        {
+            'data-type': 'hex',
+            'data-id': 0,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 1,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 2,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 3,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 4,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 5,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 6,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 7,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 8,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 9,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 10,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 11,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 12,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 13,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 14,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 15,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 16,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 17,
+            area: 'desert',
+        },
+        {
+            'data-type': 'hex',
+            'data-id': 18,
+            area: 'desert',
+        },
+    ],
     init () {
+        for (let hex of game.hexes) {
+            //gets random area from catan.hexes
+            let randomArea = Math.floor((Math.random() * catan.hexes.length));
+            console.log(randomArea);
+
+            let chosenArea;
+            //if that area's quantity is 0, remove it from array, else assign that chosen area to chosenArea
+            if (catan.hexes[randomArea].quantity === 0) {
+                catan.hexes.splice(randomArea, 1);
+            } else {
+                chosenArea = catan.hexes[randomArea];
+                // catan.hexes[randomArea].quantity -= 1;
+            }
+            console.log(chosenArea);
+            
+
+            $(`#hex${hex['data-id']}`).append(`<img src="${chosenArea.img}">`);
+            hex.area = chosenArea.area;
+            console.log(hex);
+            console.log(`#hex${hex["data-id"]}`);
+            console.log(`${chosenArea.img}`);
+        }
 
     },
     render () {

@@ -292,11 +292,37 @@ main {
 
 .player-1__road {
     grid-area: road;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "RoadText RoadImg";
+    justify-items: center;
+    align-items: center;
 }
+    .player-1__road--num {
+        grid-area: RoadText;
+        align-self: right;
+    }
+
+    .player-1__road--card {
+        grid-area: RoadImg;
+    }
 
 .player-1__army {
     grid-area: army;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "ArmyText ArmyImg";
+    justify-items: center;
+    align-items: center;
 }
+    .player-1__army--card {
+        grid-area: ArmyImg;
+    }
+
+    .player-1__army--num {
+        grid-area: ArmyText;
+        align-self: left;
+    }
 
 .player-1__pieces {
     grid-area: pieces;

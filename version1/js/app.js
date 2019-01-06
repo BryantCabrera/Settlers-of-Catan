@@ -54,7 +54,35 @@
 
 */
 
+class Player {
+    constructor(name) {
+        this.name = name;
+        this.player = game.players.length + 1;
+        this.victoryPoints = 0;
+        this.special = {
+            roadSize: 0,
+            longestRoad: false,
+            armySize: 0,
+            largestArmy: false
+        }
+        this.pieces = {
+            roads: 15,
+            settlements: 5,
+            cities: 4,
+        };
+        this.resources = {
+            lumber: 0,
+            brick: 0,
+            wool: 0,
+            grain: 0,
+            ore: 0
+        };
+        this.developmentCards = [];
+    }
+}
+
 const game = {
+    players: [],
     init () {
 
     },

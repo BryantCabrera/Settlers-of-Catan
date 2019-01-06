@@ -18,10 +18,10 @@
     --settlement-color1: rgba(110, 118, 126, 0.8) ;
     /* --settlement-color2: rgba(); */
 
-    --player1-color: rgba(190, 0, 16, 1); /*#BE0010*/
-    --player2-color: rgba(8, 69, 123, 1); /*#08457B*/
-    --player3-color: rgba(25, 158, 60, 1); /*#199E3C*/
-    --player4-color: rgba(239, 222, 202, 1); /*#EFDECA*/
+    --player-0-color1: rgba(190, 0, 16, 1); /*#BE0010*/
+    --player-1-color1: rgba(8, 69, 123, 1); /*#08457B*/
+    --player-2-color1: rgba(25, 158, 60, 1); /*#199E3C*/
+    --player-3-color1: rgba(239, 222, 202, 1); /*#EFDECA*/
 }
 
 * {
@@ -57,10 +57,10 @@ main {
     display: grid;
     grid-template-columns: 1fr, 1fr, 1fr, 1fr;
     grid-template-rows: 1fr, 4fr, 4fr, 1fr;
-    grid-template-areas: "player-1 controls controls player-2"
-                         "player-1 boardgame boardgame player-2"
-                         "player-3 boardgame boardgame player-4"
-                         "player-3 bank cheat-sheet player-4";
+    grid-template-areas: "player-0 controls controls player-1"
+                         "player-0 boardgame boardgame player-1"
+                         "player-2 boardgame boardgame player-3"
+                         "player-2 bank cheat-sheet player-3";
     height: 80vh;
 }
 
@@ -158,6 +158,14 @@ main {
     -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background-color: var(--hex-color2);
+    /* test */
+    /* background-image: url('imgs/hexes/vector/forest.png'); */
+}
+
+.hex img {
+    height: 100%;
+    width: 100%;
+    z-index: 2;
 }
 
 .road--vertical {
@@ -216,7 +224,7 @@ main {
 .settlement--side:hover,
 .settlement--top:hover {
     opacity: 1;
-    background-color: var(--player1-color);
+    background-color: var(--player-0-color1);
 }
 
 .ocean__full {
@@ -262,8 +270,8 @@ main {
 }
 
 /********** Player 1 Section **********/
-#player-1 {
-    grid-area: player-1;
+#player-0 {
+    grid-area: player-0;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
@@ -279,18 +287,18 @@ main {
                         ". . . . dc dc . . . .";
     align-items: center;
     justify-items: center;
-    background-color: var(--player1-color);
+    background-color: var(--player-0-color1);
 }
 
-.player-1__name {
+.player-0__name {
     grid-area: name;
 }
 
-.player-1__vp {
+.player-0__vp {
     grid-area: vp;
 }
 
-.player-1__road {
+.player-0__road {
     grid-area: road;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -298,16 +306,16 @@ main {
     justify-items: center;
     align-items: center;
 }
-    .player-1__road--num {
+    .player-0__road--num {
         grid-area: RoadText;
         align-self: right;
     }
 
-    .player-1__road--card {
+    .player-0__road--card {
         grid-area: RoadImg;
     }
 
-.player-1__army {
+.player-0__army {
     grid-area: army;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -315,45 +323,45 @@ main {
     justify-items: center;
     align-items: center;
 }
-    .player-1__army--card {
+    .player-0__army--card {
         grid-area: ArmyImg;
     }
 
-    .player-1__army--num {
+    .player-0__army--num {
         grid-area: ArmyText;
         align-self: left;
     }
 
-.player-1__pieces {
+.player-0__pieces {
     grid-area: pieces;
 }
 
-.player-1__resource--num {
+.player-0__resource--num {
     grid-area: totalResource;
 }
 
-.player-1__resource {
+.player-0__resource {
     grid-area: resource;
 }
-.player-1__dc {
+.player-0__dc {
     grid-area: dc;
 }
 /********** Player 2 Section **********/
-#player-2 {
-    grid-area: player-2;
-    background-color: var(--player2-color);
+#player-1 {
+    grid-area: player-1;
+    background-color: var(--player-1-color1);
 }
 
 /********** Player 3 Section **********/
-#player-3 {
-    grid-area: player-3;
-    background-color: var(--player3-color);
+#player-2 {
+    grid-area: player-2;
+    background-color: var(--player-2-color1);
 }
 
 /********** Player 4 Section **********/
-#player-4 {
-    grid-area: player-4;
-    background-color: var(--player4-color);
+#player-3 {
+    grid-area: player-3;
+    background-color: var(--player-3-color1);
 }
 
 /********** Cheat Sheet Section **********/

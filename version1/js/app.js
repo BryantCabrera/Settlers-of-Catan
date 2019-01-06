@@ -81,6 +81,44 @@ class Player {
     }
 }
 
+const catan = {
+    hexes: {
+        desert: {
+            quantity: 1,
+            img: ''
+        },
+        forest: {
+            quantity: 4,
+            img: ''
+        },
+        hill: {
+            quantity: 3,
+            img: ''
+        },
+        pasture: {
+            quantity: 4,
+            img: ''
+        },
+        field: {
+            quantity: 4,
+            img: ''
+        },
+        mountain: {
+            quantity: 3,
+            img: ''
+        },
+    },
+    numberTokens: [
+
+    ],
+    resources: [
+
+    ],
+    developmentCards: [
+
+    ]
+}
+
 const game = {
     players: [],
     init () {
@@ -98,11 +136,18 @@ $('.hexes').on('click', function (e) {
     console.log(e.target);
     console.log($(e.target).attr('class'));
     if ($(e.target).attr('class') !== "row" && $(e.target).attr('class') !== "hex" && $(e.target).attr('class') !== "hexes") {
+        console.log(`Player ${turn + 1} is taking his/her turn.`);
+
       $(e.target)
-        .css("background-color", `var(--player${turn}-color)`)
+        .css("background-color", `var(--player-${turn}-color1)`)
         .css("opacity", "1")
         .css("border", "1px solid black");
+
+        //change turn
+        turn >= 3 ? turn = 0 : turn += 1;
+        console.log(`It is now Player ${turn + 1}'s turn.`)
     }
+    
     
 });
 

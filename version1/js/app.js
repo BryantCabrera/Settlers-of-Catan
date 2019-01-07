@@ -65,6 +65,8 @@ class Player {
         this.name = name;
         this.player = game.players.length - 1;
         this.victoryPoints = 0;
+        this.victoryPointsHidden = 0;
+        this.victoryPointsActual = this.victoryPoints + this.victoryPointsHidden;
         this.special = {
             roadSize: 0,
             longestRoad: false,
@@ -84,6 +86,30 @@ class Player {
             ore: 0
         };
         this.developmentCards = [];
+    }
+
+    buildRoad () {
+
+    }
+
+    buildSettlement () {
+
+    }
+
+    buildCity () {
+
+    }
+
+    tradePlayer () {
+
+    }
+
+    tradeBank () {
+
+    }
+
+    playDevelopmentCard () {
+
     }
 }
 
@@ -206,7 +232,9 @@ const catan = {
 /******************************/
 /********** App's State (Variables) **********/
 /******************************/
+let dice1, dice2, diceTotal;
 
+diceTotal = dice1 + dice2;
 
 
 
@@ -233,6 +261,7 @@ const catan = {
 const game = {
     players: [],
     hexes: [
+        //numberTokens are initialized to 7 because those do not produce any resources
         {
             'data-type': 'hex',
             'data-id': 0,
@@ -367,6 +396,892 @@ const game = {
             numberToken: 7
         },
     ],
+    settlementAreas: [
+        {
+            'data-type': 'settlement',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [1, 14]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 1,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [0,2]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 2,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [1, 3, 12]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 3,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [2, 4]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 4,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [3, 10, 5]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 5,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [4, 6]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 6,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [5, 8]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 7,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [8, 25]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 8,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [6, 7, 9]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 9,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [8, 23, 10]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 10,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [4, 9, 11]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 11,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [10, 12, 21]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 12,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [2, 11, 13]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 13,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [12, 14, 19]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 14,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [0, 13, 15]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 15,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [14, 17]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 16,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [17, 37]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 17,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [15, 16, 18]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 18,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [17, 19, 35]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 19,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [13, 18, 20]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 20,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [19, 21, 33]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 21,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [11, 20, 22]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 22,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [21, 23, 31]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 23,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [9, 22, 24]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 24,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [23, 29, 25]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 25,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [7, 24, 26]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 26,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [25, 27]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 27,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [26, 28]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 28,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [27, 29, 46]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 29,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [24, 28, 30]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 30,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [29, 31, 44]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 31,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [22, 30, 32]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 32,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [31, 33, 42]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 33,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [20, 32, 34]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 34,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [33, 35, 40]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 35,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [18, 34, 36]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 36,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [35, 37, 38]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 37,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [16, 36]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 38,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [36, 39]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 39,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [38, 40, 53]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 40,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [34, 39, 41]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 41,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [40, 42, 51]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 42,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [32, 41, 43]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 43,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [42, 44, 49]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 44,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [30, 43, 45]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 45,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [44, 46, 47]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 46,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [28, 45]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 47,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [45, 48]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 48,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [47, 49]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 49,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [43, 48, 50]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 50,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [49, 51]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 51,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [41, 50, 52]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 52,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [51, 53]
+        },
+        {
+            'data-type': 'settlement',
+            'data-id': 53,
+            occupied: false,
+            canOccupy: true,
+            neighbors: [39, 52]
+        }
+    ],
+    roadAreas: [
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: [0, 1]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 1,
+            occupied: false,
+            canOccupy: true,
+            settlements: [1, 2]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 2,
+            occupied: false,
+            canOccupy: true,
+            settlements: [2, 3]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 3,
+            occupied: false,
+            canOccupy: true,
+            settlements: [3, 4]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 4,
+            occupied: false,
+            canOccupy: true,
+            settlements: [4, 5]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 5,
+            occupied: false,
+            canOccupy: true,
+            settlements: [5, 6]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 6,
+            occupied: false,
+            canOccupy: true,
+            settlements: [6, 8]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 7,
+            occupied: false,
+            canOccupy: true,
+            settlements: [4, 10]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 8,
+            occupied: false,
+            canOccupy: true,
+            settlements: [2, 12]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 9,
+            occupied: false,
+            canOccupy: true,
+            settlements: [0, 14]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 10,
+            occupied: false,
+            canOccupy: true,
+            settlements: [14, 15]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 11,
+            occupied: false,
+            canOccupy: true,
+            settlements: [13, 14]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 12,
+            occupied: false,
+            canOccupy: true,
+            settlements: [12, 13]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 13,
+            occupied: false,
+            canOccupy: true,
+            settlements: [11, 12]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 14,
+            occupied: false,
+            canOccupy: true,
+            settlements: [10, 11]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 15,
+            occupied: false,
+            canOccupy: true,
+            settlements: [9, 10]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 16,
+            occupied: false,
+            canOccupy: true,
+            settlements: [8, 9]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 17,
+            occupied: false,
+            canOccupy: true,
+            settlements: [7, 8]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 18,
+            occupied: false,
+            canOccupy: true,
+            settlements: [7, 25]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 19,
+            occupied: false,
+            canOccupy: true,
+            settlements: [9, 23]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 20,
+            occupied: false,
+            canOccupy: true,
+            settlements: [11, 21]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 21,
+            occupied: false,
+            canOccupy: true,
+            settlements: [13, 19]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 22,
+            occupied: false,
+            canOccupy: true,
+            settlements: [15, 17]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 23,
+            occupied: false,
+            canOccupy: true,
+            settlements: [16, 17]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 24,
+            occupied: false,
+            canOccupy: true,
+            settlements: [17, 18]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 25,
+            occupied: false,
+            canOccupy: true,
+            settlements: [18, 19]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 26,
+            occupied: false,
+            canOccupy: true,
+            settlements: [19, 20]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 27,
+            occupied: false,
+            canOccupy: true,
+            settlements: [20, 21]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 28,
+            occupied: false,
+            canOccupy: true,
+            settlements: [21, 22]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 29,
+            occupied: false,
+            canOccupy: true,
+            settlements: [22, 23]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 30,
+            occupied: false,
+            canOccupy: true,
+            settlements: [23, 24]
+        },
+        {
+            'data-type': 'road',
+            'data-id': 31,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 32,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 33,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 34,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 35,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 36,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 37,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 38,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 39,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 40,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 41,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 42,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 43,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 44,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 45,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 46,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 47,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 48,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 49,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 50,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+        {
+            'data-type': 'road',
+            'data-id': 0,
+            occupied: false,
+            canOccupy: true,
+            settlements: []
+        },
+    ],
     init () {
         //randomly generates the areas for the hexes on the board
         for (let hex of game.hexes) {
@@ -395,13 +1310,14 @@ const game = {
                 $(`#hex${hex["data-id"]}`).append(`<div>${hex.numberToken}</div>`);
                 //at the current index, splice in the string 'robber' so that we can continue assigning the appropriate tokens to the rest of the hexes
                 catan.numberTokens.splice([`${hex["data-id"]}`], 0, 'robber');
-            } 
-            
+            }   
         }
-
     },
     render () {
 
+    },
+    initialPlacement () {
+        //this refers to the 2 initial settlements and roads players can place
     }
 };
 
@@ -410,17 +1326,32 @@ let turn = 2;
 //Places current player's appropriate piece on the gameboard
 $('.hexes').on('click', function (e) {
     console.log(e.target);
-    console.log($(e.target).attr('class'));
-    if ($(e.target).attr('class') !== "row" && $(e.target).attr('class') !== "hex" && $(e.target).attr('class') !== "hexes") {
-        console.log(`Player ${turn + 1} is taking his/her turn.`);
+    if ($(e.target).hasClass('road') || $(e.target).hasClass('settlement')) {
+        let id = $(e.target).attr('data-id')
+        
+        for (let i = 0; i < game.settlementAreas[id].neighbors.length; i++) {
+            if (game.settlementAreas[game.settlementAreas[id].neighbors[i]].occupied === true) {
+                game.settlementAreas[id].canOccupy = false;
+            }
+        }
 
-      $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
+        //changes clicked area to current player's color
+        if (game.settlementAreas[id].canOccupy === true) {
+            console.log(`Player ${turn + 1} just placed a road/settlement.`);
 
-        //change turn
-        turn === 3 ? turn = 0 : turn += 1;
-        console.log(`It is now Player ${turn + 1}'s turn.`)
+            game.settlementAreas[id].occupied = true;
+            game.settlementAreas[id].canOccupy = false;
+
+            $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
+
+            //change turn
+            turn === 3 ? turn = 0 : turn += 1;
+            console.log(`It is now Player ${turn + 1}'s turn.`)
+        } else {
+            console.log('This settlement cannot be placed within 1 vertex of another already-placed settlement.')
+        }
+    } else {
+        console.log('This is not a valid area to place a settlement or a road.')
     }
-    
-    
 });
 

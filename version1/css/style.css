@@ -36,6 +36,11 @@
 
     --color-white: rgba(255, 255, 255, 1);
     --color-black: rgba(0, 0, 0, 1);
+    --color-black-transparent: rgba(0, 0, 0, 0.5);
+    --background-color-light: rgba(207, 227, 244, .7);
+    --background-color-medium: rgba(83, 83, 83, 0.5);
+
+    --border-radius-small: .3rem;
 }
 
 * {
@@ -77,14 +82,15 @@ header {
 /********** Main **********/
 /******************************/
 main {
+    height: 80vh;
+    width: 100vw;
     display: grid;
-    grid-template-columns: 1fr, 1fr, 1fr, 1fr;
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr, 4fr, 4fr, 1fr;
     grid-template-areas: "player-0 controls controls player-1"
                          "player-0 boardgame boardgame player-1"
                          "player-2 boardgame boardgame player-3"
                          "player-2 bank cheat-sheet player-3";
-    height: 80vh;
 }
 
 /********** Boardgame Section **********/
@@ -336,13 +342,14 @@ main {
 #controls {
     grid-area: controls;
     background-color: var(--road-color1);
+    border-radius: var(--border-radius-small);
 }
 
 /********** Players Section **********/
 .player {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 2rem, 1rem, repeat(2, 2rem), 1rem, repeat(2, 2rem);
+    grid-template-rows: 1.5rem, 1rem, 2rem, 1.5rem, 1rem, repeat(2, 2rem);
     grid-column-gap: .5rem;
     grid-template-areas: "name name"
                         "vp vp"
@@ -354,11 +361,18 @@ main {
     align-items: center;
     justify-items: center;
     background-color: var(--player-0-color1);
+    border-radius: var(--border-radius-small);
+    font-size: 1.2rem;
 }
 
 .player .name {
     grid-area: name;
-    font-size: 2.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 1.5rem;
+    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent))
 }
 
 .player .vp {
@@ -414,39 +428,62 @@ main {
 
 .player .pieces {
     grid-area: pieces;
+    justify-self: center;
+    align-self: center;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 3rem);
+    grid-template-rows: 1rem 1rem 3rem;
+    grid-column-gap: 2rem;
     grid-template-areas: "piecesTotal piecesTotal piecesTotal"
-                         "road sett city"
+                         "roadNum settNum cityNum"
+                         "road sett city";
 }
 
     .player .pieces .pieces--num {
         grid-area: piecesTotal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        height: 1.2rem;
+        /* background-image: linear-gradient(to bottom, var(--background-color-light), var(--color-black-medium));
+        box-shadow: inset .2rem .2rem .2rem var(--color-black-transparent); */
     }
 
     .player .pieces .road--pic {
         grid-area: road;
+        margin-bottom: 1rem;
     }
 
     .player .pieces .road--num {
-        grid-area: road;
+        grid-area: roadNum;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .player .pieces .settlement--pic {
         grid-area: sett;
+        margin-bottom: 1rem;
     }
 
     .player .pieces .settlement--num {
-        grid-area: sett;
+        grid-area: settNum;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .player .pieces .city--pic {
         grid-area: city;
+        margin-bottom: 1rem;
     }
 
     .player .pieces .city--num {
-        grid-area: city;
+        grid-area: cityNum;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
 .player .resource--num {
@@ -521,31 +558,39 @@ main {
 
 /********** Player Section - Pieces **********/
 .road--pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 1.6rem;
     width: 1.2rem;
     -webkit-clip-path: polygon(55% 0, 85% 0, 45% 100%, 15% 100%);
     clip-path: polygon(55% 0, 85% 0, 45% 100%, 15% 100%);
-    background-image: radial-gradient(, var(--color-black));
-    /* border: .1rem solid var(--color-black);
-    box-shadow: .2rem .2rem .2rem rgba(0, 0, 0, .7); */
+    background-image: radial-gradient(var(--background-color-light), rgba(0, 0, 0, .7));
+    font-size: 1rem;
 }
 
 .settlement--pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     width: auto;
     -webkit-clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
     clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-    /* border: .1rem solid var(--color-black);
-    box-shadow: .2rem .2rem .2rem rgba(0, 0, 0, .7); */
+    background-image: radial-gradient(var(--background-color-light), rgba(0, 0, 0, .7));
+    font-size: 1rem;
 }
 
 .city--pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     width: auto;
-    -webkit-clip-path: polygon(50% 50%, 100% 0, 82% 100%, 18% 100%, 0 0);
-    clip-path: polygon(50% 50%, 100% 0, 82% 100%, 18% 100%, 0 0);
-    /* border: .1rem solid var(--color-black);
-    box-shadow: .2rem .2rem .2rem rgba(0, 0, 0, .7); */
+    -webkit-clip-path: polygon(50% 40%, 100% 0, 82% 100%, 18% 100%, 0 0);
+    clip-path: polygon(50% 40%, 100% 0, 82% 100%, 18% 100%, 0 0);
+    background-image: radial-gradient(var(--background-color-light), rgba(0, 0, 0, .7));
+    font-size: 1rem;
 }
 
 /********** Player 0 Section **********/
@@ -594,6 +639,7 @@ main {
 #player-3 {
     grid-area: player-3;
     background-color: var(--player-3-color1);
+    color: var(--color-black);
 }
 
 #player-3 .pieces .road--pic,

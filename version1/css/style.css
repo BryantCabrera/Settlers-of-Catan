@@ -219,6 +219,11 @@ main {
     font-size: 1.2rem;
 }
 
+.hex div img {
+    height: 80%;
+    width: auto;
+}
+
 .road--vertical {
     height: 6rem;
     width: 1rem;
@@ -320,7 +325,9 @@ main {
     background-color: var(--road-color1);
 }
 
-/********** Player 1 Section **********/
+/********** Players Section **********/
+
+/********** Player 0 Section **********/
 #player-0 {
     grid-area: player-0;
     display: grid;
@@ -443,19 +450,19 @@ main {
 .player-0__dc {
     grid-area: dc;
 }
-/********** Player 2 Section **********/
+/********** Player 1 Section **********/
 #player-1 {
     grid-area: player-1;
     background-color: var(--player-1-color1);
 }
 
-/********** Player 3 Section **********/
+/********** Player 2 Section **********/
 #player-2 {
     grid-area: player-2;
     background-color: var(--player-2-color1);
 }
 
-/********** Player 4 Section **********/
+/********** Player 3 Section **********/
 #player-3 {
     grid-area: player-3;
     background-color: var(--player-3-color1);

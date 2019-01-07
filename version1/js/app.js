@@ -390,9 +390,17 @@ const game = {
             console.log(`${chosenArea.img}`);
 
             //assigns number tokens to each hex, starting from hex1, and skipping over any desert
-            hex.area !== 'desert' ? hex.numberToken = catan.numberTokens[`${hex['data-id']}`] : hex.numberToken = '<img src="">';
+            if (hex.area !== 'desert') {
+                hex.numberToken = catan.numberTokens[`${hex['data-id']}`]; 
+                $(`#hex${hex["data-id"]}`).append(`<div><h3>${hex.numberToken}</h3></div>`);
+             } else {
+                hex.numberToken = '<img src="resources/imgs/robber/vector/robber.png">';
+                $(`#hex${hex["data-id"]}`).append(`<div>${hex.numberToken}</div>`);
+                //at the current index, splice in the string 'robber' so that we can continue assigning the appropriate tokens to the rest of the hexes
+                catan.numberTokens.splice([`${hex["data-id"]}`], 0, 'robber');
+             } 
             console.log(hex.numberToken);
-            $(`#hex${hex['data-id']}`).append(`<div><h3>${hex.numberToken}</h3></div>`);
+            
         }
 
     },
@@ -410,13 +418,10 @@ $('.hexes').on('click', function (e) {
     if ($(e.target).attr('class') !== "row" && $(e.target).attr('class') !== "hex" && $(e.target).attr('class') !== "hexes") {
         console.log(`Player ${turn + 1} is taking his/her turn.`);
 
-      $(e.target)
-        .css("background-color", `var(--player-${turn}-color1)`)
-        .css("opacity", "1")
-        .css("border", "1px solid black");
+      $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
 
         //change turn
-        turn >= 3 ? turn = 0 : turn += 1;
+        turn === 3 ? turn = 0 : turn += 1;
         console.log(`It is now Player ${turn + 1}'s turn.`)
     }
     

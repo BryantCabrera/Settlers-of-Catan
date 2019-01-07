@@ -88,127 +88,114 @@ class Player {
 }
 
 const catan = {
-    hexes: [
+    areas: [
         {
             area: 'desert',
             quantity: 1,
-            img: 'resources/imgs/hexes/vector/desert.png'
+            img: 'resources/imgs/hexes/vector/desert.png',
+            resource: null
         },
         {
             area: 'forest',
             quantity: 4,
-            img: 'resources/imgs/hexes/vector/forest.png'
+            img: 'resources/imgs/hexes/vector/forest.png',
+            resource: 'lumber'
         },
         {
             area: 'hill',
             quantity: 3,
-            img: 'resources/imgs/hexes/vector/hill.png'
+            img: 'resources/imgs/hexes/vector/hill.png',
+            resource: 'brick'
         },
         {
             area: 'pasture',
             quantity: 4,
-            img: 'resources/imgs/hexes/vector/pasture.png'
+            img: 'resources/imgs/hexes/vector/pasture.png',
+            resource: 'wool'
         },
         {
             area: 'field',
             quantity: 4,
-            img: 'resources/imgs/hexes/vector/field.png'
+            img: 'resources/imgs/hexes/vector/field.png',
+            resource: 'grain'
         },
         {
             area: 'mountain',
             quantity: 3,
-            img: 'resources/imgs/hexes/vector/mountain.png'
+            img: 'resources/imgs/hexes/vector/mountain.png',
+            resource: 'mountain'
         }
     ],
-    numberTokens: [
-        { a: 5 },
-        { b: 2 },
-        { c: 6 },
-        { d: 3 },
-        { e: 8 },
-        { f: 10 },
-        { g: 9 },
-        { h: 12 },
-        { i: 11 },
-        { j: 4 },
-        { k: 8 },
-        { l: 10 },
-        { m: 9 },
-        { n: 4 },
-        { o: 5 },
-        { p: 6 },
-        { q: 3 },
-        { r: 11 },
-    ],
-    resources: [
-        {
+    numberTokens: [5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11],
+    resources: {
+        back: {
             resource: 'back',
             quantity: 0,
             img: 'resources/imgs/resources/vector/resources--back.png'
         },
-        {
+        lumber: {
             resource: 'lumber',
             quantity: 19,
             img: 'resources/imgs/resources/vector/resources--lumber.png'
         },
-        {
+        brick: {
             resource: 'brick',
             quantity: 19,
             img: 'resources/imgs/resources/vector/resources--brick.png'
         },
-        {
+        wool: {
             resource: 'wool',
             quantity: 19,
             img: 'resources/imgs/resources/vector/resources--wool.png'
         },
-        {
+        grain: {
             resource: 'grain',
             quantity: 19,
             img: 'resources/imgs/resources/vector/resources--grain.png'
         },
-        {
+        ore: {
             resource: 'ore',
             quantity: 19,
             img: 'resources/imgs/resources/vector/resources--ore.png'
-        },
-    ],
+        }
+    },
     developmentCards: {
         knight: {
             quantity: 14,
-            img: ""
+            img: ''
         },
         monopoly: {
             quantity: 2,
-            img: ""
+            img: ''
         },
         yearOfPlenty: {
             quantity: 2,
-            img: ""
+            img: ''
         },
         roadBuilding: {
             quantity: 2,
-            img: ""
+            img: ''
         },
         market: {
             quantity: 1,
-            img: ""
+            img: ''
         },
         chapel: {
             quantity: 1,
-            img: ""
+            img: ''
         },
         library: {
             quantity: 1,
-            img: ""
+            img: ''
         },
         university: {
             quantity: 1,
-            img: ""
+            img: ''
         },
         palace: {
             quantity: 1,
-            img: ""
-        },
+            img: ''
+        }
     }
 };
 
@@ -250,120 +237,162 @@ const game = {
             'data-type': 'hex',
             'data-id': 0,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 1,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 2,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 3,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 4,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 5,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 6,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 7,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 8,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 9,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 10,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 11,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 12,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 13,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 14,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 15,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 16,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 17,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
         {
             'data-type': 'hex',
             'data-id': 18,
             area: 'desert',
+            resource: null,
+            numberToken: 7
         },
     ],
     init () {
+        //randomly generates the areas for the hexes on the board
         for (let hex of game.hexes) {
-            //gets random area from catan.hexes
-            let randomArea = Math.floor((Math.random() * catan.hexes.length));
-            console.log(randomArea);
+            //gets random area from catan.areas
+            let randomArea = Math.floor((Math.random() * catan.areas.length));
 
             let chosenArea;
-            //if that area's quantity is 0, remove it from array, else assign that chosen area to chosenArea
-            if (catan.hexes[randomArea].quantity === 0) {
-                catan.hexes.splice(randomArea, 1);
-            } else {
-                chosenArea = catan.hexes[randomArea];
-                // catan.hexes[randomArea].quantity -= 1;
-            }
-            console.log(chosenArea);
-            
+            //assign that chosen area to chosenArea and reduce its quantity by 1
+            chosenArea = catan.areas[randomArea];
+            catan.areas[randomArea].quantity -= 1;
+            //if that area's quantity is 0, remove it from array catan.areas
+            if (catan.areas[randomArea].quantity === 0) {
+                catan.areas.splice(randomArea, 1);
+            } 
 
             $(`#hex${hex['data-id']}`).append(`<img src="${chosenArea.img}">`);
             hex.area = chosenArea.area;
+            hex.resource = chosenArea.resource;
             console.log(hex);
-            console.log(`#hex${hex["data-id"]}`);
+            console.log(`#hex${hex['data-id']}`);
             console.log(`${chosenArea.img}`);
+
+            //assigns number tokens to each hex, starting from hex1, and skipping over any desert
+            hex.area !== 'desert' ? hex.numberToken = catan.numberTokens[`${hex['data-id']}`] : hex.numberToken = '<img src="">';
+            console.log(hex.numberToken);
+            $(`#hex${hex['data-id']}`).append(`<div><h3>${hex.numberToken}</h3></div>`);
         }
 
     },

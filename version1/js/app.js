@@ -162,39 +162,39 @@ const catan = {
     developmentCards: {
         knight: {
             quantity: 14,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__knight.png'
         },
         monopoly: {
             quantity: 2,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__monopoly.png'
         },
         yearOfPlenty: {
             quantity: 2,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__yearOfPlenty.png'
         },
         roadBuilding: {
             quantity: 2,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__roadBuilding.png'
         },
         market: {
             quantity: 1,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__market.png'
         },
         chapel: {
             quantity: 1,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__chapel.png'
         },
         library: {
             quantity: 1,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__library.png'
         },
         university: {
             quantity: 1,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__university.png'
         },
         palace: {
             quantity: 1,
-            img: ''
+            img: 'resources/imgs/dcs/vector/dcs__palace.png'
         }
     }
 };
@@ -385,21 +385,17 @@ const game = {
             $(`#hex${hex['data-id']}`).append(`<img src="${chosenArea.img}">`);
             hex.area = chosenArea.area;
             hex.resource = chosenArea.resource;
-            console.log(hex);
-            console.log(`#hex${hex['data-id']}`);
-            console.log(`${chosenArea.img}`);
 
             //assigns number tokens to each hex, starting from hex1, and skipping over any desert
             if (hex.area !== 'desert') {
                 hex.numberToken = catan.numberTokens[`${hex['data-id']}`]; 
                 $(`#hex${hex["data-id"]}`).append(`<div><h3>${hex.numberToken}</h3></div>`);
-             } else {
+            } else {
                 hex.numberToken = '<img src="resources/imgs/robber/vector/robber.png">';
                 $(`#hex${hex["data-id"]}`).append(`<div>${hex.numberToken}</div>`);
                 //at the current index, splice in the string 'robber' so that we can continue assigning the appropriate tokens to the rest of the hexes
                 catan.numberTokens.splice([`${hex["data-id"]}`], 0, 'robber');
-             } 
-            console.log(hex.numberToken);
+            } 
             
         }
 

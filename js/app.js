@@ -459,7 +459,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [1, 14]
+            neighbors: [1, 14],
+            adjacentRoads: [0, 9]
         },
         {
             'data-type': 'settlement',
@@ -467,7 +468,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [0,2]
+            neighbors: [0,2],
+            adjacentRoads: [0, 1]
         },
         {
             'data-type': 'settlement',
@@ -475,7 +477,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [1, 3, 12]
+            neighbors: [1, 3, 12],
+            adjacentRoads: [1, 2, 8]
         },
         {
             'data-type': 'settlement',
@@ -483,7 +486,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [2, 4]
+            neighbors: [2, 4],
+            adjacentRoads: [2, 3]
         },
         {
             'data-type': 'settlement',
@@ -491,7 +495,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [3, 10, 5]
+            neighbors: [3, 10, 5],
+            adjacentRoads: [3, 4, 7]
         },
         {
             'data-type': 'settlement',
@@ -499,7 +504,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [4, 6]
+            neighbors: [4, 6],
+            adjacentRoads: [4, 5]
         },
         {
             'data-type': 'settlement',
@@ -507,7 +513,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [5, 8]
+            neighbors: [5, 8],
+            adjacentRoads: [5, 6]
         },
         {
             'data-type': 'settlement',
@@ -515,7 +522,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [8, 25]
+            neighbors: [8, 25],
+            adjacentRoads: [17, 18]
         },
         {
             'data-type': 'settlement',
@@ -523,7 +531,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [6, 7, 9]
+            neighbors: [6, 7, 9],
+            adjacentRoads: [6, 16, 17]
         },
         {
             'data-type': 'settlement',
@@ -531,7 +540,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [8, 23, 10]
+            neighbors: [8, 23, 10],
+            adjacentRoads: [15, 16, 19]
         },
         {
             'data-type': 'settlement',
@@ -539,7 +549,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [4, 9, 11]
+            neighbors: [4, 9, 11],
+            adjacentRoads: [7, 14, 15]
         },
         {
             'data-type': 'settlement',
@@ -547,7 +558,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [10, 12, 21]
+            neighbors: [10, 12, 21],
+            adjacentRoads: [13, 14, 20]
         },
         {
             'data-type': 'settlement',
@@ -555,7 +567,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [2, 11, 13]
+            neighbors: [2, 11, 13],
+            adjacentRoads: [8, 12, 13]
         },
         {
             'data-type': 'settlement',
@@ -563,7 +576,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [12, 14, 19]
+            neighbors: [12, 14, 19],
+            adjacentRoads: [11, 12, 21]
         },
         {
             'data-type': 'settlement',
@@ -571,7 +585,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [0, 13, 15]
+            neighbors: [0, 13, 15],
+            adjacentRoads: [9, 10, 11]
         },
         {
             'data-type': 'settlement',
@@ -579,7 +594,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [14, 17]
+            neighbors: [14, 17],
+            adjacentRoads: [10, 22]
         },
         {
             'data-type': 'settlement',
@@ -587,7 +603,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [17, 37]
+            neighbors: [17, 37],
+            adjacentRoads: [23, 38]
         },
         {
             'data-type': 'settlement',
@@ -595,7 +612,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [15, 16, 18]
+            neighbors: [15, 16, 18],
+            adjacentRoads: [22, 23, 24]
         },
         {
             'data-type': 'settlement',
@@ -603,7 +621,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [17, 19, 35]
+            neighbors: [17, 19, 35],
+            adjacentRoads: [24, 25, 27]
         },
         {
             'data-type': 'settlement',
@@ -611,7 +630,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [13, 18, 20]
+            neighbors: [13, 18, 20],
+            adjacentRoads: [21, 25, 26]
         },
         {
             'data-type': 'settlement',
@@ -619,7 +639,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [19, 21, 33]
+            neighbors: [19, 21, 33],
+            adjacentRoads: [26, 27, 36]
         },
         {
             'data-type': 'settlement',
@@ -627,7 +648,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [11, 20, 22]
+            neighbors: [11, 20, 22],
+            adjacentRoads: [20, 27, 28]
         },
         {
             'data-type': 'settlement',
@@ -635,7 +657,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [21, 23, 31]
+            neighbors: [21, 23, 31],
+            adjacentRoads: [28, 29, 35]
         },
         {
             'data-type': 'settlement',
@@ -643,7 +666,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [9, 22, 24]
+            neighbors: [9, 22, 24],
+            adjacentRoads: [19, 29, 30]
         },
         {
             'data-type': 'settlement',
@@ -651,7 +675,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [23, 29, 25]
+            neighbors: [23, 29, 25],
+            adjacentRoads: [30, 31, 34]
         },
         {
             'data-type': 'settlement',
@@ -659,7 +684,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [7, 24, 26]
+            neighbors: [7, 24, 26],
+            adjacentRoads: [18, 31, 32]
         },
         {
             'data-type': 'settlement',
@@ -667,7 +693,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [25, 27]
+            neighbors: [25, 27],
+            adjacentRoads: [32, 33]
         },
         {
             'data-type': 'settlement',
@@ -675,7 +702,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [26, 28]
+            neighbors: [26, 28],
+            adjacentRoads: [33, 48]
         },
         {
             'data-type': 'settlement',
@@ -683,7 +711,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [27, 29, 46]
+            neighbors: [27, 29, 46],
+            adjacentRoads: [47, 48, 49]
         },
         {
             'data-type': 'settlement',
@@ -691,7 +720,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [24, 28, 30]
+            neighbors: [24, 28, 30],
+            adjacentRoads: [34, 46, 47]
         },
         {
             'data-type': 'settlement',
@@ -699,7 +729,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [29, 31, 44]
+            neighbors: [29, 31, 44],
+            adjacentRoads: [45, 46, 50]
         },
         {
             'data-type': 'settlement',
@@ -707,7 +738,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [22, 30, 32]
+            neighbors: [22, 30, 32],
+            adjacentRoads: [35, 44, 45]
         },
         {
             'data-type': 'settlement',
@@ -715,7 +747,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [31, 33, 42]
+            neighbors: [31, 33, 42],
+            adjacentRoads: [43, 44, 51]
         },
         {
             'data-type': 'settlement',
@@ -723,7 +756,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [20, 32, 34]
+            neighbors: [20, 32, 34],
+            adjacentRoads: [36, 42, 43]
         },
         {
             'data-type': 'settlement',
@@ -731,7 +765,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [33, 35, 40]
+            neighbors: [33, 35, 40],
+            adjacentRoads: [41, 42, 52]
         },
         {
             'data-type': 'settlement',
@@ -739,7 +774,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [18, 34, 36]
+            neighbors: [18, 34, 36],
+            adjacentRoads: [37, 40, 41]
         },
         {
             'data-type': 'settlement',
@@ -747,7 +783,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [35, 37, 38]
+            neighbors: [35, 37, 38],
+            adjacentRoads: [39, 40, 53]
         },
         {
             'data-type': 'settlement',
@@ -755,7 +792,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [16, 36]
+            neighbors: [16, 36],
+            adjacentRoads: [38, 39]
         },
         {
             'data-type': 'settlement',
@@ -763,7 +801,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [36, 39]
+            neighbors: [36, 39],
+            adjacentRoads: [53, 54]
         },
         {
             'data-type': 'settlement',
@@ -771,7 +810,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [38, 40, 53]
+            neighbors: [38, 40, 53],
+            adjacentRoads: [54, 55, 65]
         },
         {
             'data-type': 'settlement',
@@ -779,7 +819,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [34, 39, 41]
+            neighbors: [34, 39, 41],
+            adjacentRoads: [52, 55, 56]
         },
         {
             'data-type': 'settlement',
@@ -787,7 +828,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [40, 42, 51]
+            neighbors: [40, 42, 51],
+            adjacentRoads: [56, 57, 64]
         },
         {
             'data-type': 'settlement',
@@ -795,7 +837,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [32, 41, 43]
+            neighbors: [32, 41, 43],
+            adjacentRoads: [51, 57, 58]
         },
         {
             'data-type': 'settlement',
@@ -803,7 +846,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [42, 44, 49]
+            neighbors: [42, 44, 49],
+            adjacentRoads: [58, 59, 63]
         },
         {
             'data-type': 'settlement',
@@ -811,7 +855,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [30, 43, 45]
+            neighbors: [30, 43, 45],
+            adjacentRoads: [50, 59, 60]
         },
         {
             'data-type': 'settlement',
@@ -819,7 +864,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [44, 46, 47]
+            neighbors: [44, 46, 47],
+            adjacentRoads: [60, 61, 62]
         },
         {
             'data-type': 'settlement',
@@ -827,7 +873,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [28, 45]
+            neighbors: [28, 45],
+            adjacentRoads: [49, 61]
         },
         {
             'data-type': 'settlement',
@@ -835,7 +882,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [45, 48]
+            neighbors: [45, 48],
+            adjacentRoads: [62, 71]
         },
         {
             'data-type': 'settlement',
@@ -843,7 +891,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [47, 49]
+            neighbors: [47, 49],
+            adjacentRoads: [70, 71]
         },
         {
             'data-type': 'settlement',
@@ -851,7 +900,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [43, 48, 50]
+            neighbors: [43, 48, 50],
+            adjacentRoads: [63, 69, 70]
         },
         {
             'data-type': 'settlement',
@@ -859,7 +909,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [49, 51]
+            neighbors: [49, 51],
+            adjacentRoads: [68, 69]
         },
         {
             'data-type': 'settlement',
@@ -867,7 +918,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [41, 50, 52]
+            neighbors: [41, 50, 52],
+            adjacentRoads: [64, 67, 68]
         },
         {
             'data-type': 'settlement',
@@ -875,7 +927,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [51, 53]
+            neighbors: [51, 53],
+            adjacentRoads: [66, 67]
         },
         {
             'data-type': 'settlement',
@@ -883,7 +936,8 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
-            neighbors: [39, 52]
+            neighbors: [39, 52],
+            adjacentRoads: [65, 66]
         }
     ],
     roadAreas: [
@@ -891,648 +945,648 @@ const game = {
             'data-type': 'road',
             'data-id': 0,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [1, 9],
             settlements: [0, 1]
         },
         {
             'data-type': 'road',
             'data-id': 1,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [0, 2, 8],
             settlements: [1, 2]
         },
         {
             'data-type': 'road',
             'data-id': 2,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [1, 3, 8],
             settlements: [2, 3]
         },
         {
             'data-type': 'road',
             'data-id': 3,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [2, 4, 7],
             settlements: [3, 4]
         },
         {
             'data-type': 'road',
             'data-id': 4,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [3, 5, 7],
             settlements: [4, 5]
         },
         {
             'data-type': 'road',
             'data-id': 5,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [4, 6],
             settlements: [5, 6]
         },
         {
             'data-type': 'road',
             'data-id': 6,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [5, 16, 17],
             settlements: [6, 8]
         },
         {
             'data-type': 'road',
             'data-id': 7,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [3, 4, 14, 15],
             settlements: [4, 10]
         },
         {
             'data-type': 'road',
             'data-id': 8,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [1, 2, 12, 13],
             settlements: [2, 12]
         },
         {
             'data-type': 'road',
             'data-id': 9,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [0, 10, 11],
             settlements: [0, 14]
         },
         {
             'data-type': 'road',
             'data-id': 10,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [9, 11, 22],
             settlements: [14, 15]
         },
         {
             'data-type': 'road',
             'data-id': 11,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [9, 10, 12, 21],
             settlements: [13, 14]
         },
         {
             'data-type': 'road',
             'data-id': 12,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [8, 11, 13, 21],
             settlements: [12, 13]
         },
         {
             'data-type': 'road',
             'data-id': 13,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [8, 12, 14, 20],
             settlements: [11, 12]
         },
         {
             'data-type': 'road',
             'data-id': 14,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [7, 13, 15, 20],
             settlements: [10, 11]
         },
         {
             'data-type': 'road',
             'data-id': 15,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [7, 14, 16, 19],
             settlements: [9, 10]
         },
         {
             'data-type': 'road',
             'data-id': 16,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [6, 15, 17, 19],
             settlements: [8, 9]
         },
         {
             'data-type': 'road',
             'data-id': 17,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [6, 16, 18],
             settlements: [7, 8]
         },
         {
             'data-type': 'road',
             'data-id': 18,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [17, 31, 32],
             settlements: [7, 25]
         },
         {
             'data-type': 'road',
             'data-id': 19,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [15, 16, 29, 30],
             settlements: [9, 23]
         },
         {
             'data-type': 'road',
             'data-id': 20,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [13, 14, 27, 28],
             settlements: [11, 21]
         },
         {
             'data-type': 'road',
             'data-id': 21,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [12, 13, 25, 26],
             settlements: [13, 19]
         },
         {
             'data-type': 'road',
             'data-id': 22,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [10, 23, 24],
             settlements: [15, 17]
         },
         {
             'data-type': 'road',
             'data-id': 23,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [22, 24, 38],
             settlements: [16, 17]
         },
         {
             'data-type': 'road',
             'data-id': 24,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [22, 23, 25, 37],
             settlements: [17, 18]
         },
         {
             'data-type': 'road',
             'data-id': 25,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [21, 24, 26, 37],
             settlements: [18, 19]
         },
         {
             'data-type': 'road',
             'data-id': 26,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [21, 25, 27, 36],
             settlements: [19, 20]
         },
         {
             'data-type': 'road',
             'data-id': 27,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [20, 26, 28, 36],
             settlements: [20, 21]
         },
         {
             'data-type': 'road',
             'data-id': 28,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [20, 27, 29, 35],
             settlements: [21, 22]
         },
         {
             'data-type': 'road',
             'data-id': 29,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [19, 28, 30, 35],
             settlements: [22, 23]
         },
         {
             'data-type': 'road',
             'data-id': 30,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [19, 29, 31, 34],
             settlements: [23, 24]
         },
         {
             'data-type': 'road',
             'data-id': 31,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [18, 30, 32, 34],
             settlements: [24, 25]
         },
         {
             'data-type': 'road',
             'data-id': 32,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [18, 31, 33],
             settlements: [25, 26]
         },
         {
             'data-type': 'road',
             'data-id': 33,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [32, 48],
             settlements: [26, 27]
         },
         {
             'data-type': 'road',
             'data-id': 34,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [30, 31, 46, 47],
             settlements: [24, 29]
         },
         {
             'data-type': 'road',
             'data-id': 35,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [28, 29, 44, 45],
             settlements: [22, 31]
         },
         {
             'data-type': 'road',
             'data-id': 36,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [26, 27, 42, 43],
             settlements: [20, 33]
         },
         {
             'data-type': 'road',
             'data-id': 37,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [24, 25, 40, 41],
             settlements: [18, 35]
         },
         {
             'data-type': 'road',
             'data-id': 38,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [23, 39],
             settlements: [16, 37]
         },
         {
             'data-type': 'road',
             'data-id': 39,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [38, 40, 53],
             settlements: [36, 37]
         },
         {
             'data-type': 'road',
             'data-id': 40,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [37, 39, 41, 53],
             settlements: [35, 36]
         },
         {
             'data-type': 'road',
             'data-id': 41,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [37, 40, 42, 52],
             settlements: [34, 35]
         },
         {
             'data-type': 'road',
             'data-id': 42,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [36, 41, 43, 52],
             settlements: [33, 34]
         },
         {
             'data-type': 'road',
             'data-id': 43,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [36, 42, 44, 51],
             settlements: [32, 33]
         },
         {
             'data-type': 'road',
             'data-id': 44,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [35, 43, 45, 51],
             settlements: [31, 32]
         },
         {
             'data-type': 'road',
             'data-id': 45,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [35, 44, 46, 50],
             settlements: [30, 31]
         },
         {
             'data-type': 'road',
             'data-id': 46,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [34, 45, 47, 50],
             settlements: [29, 30]
         },
         {
             'data-type': 'road',
             'data-id': 47,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [34, 46, 48, 49],
             settlements: [28, 29]
         },
         {
             'data-type': 'road',
             'data-id': 48,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [33, 47, 49],
             settlements: [27, 28]
         },
         {
             'data-type': 'road',
             'data-id': 49,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [47, 48, 61],
             settlements: [28, 46]
         },
         {
             'data-type': 'road',
             'data-id': 50,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [45, 46, 59, 60],
             settlements: [30, 44]
         },
         {
             'data-type': 'road',
             'data-id': 51,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [43, 44, 57, 58],
             settlements: [32, 42]
         },
         {
             'data-type': 'road',
             'data-id': 52,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [41, 42, 55, 56],
             settlements: [34, 40]
         },
         {
             'data-type': 'road',
             'data-id': 53,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [39, 40, 54],
             settlements: [36, 38]
         },
         {
             'data-type': 'road',
             'data-id': 54,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [53, 55, 65],
             settlements: [38, 39]
         },
         {
             'data-type': 'road',
             'data-id': 55,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [52, 54, 56, 65],
             settlements: [39, 40]
         },
         {
             'data-type': 'road',
             'data-id': 56,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [52, 55, 57, 64],
             settlements: [40, 41]
         },
         {
             'data-type': 'road',
             'data-id': 57,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [51, 56, 58, 64],
             settlements: [41, 42]
         },
         {
             'data-type': 'road',
             'data-id': 58,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [51, 57, 59, 63],
             settlements: [42, 43]
         },
         {
             'data-type': 'road',
             'data-id': 59,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [50, 58, 60, 63],
             settlements: [43, 44]
         },
         {
             'data-type': 'road',
             'data-id': 60,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [50, 59, 61, 62],
             settlements: [44, 45]
         },
         {
             'data-type': 'road',
             'data-id': 61,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [49, 60, 62],
             settlements: [45, 46]
         },
         {
             'data-type': 'road',
             'data-id': 62,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [60, 61, 71],
             settlements: [45, 47]
         },
         {
             'data-type': 'road',
             'data-id': 63,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [58, 59, 69, 70],
             settlements: [43, 49]
         },
         {
             'data-type': 'road',
             'data-id': 64,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [56, 57, 67, 68],
             settlements: [41, 51]
         },
         {
             'data-type': 'road',
             'data-id': 65,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [54, 55, 60],
             settlements: [39, 53]
         },
         {
             'data-type': 'road',
             'data-id': 66,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [65, 67],
             settlements: [52, 53]
         },
         {
             'data-type': 'road',
             'data-id': 67,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [64, 66, 68],
             settlements: [51, 52]
         },
         {
             'data-type': 'road',
             'data-id': 68,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [64, 67, 69],
             settlements: [50, 51]
         },
         {
             'data-type': 'road',
             'data-id': 69,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [63, 68, 70],
             settlements: [49, 50]
         },
         {
             'data-type': 'road',
             'data-id': 70,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [63, 69, 71],
             settlements: [48, 49]
         },
         {
             'data-type': 'road',
             'data-id': 71,
             occupied: false,
-            canOccupy: true,
+            canOccupy: false,
             ownedByPlayer: null,
-            adjacentRoads: [],
+            adjacentRoads: [62, 70],
             settlements: [47, 48]
         }
     ],
@@ -1628,7 +1682,7 @@ const game = {
         //change 3 to game.players.length, this is just for TESTING purposes
         turn === 3 ? turn = 0 : turn += 1;
 
-        $('.road--vertical:hover, .road--left:hover, .road--right:hover,.settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
+        $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
         console.log(`It is now Player ${turn + 1}'s turn.`);
     },
@@ -1704,8 +1758,15 @@ $('.hexes .row .road').on('click', function (e) {
         //     }
         // }
 
+        //if the road you are trying to place is next to a settlement you own or next to a road you own, you can occupy that road
+        for (let i = 0; i < game.roadAreas[id].adjacentRoads.length; i++) {
+            if ((game.roadAreas[game.roadAreas[id].adjacentRoads[i]].ownedByPlayer === turn) || (game.settlementAreas[game.roadAreas[id].settlements[0]].ownedByPlayer === turn || game.settlementAreas[game.roadAreas[id].settlements[1]].ownedByPlayer === turn)) {
+                game.roadAreas[id].canOccupy = true;
+            } 
+        }
+
         //changes clicked area to current player's color
-        if (game.roadAreas[id].canOccupy === true && (game.settlementAreas[game.roadAreas[id].settlements[0]].ownedByPlayer === turn || game.settlementAreas[game.roadAreas[id].settlements[1]].ownedByPlayer === turn)) {
+        if (game.roadAreas[id].canOccupy === true && game.roadAreas[id].occupied === false) {
             console.log(`Player ${turn + 1} just placed a road.`);
 
             game.roadAreas[id].occupied = true;

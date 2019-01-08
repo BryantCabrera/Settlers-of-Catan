@@ -86,17 +86,30 @@ class Player {
             ore: 0
         };
         this.developmentCards = [];
+        this.hexesSettled = [];
+        this.roadsOwned = [];
     }
 
     roll () {
+        //NEED TO ADD: check to see if player has a knight card.  if so, ask if they want to use it.
+
         dice1 = Math.floor(Math.random() * 7);
-        dice2 = dice1 = Math.floor(Math.random() * 7);
+        dice2 = Math.floor(Math.random() * 7);
+        game.render();
 
         if (game.state === 'initializing') {
             return diceTotal
         }
 
-        game.render();
+        if (diceTotal === 7) this.moveRobber();
+
+        game.distributeResources();
+    }
+
+    moveRobber () {
+        console.log(`${this.name} must now move the robber.`);
+
+        //NEED TO ADD: use mouseover, mouseclick, mousehold, and mouserelease events coupled with my Tic-Tac-Toe floating pointer
     }
 
     buildRoad (e) {
@@ -1554,6 +1567,8 @@ const game = {
             }   
         }
 
+        //NEED TO ADD: Shuffle catan.developmentCards
+
         //Uncommented below for TESTING purposes
         // this.getFirstPlayer();
         // this.initialPlacement();
@@ -1593,17 +1608,7 @@ const game = {
     },
     initialPlacement () {
         //this refers to the 2 initial settlements and roads players can place
-
-        //the following 2 for loops & while loop create initialPlacement "crescent" turn order, which is different from regular turn order.  initialPlacement turn order starts at current first player and after the last player takes his/her turn, then initial order reverses.  This ends when the first player has placed his/her second settlement and road.
-        for (let i = turn; i < game.players.length; i++) {
-            initialTurns.push(i);
-        }
-        //if initialTurns is not the same size as game.players array, continue adding player numbers
-        let j = 0;
-        while (initialTurns.length < game.players.length) {
-            initialTurns.push(j);
-            j++;
-        }
+        this.roundRobin();
         //loops backwards through initialTurns to create the initial "crescent" turn order described above
         for (let i = initialTurns.length - 1; i >= 0; i--) {
             initialTurns.push(initialTurns[i]);
@@ -1626,6 +1631,24 @@ const game = {
         $('.road--vertical:hover, .road--left:hover, .road--right:hover,.settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
         console.log(`It is now Player ${turn + 1}'s turn.`);
+    },
+    distributeResources () {
+        this.roundRobin();
+        
+    },
+    roundRobin () {
+        initialTurns = [];
+        
+        //the following 2 for loops & while loop create initialPlacement "crescent" turn order, which is different from regular turn order.  initialPlacement turn order starts at current first player and after the last player takes his/her turn, then initial order reverses.  This ends when the first player has placed his/her second settlement and road.
+        for (let i = turn; i < game.players.length; i++) {
+            initialTurns.push(i);
+        }
+        //if initialTurns is not the same size as game.players array, continue adding player numbers
+        let j = 0;
+        while (initialTurns.length < game.players.length) {
+            initialTurns.push(j);
+            j++;
+        }
     }
 };
 

@@ -401,6 +401,7 @@ main {
         .player .road-card .road--card img {
             height: 10rem;
             width: auto;
+            opacity: 0.5;
         }
 
 .player .army-card {
@@ -419,6 +420,7 @@ main {
         .player .army-card .army--card img {
             height: 10rem;
             width: auto;
+            opacity: 0.5;
         }
 
     .player .army-card .army--num {

@@ -90,7 +90,7 @@ main {
     grid-template-areas: "player-0 controls controls player-1"
                          "player-0 boardgame boardgame player-1"
                          "player-2 boardgame boardgame player-3"
-                         "player-2 bank cheat-sheet player-3";
+                         "player-2 bank building-costs player-3";
 }
 
 /********** Boardgame Section **********/
@@ -372,7 +372,7 @@ main {
     align-items: center;
     width: 100%;
     font-size: 1.5rem;
-    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent))
+    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent));
 }
 
 .player .vp {
@@ -653,16 +653,80 @@ main {
 }
 
 /********** Cheat Sheet Section **********/
-#cheat-sheet {
-    grid-area: cheat-sheet;
+#building-costs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: building-costs;
     background-color: var(--road-color1);
+}
+
+#building-costs img {
+    height: 10rem;
+    width: auto;
 }
 
 /********** Bank Section **********/
 #bank {
     grid-area: bank;
+    display: block;
     background-color: var(--ocean-color5);
+    text-align: center;
 }
+
+#bank h3 {
+    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent));
+    margin-bottom: .5rem;
+}
+
+#bank .resources {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 1rem;
+    grid-template-rows: 1fr;
+    grid-template-areas: "bankLumber bankBrick bankWool bankGrain bankOre";
+    margin: 0 .5rem;
+}
+
+    #bank .resources .lumber--pic {
+        grid-area: bankLumber;
+    }
+
+    #bank .resources .lumber--num {
+        grid-area: bankLumber;
+    }
+
+    #bank .resources .brick--pic {
+        grid-area: bankBrick;
+    }
+
+    #bank .resources .brick--num {
+        grid-area: bankBrick;
+    }
+
+    #bank .resources .wool--pic {
+        grid-area: bankWool;
+    }
+
+    #bank .resources .wool--num {
+        grid-area: bankWool;
+    }
+
+    #bank .resources .grain--pic {
+        grid-area: bankGrain;
+    }
+
+    #bank .resources .grain--num {
+        grid-area: bankGrain;
+    }
+
+    #bank .resources .ore--pic {
+        grid-area: bankOre;
+    }
+
+    #bank .resources .ore--num {
+        grid-area: bankOre;
+    }
 
 
 /******************************/

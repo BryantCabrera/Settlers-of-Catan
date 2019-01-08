@@ -91,24 +91,40 @@ class Player {
     roll () {
         dice1 = Math.floor(Math.random() * 7);
         dice2 = dice1 = Math.floor(Math.random() * 7);
+
+        if (game.state === 'initializing') {
+            return diceTotal
+        }
+
+        game.render();
     }
 
     buildRoad (e) {
         if (this.pieces.roads > 0) {
+            if (game.state === 'initializing') {
+                return
+            }
 
             this.pieces.roads -= 1;
         } else {
             console.log(`You don't have anymore road pieces.`)
-        } 
+        }
+        
+        game.render();
     }
 
     buildSettlement (e) {
         if (this.pieces.settlements > 0) {
+            if (game.state === 'initializing') {
+                return
+            }
             
             this.pieces.settlements -= 1;
         } else {
             console.log(`You don't have anymore settlement pieces.`)
-        } 
+        }
+
+        game.render();
     }
 
     buildCity () {
@@ -117,7 +133,9 @@ class Player {
             this.pieces.cities -= 1;
         } else {
             console.log(`You don't have anymore city pieces.`)
-        } 
+        }
+        
+        game.render();
     }
 
     buyDevelopmentCard () {
@@ -137,7 +155,7 @@ class Player {
     }
 
     endTurn () {
-        turn === 3 ? (turn = 0) : (turn += 1);
+        game.changeTurn();
         game.render();
     }
 }
@@ -261,9 +279,12 @@ const catan = {
 /******************************/
 /********** App's State (Variables) **********/
 /******************************/
-let dice1, dice2, diceTotal, turn;
+let dice1, dice2, turn;
 
-diceTotal = dice1 + dice2;
+//this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
+let diceTotal = dice1 + dice2;
+
+let initialTurns = [];
 
 
 
@@ -280,6 +301,7 @@ diceTotal = dice1 + dice2;
 /********** Functions **********/
 /******************************/
 const game = {
+    state: 'initializing',
     players: [],
     hexes: [
         //numberTokens are initialized to 7 because those do not produce any resources
@@ -858,6 +880,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [0, 1]
         },
         {
@@ -866,6 +889,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [1, 2]
         },
         {
@@ -874,6 +898,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [2, 3]
         },
         {
@@ -882,6 +907,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [3, 4]
         },
         {
@@ -890,6 +916,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [4, 5]
         },
         {
@@ -898,6 +925,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [5, 6]
         },
         {
@@ -906,6 +934,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [6, 8]
         },
         {
@@ -914,6 +943,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [4, 10]
         },
         {
@@ -922,6 +952,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [2, 12]
         },
         {
@@ -930,6 +961,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [0, 14]
         },
         {
@@ -938,6 +970,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [14, 15]
         },
         {
@@ -946,6 +979,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [13, 14]
         },
         {
@@ -954,6 +988,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [12, 13]
         },
         {
@@ -962,6 +997,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [11, 12]
         },
         {
@@ -970,6 +1006,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [10, 11]
         },
         {
@@ -978,6 +1015,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [9, 10]
         },
         {
@@ -986,6 +1024,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [8, 9]
         },
         {
@@ -994,6 +1033,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [7, 8]
         },
         {
@@ -1002,6 +1042,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [7, 25]
         },
         {
@@ -1010,6 +1051,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [9, 23]
         },
         {
@@ -1018,6 +1060,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [11, 21]
         },
         {
@@ -1026,6 +1069,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [13, 19]
         },
         {
@@ -1034,6 +1078,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [15, 17]
         },
         {
@@ -1042,6 +1087,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [16, 17]
         },
         {
@@ -1050,6 +1096,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [17, 18]
         },
         {
@@ -1058,6 +1105,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [18, 19]
         },
         {
@@ -1066,6 +1114,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [19, 20]
         },
         {
@@ -1074,6 +1123,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [20, 21]
         },
         {
@@ -1082,6 +1132,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [21, 22]
         },
         {
@@ -1090,6 +1141,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [22, 23]
         },
         {
@@ -1098,6 +1150,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [23, 24]
         },
         {
@@ -1106,6 +1159,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [24, 25]
         },
         {
@@ -1114,6 +1168,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [25, 26]
         },
         {
@@ -1122,6 +1177,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [26, 27]
         },
         {
@@ -1130,6 +1186,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [24, 29]
         },
         {
@@ -1138,6 +1195,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [22, 31]
         },
         {
@@ -1146,6 +1204,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [20, 33]
         },
         {
@@ -1154,6 +1213,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [18, 35]
         },
         {
@@ -1162,6 +1222,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [16, 37]
         },
         {
@@ -1170,6 +1231,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [36, 37]
         },
         {
@@ -1178,6 +1240,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [35, 36]
         },
         {
@@ -1186,6 +1249,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [34, 35]
         },
         {
@@ -1194,6 +1258,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [33, 34]
         },
         {
@@ -1202,6 +1267,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [32, 33]
         },
         {
@@ -1210,6 +1276,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [31, 32]
         },
         {
@@ -1218,6 +1285,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [30, 31]
         },
         {
@@ -1226,6 +1294,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [29, 30]
         },
         {
@@ -1234,6 +1303,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [28, 29]
         },
         {
@@ -1242,6 +1312,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [27, 28]
         },
         {
@@ -1250,6 +1321,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [28, 46]
         },
         {
@@ -1258,6 +1330,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [30, 44]
         },
         {
@@ -1266,6 +1339,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [32, 42]
         },
         {
@@ -1274,6 +1348,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [34, 40]
         },
         {
@@ -1282,6 +1357,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [36, 38]
         },
         {
@@ -1290,6 +1366,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [38, 39]
         },
         {
@@ -1298,6 +1375,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [39, 40]
         },
         {
@@ -1306,6 +1384,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [40, 41]
         },
         {
@@ -1314,6 +1393,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [41, 42]
         },
         {
@@ -1322,6 +1402,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [42, 43]
         },
         {
@@ -1330,6 +1411,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [43, 44]
         },
         {
@@ -1338,6 +1420,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [44, 45]
         },
         {
@@ -1346,6 +1429,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [45, 46]
         },
         {
@@ -1354,6 +1438,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [45, 47]
         },
         {
@@ -1362,6 +1447,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [43, 49]
         },
         {
@@ -1370,6 +1456,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [41, 51]
         },
         {
@@ -1378,6 +1465,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [39, 53]
         },
         {
@@ -1386,6 +1474,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [52, 53]
         },
         {
@@ -1394,6 +1483,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [51, 52]
         },
         {
@@ -1402,6 +1492,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [50, 51]
         },
         {
@@ -1410,6 +1501,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [49, 50]
         },
         {
@@ -1418,6 +1510,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [48, 49]
         },
         {
@@ -1426,6 +1519,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentRoads: [],
             settlements: [47, 48]
         }
     ],
@@ -1459,6 +1553,10 @@ const game = {
                 catan.numberTokens.splice([`${hex["data-id"]}`], 0, 'robber');
             }   
         }
+
+        //Uncommented below for TESTING purposes
+        // this.getFirstPlayer();
+        // this.initialPlacement();
     },
     render () {
         for (let player of game.players) {
@@ -1471,11 +1569,67 @@ const game = {
             }
         }
     },
+    getFirstPlayer () {
+        let diceRolls = [];
+        let highestRoll = 0;
+        let firstPlayer = 0;
+
+        //makes each player roll dice and return total
+        for (let player of game.players) {
+            diceRolls.push(player.rollDice());
+
+            console.log(`${player.name} rolled a ${diceTotal}`);
+        }
+        
+        //compares those dice totals from diceRolls array to determine firstPlayer & sets that person as first player
+        for (let i = 0; i < diceRolls.length; i++) {
+            if (diceRolls[i] > highestRoll) {
+                highestRoll = diceRolls[i];
+                firstPlayer = i;
+            }  
+        }
+        turn = firstPlayer;
+        console.log(`${game.players[firstPlayer].name} is the first player.`);
+    },
     initialPlacement () {
         //this refers to the 2 initial settlements and roads players can place
+
+        //the following 2 for loops & while loop create initialPlacement "crescent" turn order, which is different from regular turn order.  initialPlacement turn order starts at current first player and after the last player takes his/her turn, then initial order reverses.  This ends when the first player has placed his/her second settlement and road.
+        for (let i = turn; i < game.players.length; i++) {
+            initialTurns.push(i);
+        }
+        //if initialTurns is not the same size as game.players array, continue adding player numbers
+        let j = 0;
+        while (initialTurns.length < game.players.length) {
+            initialTurns.push(j);
+            j++;
+        }
+        //loops backwards through initialTurns to create the initial "crescent" turn order described above
+        for (let i = initialTurns.length - 1; i >= 0; i--) {
+            initialTurns.push(initialTurns[i]);
+        }
+        console.log(initialTurns);
+
+        //loops through initialTurns array to let the appropriate players build 1 settlement & 1 road using the initial turn order described above
+        for (let i = 0; i < initialTurns.length; i++) {
+            game.players[initialTurns[i]].buildSettlement();
+            game.players[initialTurns[i]].buildRoad();
+        }
+        
+        game.state = 'inProgress';
+        console.log('The game is now in progress');
+    },
+    changeTurn () {
+        //change 3 to game.players.length, this is just for TESTING purposes
+        turn === 3 ? turn = 0 : turn += 1;
+
+        $('.road--vertical:hover, .road--left:hover, .road--right:hover,.settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
+
+        console.log(`It is now Player ${turn + 1}'s turn.`);
     }
 };
 
+//for TESTING purposes
 turn = 2;
 
 
@@ -1505,8 +1659,7 @@ $('.hexes .row .settlement').on('click', function (e) {
             $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
 
             //change turn
-            turn === 3 ? turn = 0 : turn += 1;
-            console.log(`It is now Player ${turn + 1}'s turn.`)
+            game.changeTurn();
         } else {
             console.log('This settlement cannot be placed within 1 vertex of another already-placed settlement.')
         }
@@ -1521,11 +1674,12 @@ $('.hexes .row .road').on('click', function (e) {
         let id = $(e.target).attr('data-id');
         console.log(`road data-id: ${id}`);
         
-        for (let i = 0; i < game.roadAreas[id].settlements.length; i++) {
-            if (game.roadAreas[game.roadAreas[id].settlements[i]].occupied === true) {
-                game.roadAreas[id].canOccupy = false;
-            }
-        }
+        //this was just copied and pasted from player.buildSettlement() method.  Commented out in case I need something from it later
+        // for (let i = 0; i < game.roadAreas[id].settlements.length; i++) {
+        //     if (game.roadAreas[game.roadAreas[id].settlements[i]].occupied === true) {
+        //         game.roadAreas[id].canOccupy = false;
+        //     }
+        // }
 
         //changes clicked area to current player's color
         if (game.roadAreas[id].canOccupy === true && (game.settlementAreas[game.roadAreas[id].settlements[0]].ownedByPlayer === turn || game.settlementAreas[game.roadAreas[id].settlements[1]].ownedByPlayer === turn)) {
@@ -1538,8 +1692,8 @@ $('.hexes .row .road').on('click', function (e) {
             $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
 
             //change turn
-            turn === 3 ? turn = 0 : turn += 1;
-            console.log(`It is now Player ${turn + 1}'s turn.`)
+            game.changeTurn();
+            
         } else {
             console.log('This road must be placed adjacent to one of your existing settlements.')
         }

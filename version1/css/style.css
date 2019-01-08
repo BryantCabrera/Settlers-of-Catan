@@ -75,14 +75,14 @@ h2 {
 /********** Header **********/
 /******************************/
 header {
-    height: 10vh;
+    height: 7.5vh;
 }
 
 /******************************/
 /********** Main **********/
 /******************************/
 main {
-    height: 80vh;
+    height: 85vh;
     width: 100vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -377,6 +377,7 @@ main {
 
 .player .vp {
     grid-area: vp;
+    padding: .5rem 0;
 }
 
 .player .road-card {
@@ -439,6 +440,7 @@ main {
     grid-template-areas: "piecesTotal piecesTotal piecesTotal"
                          "roadNum settNum cityNum"
                          "road sett city";
+    padding: .5rem 0;
 }
 
     .player .pieces .pieces--num {
@@ -448,6 +450,7 @@ main {
         align-items: center;
         align-self: center;
         height: 1.2rem;
+        padding-bottom: .3rem;
         /* background-image: linear-gradient(to bottom, var(--background-color-light), var(--color-black-medium));
         box-shadow: inset .2rem .2rem .2rem var(--color-black-transparent); */
     }
@@ -733,5 +736,5 @@ main {
 /********** Footer **********/
 /******************************/
 footer {
-    height: 10vh;
+    height: 7.5vh;
 }

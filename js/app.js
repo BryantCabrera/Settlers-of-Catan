@@ -85,7 +85,55 @@ class Player {
             grain: 0,
             ore: 0
         };
-        this.developmentCards = [];
+        this.developmentCards = {
+            knight: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__knight.png',
+                use: function () {
+                    game.players[turn].moveRobber();
+                }
+            },
+            monopoly: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__monopoly.png',
+
+            },
+            yearOfPlenty: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__yearOfPlenty.png',
+
+            },
+            roadBuilding: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__roadBuilding.png',
+
+            },
+            market: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__market.png',
+
+            },
+            chapel: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__chapel.png',
+
+            },
+            library: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__library.png',
+
+            },
+            university: {
+                quantity: 0,
+                img: 'resources/imgs/dcs/vector/dcs__university.png',
+
+            },
+            palace: {
+                quantity: 1,
+                img: 'resources/imgs/dcs/vector/dcs__palace.png',
+
+            }
+        };
         this.hexesSettled = [];
         this.roadsOwned = [];
     }
@@ -1797,3 +1845,56 @@ $('.hexes .row .road').on('click', function (e) {
         console.log('This is not a valid area to place a road.')
     }
 });
+
+//event listener for Player Action Buttons
+$('#player__actions').on('click', function (e) {
+    console.log($(e.target).attr('data-action'));
+
+    
+    switch ($(e.target).attr("data-action")) {
+      case "buildRoad":
+        console.log("You have clicked buildRoad");
+        game.players[turn].buildRoad();
+        break;
+      case "buildSettlement":
+        console.log("You have clicked buildSettlement");
+        game.players[turn].buildSettlement();
+        break;
+      case "buildCity":
+        console.log("You have clicked buildCity");
+        game.players[turn].buildCity();
+        break;
+      case "trade":
+        console.log("You have clicked trade");
+        game.players[turn].tradeBank();
+        break;
+      case "buyDevelopmentCard":
+        console.log("You have clicked buyDevelopmentCard");
+        game.players[turn].buyDevelopmentCard();
+        break;
+      case "changeTurn":
+        console.log("You have clicked changeTurn");
+        game.changeTurn();
+        break;
+    }
+});
+
+//individual event listeners
+// $(`#buildRoad`).on('click', function () {
+//     game.players[turn].buildRoad();
+// });
+// $(`#buildSettlement`).on('click', function () {
+//     game.players[turn].buildSettlement();
+// });
+// $(`#buildCity`).on('click', function () {
+//     game.players[turn].buildCity();
+// });
+// $(`#trade`).on('click', function () {
+//     game.players[turn].tradeBank();
+// });
+// $(`#buyDevelopmentCard`).on('click', function () {
+//     game.players[turn].buyDevelopmentCard();
+// });
+// $(`#endTurn`).on('click', function () {
+//     game.changeTurn();
+// });

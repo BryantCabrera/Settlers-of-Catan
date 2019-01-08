@@ -78,6 +78,13 @@ h2 {
     text-decoration: none;
     color: var(--color-black);
     box-shadow: .2rem .2rem .2rem var(--color-black);
+    background-color: var(--road-color2);
+    padding: .5rem;
+    transition: all .2s;
+}
+
+.btn:hover {
+    
 }
 
 .btn div {
@@ -401,10 +408,10 @@ main {
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: 1fr;
         grid-template-areas: "road sett city trade dc end";
-
+        visibility: hidden;
     }
 
-        #player__actions div {
+        #player__actions div:not(#buildRoad) {
             border: 1px solid rgba(0, 0, 0, .7);
             display: flex;
             justify-content: center;
@@ -423,14 +430,22 @@ main {
             grid-template-columns: 1fr;
             grid-template-rows: 1fr;
             grid-template-areas: "btn";
+            font-size: 1.4rem;
+            justify-content: center;
+            align-items: center;
         }
 
             #buildRoad .road--pic {
                 grid-area: btn;
+                width: 100%;
             }
 
-            #buildRoad h3 {
+            #buildRoad div {
                 grid-area: btn;
+            }
+
+            #buildCity .city--pic {
+                padding-top: 1.5rem;
             }
 
         #buildSettlement {
@@ -499,7 +514,7 @@ main {
     justify-items: center;
     align-items: center;
 }
-    .player .road-card .road--num {
+    .player .road-card .SProad--num {
         grid-area: RoadText;
         align-self: right;
         text-align: right;

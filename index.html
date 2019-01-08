@@ -46,15 +46,20 @@
                     <a href="#" class="btn new-game__button">New Game</a>
                 </div>
                 <div id="player__actions">
-                    <div id="buildRoad" class="btn">
-                        <div class="road--pic"></div>
-                        <h3>Build<br> Road</h3>
+                    <div id="buildRoad" class="btn" data-action="buildRoad">
+                        <div data-action="buildRoad">Build<br> Road</div>
+                        <div class="road--pic" data-action="buildRoad"></div>
                     </div>
-                    <div id="buildSettlement" class="btn"><div class="settlement--pic">Build<br> Settlement</div></div>
-                    <div id="buildCity" class="btn"><div class="city--pic">Build<br> City</div></div>
-                    <div id="trade" class="btn">Trade</div>
-                    <div id="buyDevelopmentCard" class="btn card"><img src="resources/imgs/dcs/vector/dcs__back.png"></div>
-                    <div id="endTurn" class="btn">End Turn</div>
+                    <div id="buildSettlement" class="btn" data-action="buildSettlement">
+                            <div class="settlement--pic" data-action="buildSettlement">Build<br> Settlement</div>
+                    </div>
+                    <div id="buildCity" class="btn" data-action="buildCity">
+                        <div class="city--pic" data-action="buildCity">Build<br> City</div>
+                    </div>
+                    <div id="trade" class="btn" data-action="trade">Trade</div>
+                    <div id="buyDevelopmentCard" class="btn card" data-action="buyDevelopmentCard">
+                        <img src="resources/imgs/dcs/vector/dcs__back.png" data-action="buyDevelopmentCard"></div>
+                    <div id="endTurn" class="btn" data-action="changeTurn">End Turn</div>
                 </div>
             </div>
         </section>
@@ -261,7 +266,7 @@
             <div class="name player-0__name"><h2>Player 0</h2></div>
             <div class="vp player-0__vp">Victory Points: <span id="player-0__vp">0</span></div>
             <div class="road-card player-0__road-card">
-                <div class="road--num player-0__road--num">Longest Road<br>
+                <div class="SProad--num player-0__road--num">Longest Road<br>
                     <span id="player-0__road--num">0</span>
                 </div>
                 <div class="road--card player-0__road--card"><img src="resources/imgs/special_cards/vector/road_card.png"></div>
@@ -316,7 +321,7 @@
             <div class="name player-1__name"><h2>Player 1</h2></div>
             <div class="vp player-1__vp">Victory Points: <span id="player-1__vp">0</span></div>
             <div class="road-card player-1__road-card">
-                <div class="road--num player-1__road--num">Longest Road<br>
+                <div class="SProad--num player-1__road--num">Longest Road<br>
                     <span id="player-1__road--num">0</span>
                 </div>
                 <div class="road--card player-1__road--card"><img src="resources/imgs/special_cards/vector/road_card.png"></div>
@@ -370,7 +375,7 @@
             <div class="name 2__name"><h2>Player 2</h2></div>
             <div class="vp 2__vp">Victory Points: <span id="2__vp">0</span></div>
             <div class="road-card 2__road-card">
-                <div class="road--num 2__road--num">Longest Road<br>
+                <div class="SProad--num 2__road--num">Longest Road<br>
                     <span id="2__road--num">0</span>
                 </div>
                 <div class="road--card 2__road--card"><img src="resources/imgs/special_cards/vector/road_card.png"></div>
@@ -424,7 +429,7 @@
             <div class="name player-3__name"><h2>Player 3</h2></div>
             <div class="vp player-3__vp">Victory Points: <span id="player-3__vp">0</span></div>
             <div class="road-card player-3__road-card">
-                <div class="road--num player-3__road--num">Longest Road<br>
+                <div class="SProad--num player-3__road--num">Longest Road<br>
                     <span id="player-3__road--num">0</span>
                 </div>
                 <div class="road--card player-3__road--card"><img src="resources/imgs/special_cards/vector/road_card.png"></div>

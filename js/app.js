@@ -97,6 +97,8 @@ class Player {
         dice2 = Math.floor(Math.random() * 7);
         game.render();
 
+        console.log(`${this.name} rolled ${diceTotal}.`)
+
         if (game.state === 'initializing') {
             return diceTotal
         }
@@ -152,7 +154,9 @@ class Player {
     }
 
     buyDevelopmentCard () {
-
+        let randomCardIdx = Math.floor(Math.random() * dcDeck.length);
+        this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
+        console.log(this.developmentCards);
     }
 
     tradePlayer () {
@@ -285,7 +289,8 @@ const catan = {
     }
 };
 
-
+//this is a let instead of a const because the development card deck needs to be cleared on a new game (reassigned to an empty array)
+let dcDeck = [];
 
 
 
@@ -297,6 +302,7 @@ let dice1, dice2, turn;
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
 let diceTotal = dice1 + dice2;
 
+//this is a let instead of a const because this needs to be reassigned to a new [] when the game is reinitialized
 let initialTurns = [];
 
 
@@ -1623,6 +1629,18 @@ const game = {
 
         //NEED TO ADD: Shuffle catan.developmentCards
 
+        //created development card Deck (dcDeck)
+        for (let card in catan.developmentCards) {
+            console.log(card);
+            while (catan.developmentCards[card].quantity > 0) {
+                let dcObj;
+                dcObj = card;
+                dcDeck.push(dcObj);
+                catan.developmentCards[card].quantity -= 1;
+            }
+        }
+        console.log(dcDeck);
+
         //Uncommented below for TESTING purposes
         // this.getFirstPlayer();
         // this.initialPlacement();
@@ -1691,6 +1709,7 @@ const game = {
         
     },
     roundRobin () {
+        //this goes through all players, starting from the current player
         initialTurns = [];
         
         //the following 2 for loops & while loop create initialPlacement "crescent" turn order, which is different from regular turn order.  initialPlacement turn order starts at current first player and after the last player takes his/her turn, then initial order reverses.  This ends when the first player has placed his/her second settlement and road.
@@ -1726,7 +1745,7 @@ $('.hexes .row .settlement').on('click', function (e) {
         }
 
         //changes clicked area to current player's color
-        if (game.settlementAreas[id].canOccupy === true) {
+        if (game.settlementAreas[id].canOccupy === true && game.settlementAreas[id].occupied === false) {
             console.log(`Player ${turn + 1} just placed a settlement.`);
 
             game.settlementAreas[id].occupied = true;
@@ -1750,13 +1769,6 @@ $('.hexes .row .road').on('click', function (e) {
     if ($(e.target).hasClass('road')) {
         let id = $(e.target).attr('data-id');
         console.log(`road data-id: ${id}`);
-        
-        //this was just copied and pasted from player.buildSettlement() method.  Commented out in case I need something from it later
-        // for (let i = 0; i < game.roadAreas[id].settlements.length; i++) {
-        //     if (game.roadAreas[game.roadAreas[id].settlements[i]].occupied === true) {
-        //         game.roadAreas[id].canOccupy = false;
-        //     }
-        // }
 
         //if the road you are trying to place is next to a settlement you own or next to a road you own, you can occupy that road
         for (let i = 0; i < game.roadAreas[id].adjacentRoads.length; i++) {

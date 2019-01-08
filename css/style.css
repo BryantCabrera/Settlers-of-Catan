@@ -34,6 +34,9 @@
     --player-3-color2: rgb(179, 165, 150); /*#EFDECA*/
     --player-3-color3: rgb(134, 126, 115); /*#EFDECA*/
 
+    --dice-color1: rgb(229,0,40); /*#E50028*/
+    --dice-color2: rgb(251,236,59); /*#FBEC3B*/
+
     --color-white: rgba(255, 255, 255, 1);
     --color-black: rgba(0, 0, 0, 1);
     --color-black-transparent: rgba(0, 0, 0, 0.5);
@@ -69,6 +72,17 @@ h2 {
     font-weight: 700;
     font-style: normal;
     font-size: 2.4rem;
+}
+
+.btn {
+    text-decoration: none;
+    color: var(--color-black);
+    box-shadow: .2rem .2rem .2rem var(--color-black);
+}
+
+.btn div {
+    height: 100%;
+    width: 100%;
 }
 
 /******************************/
@@ -299,7 +313,7 @@ main {
 .settlement--side:hover,
 .settlement--top:hover {
     opacity: 1;
-    background-color: var(--player-0-color1);
+    background-color: var(--color-black);
 }
 
 .ocean__full {
@@ -341,9 +355,105 @@ main {
 /********** Controls Section **********/
 #controls {
     grid-area: controls;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "dice buttons";
     background-color: var(--road-color1);
     border-radius: var(--border-radius-small);
 }
+
+#dice {
+    grid-area: dice;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    #dice div {
+        display: inline-block;
+        margin: .5rem;
+    }
+
+    .dice img {
+        height: 3rem;
+        width: 3rem;
+        border-radius: var(--border-radius-small);
+    }
+
+.controls__btns {
+    grid-area: buttons;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "btns";
+}
+    #new-game {
+        grid-area: btns;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #player__actions {
+        grid-area: btns;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 1fr;
+        grid-template-areas: "road sett city trade dc end";
+
+    }
+
+        #player__actions div {
+            border: 1px solid rgba(0, 0, 0, .7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+            #player_actions div:not(.card) img {
+                height: 90%;
+                width: auto;
+            }
+
+        #buildRoad {
+            grid-area: road;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            grid-template-areas: "btn";
+        }
+
+            #buildRoad .road--pic {
+                grid-area: btn;
+            }
+
+            #buildRoad h3 {
+                grid-area: btn;
+            }
+
+        #buildSettlement {
+            grid-area: sett;
+        }
+
+        #buildCity {
+            grid-area: city;
+        }
+
+        #trade {
+            grid-area: trade;
+        }
+
+        #buyDevelopmentCard {
+            grid-area: dc;
+        }
+
+        #endTurn {
+            grid-area: end;
+        }
+
+
 
 /********** Players Section **********/
 .player {
@@ -566,8 +676,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1.6rem;
-    width: 1.2rem;
+    height: 100%;
+    width: auto;
     -webkit-clip-path: polygon(55% 0, 85% 0, 45% 100%, 15% 100%);
     clip-path: polygon(55% 0, 85% 0, 45% 100%, 15% 100%);
     background-image: radial-gradient(var(--background-color-light), rgba(0, 0, 0, .7));

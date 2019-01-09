@@ -1780,6 +1780,13 @@ turn = 2;
 /******************************/
 /********** Event Listeners **********/
 /******************************/
+//event listener for New Game button initializes game
+$('.new-game__button').on('click', function () {
+    game.init();
+    $('.new-game__button').css('visibility', 'hidden');
+    $('#player__actions').css('visibility', 'visible');
+});
+
 //Places current player's appropriate piece on the gameboard
 $('.hexes .row .settlement').on('click', function (e) {
     console.log(e.target);
@@ -1805,10 +1812,10 @@ $('.hexes .row .settlement').on('click', function (e) {
             //change turn
             game.changeTurn();
         } else {
-            console.log('This settlement cannot be placed within 1 vertex of another already-placed settlement.')
+            $('.text-box').append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
         }
     } else {
-        console.log('This is not a valid area to place a settlement.')
+        $('.text-box').append('<br>This is not a valid area to place a settlement.');
     }
 });
 
@@ -1839,10 +1846,10 @@ $('.hexes .row .road').on('click', function (e) {
             game.changeTurn();
             
         } else {
-            console.log('This road must be placed adjacent to one of your existing settlements.')
+            $('.text-box').append('<br>This road must be placed adjacent to one of your existing settlements.');
         }
     } else {
-        console.log('This is not a valid area to place a road.')
+        $('.text-box').append('<br>This is not a valid area to place a road.');
     }
 });
 
@@ -1851,29 +1858,29 @@ $('#player__actions').on('click', function (e) {
     console.log($(e.target).attr('data-action'));
 
     
-    switch ($(e.target).attr("data-action")) {
-      case "buildRoad":
-        console.log("You have clicked buildRoad");
+    switch ($(e.target).attr('data-action')) {
+      case 'buildRoad':
+        $('.text-box').append('<br>You have clicked buildRoad');
         game.players[turn].buildRoad();
         break;
-      case "buildSettlement":
-        console.log("You have clicked buildSettlement");
+      case 'buildSettlement':
+        $('.text-box').append('<br>You have clicked buildSettlement');
         game.players[turn].buildSettlement();
         break;
-      case "buildCity":
-        console.log("You have clicked buildCity");
+      case 'buildCity':
+        $('.text-box').append('<br>You have clicked buildCity');
         game.players[turn].buildCity();
         break;
-      case "trade":
-        console.log("You have clicked trade");
+      case 'trade':
+        $('.text-box').append('<br>You have clicked trade');
         game.players[turn].tradeBank();
         break;
-      case "buyDevelopmentCard":
-        console.log("You have clicked buyDevelopmentCard");
+      case 'buyDevelopmentCard':
+        $('.text-box').append('<br>You have clicked buyDevelopmentCard');
         game.players[turn].buyDevelopmentCard();
         break;
-      case "changeTurn":
-        console.log("You have clicked changeTurn");
+      case 'changeTurn':
+        $('.text-box').append('<br>You have clicked changeTurn');
         game.changeTurn();
         break;
     }
@@ -1898,3 +1905,8 @@ $('#player__actions').on('click', function (e) {
 // $(`#endTurn`).on('click', function () {
 //     game.changeTurn();
 // });
+
+//implement later
+// function updateScroll () {
+//     $('.text-box').scrollHeight
+// }

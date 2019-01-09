@@ -76,6 +76,8 @@ h2 {
 
 .btn {
     text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 10rem;
     color: var(--color-black);
     box-shadow: .2rem .2rem .2rem var(--color-black);
     background-color: var(--road-color2);
@@ -83,9 +85,15 @@ h2 {
     transition: all .2s;
 }
 
-.btn:hover {
-    
-}
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 1rem 2rem rgba(var(--color-black),.2);
+    }
+
+        .btn:hover::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
 
 .btn div {
     height: 100%;
@@ -117,13 +125,33 @@ main {
 /********** Boardgame Section **********/
 #boardgame {
     grid-area: boardgame;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 5fr;
+    grid-template-areas: "text"
+                         "hexes";
     background-color: var(--ocean-color2);
 }
 
+.text-box {
+    grid-area: text;
+    text-align: center;
+    height: 10rem;
+    width: 100%;
+    overflow-y: scroll;
+    border-radius: var(--border-radius-small);
+    background-color: var(--background-color-medium);
+    font-size: 1.2rem;
+    padding-top: .5rem;
+}
+
 .hexes {
+    grid-area: hexes;
+    justify-self: center;
+    align-self: center;
     position: relative; /*test*/
     height: 30rem; /*was 31.2rem*/
     width: 36rem;
@@ -411,7 +439,7 @@ main {
         visibility: hidden;
     }
 
-        #player__actions div:not(#buildRoad) {
+        #player__actions div:not(:first-child) {
             border: 1px solid rgba(0, 0, 0, .7);
             display: flex;
             justify-content: center;
@@ -433,6 +461,8 @@ main {
             font-size: 1.4rem;
             justify-content: center;
             align-items: center;
+            border: 1px solid var(--color-black);
+            text-align: center;
         }
 
             #buildRoad .road--pic {
@@ -442,6 +472,10 @@ main {
 
             #buildRoad div {
                 grid-area: btn;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             #buildCity .city--pic {

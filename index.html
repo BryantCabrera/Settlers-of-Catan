@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.typekit.net/ojm8stc.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.ui.js"></script>
+    <script src="https://unpkg.com/ionicons@4.5.0/dist/ionicons.js"></script>
+    <link rel="stylesheet" href="css/icon-font.css">
+    <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Bryant's Settlers of Catan</title>
 </head>
@@ -32,7 +37,13 @@
 
     -->
     <header>
-        Header
+        <img src="resources/imgs/logo/settlers-of-catan-logo.png" alt="Settlers of Catan Logo" title="Settlers of Catan Logo">
+        <h1>Bryant Cabrera</h1>
+        <ul>
+            <li><a href="#controls">Game</a></li>
+            <li><a href="#instructions">Instructions</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </header>
 
     <main>
@@ -46,7 +57,7 @@
                     <a href="#" class="btn new-game__button">New Game</a>
                 </div>
                 <div class="initial-player-creation">
-                    <p>How many player's will be playing the game?</p>
+                    <p>How many players will be<br> playing the game?</p>
 
                     <div class="num_players">
                         <input type="submit" value="1">
@@ -530,8 +541,20 @@
         </section>
     </main>
     
-    <footer>
-        Footer
+    <footer id="contact">
+        <ul class="footer-nav">
+            <li><a href="www.bryantcabrera.com" target="blank">About Me</a></li>
+            <li><a href="https://www.linkedin.com/in/bryantcabrera/" target="blank">LinkedIn</a></li>
+            <li><a href="https://github.com/BryantCabrera" target="blank">GitHub</a></li>
+        </ul>
+
+
+        <ul class="social-links">
+            <li><a href="https://www.facebook.com/bryantcabrera" target="blank"><i class="ion-social-facebook"></i></a></li>
+            <li><a href="https://twitter.com/bryantcabrera" target="blank"><i class="ion-social-twitter"></i></a></li>
+            <li><a href="plus.google.com/+BryantCabrera" target="blank"><i class="ion-social-googleplus"></i></a></li>
+            <li><a href="https://www.instagram.com/bryantcabrera/" target="blank"><i class="ion-social-instagram"></i></a></li>
+        </ul>
     </footer>
     <script src="js/app.js"></script>
 </body>

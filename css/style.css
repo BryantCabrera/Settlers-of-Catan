@@ -104,8 +104,55 @@ h2 {
 /********** Header **********/
 /******************************/
 header {
-    height: 7.5vh;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "logo title nav";
+    height: 5vh;
+    background-color: var(--dice-color1);
+    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent));
 }
+
+    header img {
+        grid-area: logo;
+        height: 90%;
+        width: auto;
+    }
+
+    header h1 {
+        grid-area: title;
+        color: var(--dice-color2);
+        text-align: center;
+    }
+
+    header ul {
+        grid-area: nav;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        header ul li {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin-right: .5rem;
+        }
+
+            header ul li a:link,
+            header ul li a:visited {
+                text-decoration: none;
+                color: var(--dice-color2);
+                text-transform: uppercase;
+                padding: 0 .1rem;
+                transition: all .2s;
+            }
+
+            header ul li a:hover,
+            header ul li a:active {
+                text-decoration: none;
+                border-bottom: 1px solid var(--dice-color2);
+            }
 
 /******************************/
 /********** Main **********/
@@ -447,6 +494,7 @@ main {
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .initial-player-creation .num_players {
@@ -922,5 +970,67 @@ main {
 /********** Footer **********/
 /******************************/
 footer {
-    height: 7.5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5vh;
+    padding: 30px;
+    font-size: 80%;
+    background: var(--dice-color1);
+    background-image: linear-gradient(to top, var(--background-color-medium), var(--color-black-transparent));
+}
+
+.footer-nav li,
+.social-links li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.footer-nav li:last-child,
+.social-links li:last-child {
+    margin-right: 0;
+}
+
+.footer-nav li a:link,
+.footer-nav li a:visited,
+.social-links li a:link,
+.social-links li a:visited {
+    text-decoration: none;
+    border: 0;
+    color: var(--dice-color2);
+    transition: color 0.2s;
+    font-size: 1.6rem;
+}
+
+.footer-nav li a:hover,
+.footer-nav li a:active {
+    color: var(--device-color2);
+}
+
+.social-links li a:link,
+.social-links li a:visited {
+    font-size: 2.6rem;
+}
+
+.ion-social-facebook,
+.ion-social-twitter,
+.ion-social-googleplus,
+.ion-social-instagram {
+    transition: color 0.2s;
+}
+
+.ion-social-facebook:hover {
+    color: #3b5998;
+}
+
+.ion-social-twitter:hover {
+    color: #00aced;
+}
+
+.ion-social-googleplus:hover {
+    color: #dd4b39;
+}
+
+.ion-social-instagram:hover {
+    color: #517fa4;
 }

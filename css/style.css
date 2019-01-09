@@ -377,6 +377,10 @@ main {
     background-color: var(--settlement-color1);
     opacity: .6;
     transition: all .1s;
+    font-size: .8rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 .settlement--top {
@@ -387,6 +391,8 @@ main {
     background-color: var(--settlement-color1);
     opacity: .6;
     transition: all .1s;
+    font-size: .8rem;
+    text-align: center;
 }
 
 .road--vertical:hover,

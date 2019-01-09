@@ -251,7 +251,11 @@ class Player {
                     game.settlementAreas[id].canOccupy = false;
                     game.settlementAreas[id].ownedByPlayer = turn;
 
-                    $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
+                    $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)").text('S');
+
+                    if (turn === 3) {
+                        $(e.target).css("color", "black");
+                    }
 
                     //reduces player's settlement pieces by 1
                     this.pieces.settlement -= 1;
@@ -1997,27 +2001,27 @@ $('#player__actions').on('click', function (e) {
     
     switch ($(e.target).attr('data-action')) {
       case 'buildRoad':
-        $('.text-box').append('<br>You have clicked buildRoad');
-        game.players[turn].buildRoad();
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildRoad`);
+        $('.hexes .row .road').on('click', buildRoadClick);
         break;
       case 'buildSettlement':
-        $('.text-box').append('<br>You have clicked buildSettlement');
-        game.players[turn].buildSettlement();
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildSettlement`);
+        $('.hexes .row .settlement').on('click', buildSettlementClick);
         break;
       case 'buildCity':
-        $('.text-box').append('<br>You have clicked buildCity');
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildCity`);
         game.players[turn].buildCity();
         break;
       case 'trade':
-        $('.text-box').append('<br>You have clicked trade');
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked trade`);
         game.players[turn].tradeBank();
         break;
       case 'buyDevelopmentCard':
-        $('.text-box').append('<br>You have clicked buyDevelopmentCard');
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked buyDevelopmentCard`);
         game.players[turn].buyDevelopmentCard();
         break;
       case 'changeTurn':
-        $('.text-box').append('<br>You have clicked changeTurn');
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked changeTurn`);
         game.changeTurn();
         break;
     }

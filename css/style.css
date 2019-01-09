@@ -432,11 +432,30 @@ main {
 
     .initial-player-creation {
         grid-area: btns;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: "text"
+                             "buttons";
         justify-content: center;
         align-items: center;
         visibility: hidden;
     }
+
+        .initial-player-creation p {
+            grid-area: text;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .initial-player-creation .num_players {
+            grid-area: buttons;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
 
     #player__actions {
         grid-area: btns;

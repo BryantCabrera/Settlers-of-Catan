@@ -164,11 +164,39 @@ class Player {
 
     buildRoad (e) {
         if (this.pieces.roads > 0) {
-            if (game.state === 'initializing') {
-                return
+            if ($(e.target).hasClass('road')) {
+                let id = $(e.target).attr('data-id');
+
+                //if the road you are trying to place is next to a settlement you own or next to a road you own, you can occupy that road
+                for (let i = 0; i < game.roadAreas[id].adjacentRoads.length; i++) {
+                    if ((game.roadAreas[game.roadAreas[id].adjacentRoads[i]].ownedByPlayer === turn) || (game.settlementAreas[game.roadAreas[id].settlements[0]].ownedByPlayer === turn || game.settlementAreas[game.roadAreas[id].settlements[1]].ownedByPlayer === turn)) {
+                        game.roadAreas[id].canOccupy = true;
+                    }
+                }
+
+                //changes clicked area to current player's color
+                if (game.roadAreas[id].canOccupy === true && game.roadAreas[id].occupied === false) {
+                    $('.text-box').append(`<br>Player ${turn + 1} just placed a road.`);
+
+                    game.roadAreas[id].occupied = true;
+                    game.roadAreas[id].canOccupy = false;
+                    game.roadAreas[id].ownedByPlayer = turn;
+
+                    $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
+
+                    //reduce player's road pieces by 1
+                    this.pieces.roads -= 1;
+
+                    //change turn
+                    game.changeTurn();
+
+                } else {
+                    $('.text-box').append('<br>This road must be placed adjacent to one of your existing settlements.');
+                }
+            } else {
+                $('.text-box').append('<br>This is not a valid area to place a road.');
             }
 
-            this.pieces.roads -= 1;
         } else {
             $('.text-box').append(`<br>You don't have anymore road pieces.`)
         }
@@ -178,8 +206,32 @@ class Player {
 
     buildSettlement (e) {
         if (this.pieces.settlements > 0) {
-            if (game.state === 'initializing') {
-                return
+            if ($(e.target).hasClass('settlement')) {
+                let id = $(e.target).attr('data-id');
+
+                for (let i = 0; i < game.settlementAreas[id].neighbors.length; i++) {
+                    if (game.settlementAreas[game.settlementAreas[id].neighbors[i]].occupied === true) {
+                        game.settlementAreas[id].canOccupy = false;
+                    }
+                }
+
+                //changes clicked area to current player's color
+                if (game.settlementAreas[id].canOccupy === true && game.settlementAreas[id].occupied === false) {
+                    $('.text-box').append(`<br>Player ${turn + 1} just placed a settlement.`);
+
+                    game.settlementAreas[id].occupied = true;
+                    game.settlementAreas[id].canOccupy = false;
+                    game.settlementAreas[id].ownedByPlayer = turn;
+
+                    $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
+
+                    //change turn
+                    game.changeTurn();
+                } else {
+                    $('.text-box').append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
+                }
+            } else {
+                $('.text-box').append('<br>This is not a valid area to place a settlement.');
             }
             
             this.pieces.settlements -= 1;
@@ -1749,7 +1801,9 @@ const game = {
 
         //loops through initialTurns array to let the appropriate players build 1 settlement & 1 road using the initial turn order described above
         for (let i = 0; i < initialTurns.length; i++) {
+            $('.text-box').append(`${game.players[i]}, please place a settlement on the board.`);
             game.players[initialTurns[i]].buildSettlement();
+            $('.text-box').append(`${game.players[i]}, please place a road on the board adjacent to the settlement you just placed.`);
             game.players[initialTurns[i]].buildRoad();
         }
         
@@ -1763,6 +1817,7 @@ const game = {
         $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
         $('.text-box').append(`<br>It is now Player ${turn + 1}'s turn.`);
+        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
     },
     distributeResources () {
         this.roundRobin();
@@ -1797,68 +1852,11 @@ $('.new-game__button').on('click', function () {
 
 //Places current player's appropriate piece on the gameboard
 $('.hexes .row .settlement').on('click', function (e) {
-    console.log(e.target);
-    if ($(e.target).hasClass('settlement')) {
-        let id = $(e.target).attr('data-id');
-        
-        for (let i = 0; i < game.settlementAreas[id].neighbors.length; i++) {
-            if (game.settlementAreas[game.settlementAreas[id].neighbors[i]].occupied === true) {
-                game.settlementAreas[id].canOccupy = false;
-            }
-        }
-
-        //changes clicked area to current player's color
-        if (game.settlementAreas[id].canOccupy === true && game.settlementAreas[id].occupied === false) {
-            console.log(`Player ${turn + 1} just placed a settlement.`);
-
-            game.settlementAreas[id].occupied = true;
-            game.settlementAreas[id].canOccupy = false;
-            game.settlementAreas[id].ownedByPlayer = turn;
-
-            $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
-
-            //change turn
-            game.changeTurn();
-        } else {
-            $('.text-box').append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
-        }
-    } else {
-        $('.text-box').append('<br>This is not a valid area to place a settlement.');
-    }
+    game.players[turn].buildSettlement(e);
 });
 
 $('.hexes .row .road').on('click', function (e) {
-    console.log(e.target);
-    if ($(e.target).hasClass('road')) {
-        let id = $(e.target).attr('data-id');
-        console.log(`road data-id: ${id}`);
-
-        //if the road you are trying to place is next to a settlement you own or next to a road you own, you can occupy that road
-        for (let i = 0; i < game.roadAreas[id].adjacentRoads.length; i++) {
-            if ((game.roadAreas[game.roadAreas[id].adjacentRoads[i]].ownedByPlayer === turn) || (game.settlementAreas[game.roadAreas[id].settlements[0]].ownedByPlayer === turn || game.settlementAreas[game.roadAreas[id].settlements[1]].ownedByPlayer === turn)) {
-                game.roadAreas[id].canOccupy = true;
-            } 
-        }
-
-        //changes clicked area to current player's color
-        if (game.roadAreas[id].canOccupy === true && game.roadAreas[id].occupied === false) {
-            console.log(`Player ${turn + 1} just placed a road.`);
-
-            game.roadAreas[id].occupied = true;
-            game.roadAreas[id].canOccupy = false;
-            game.roadAreas[id].ownedByPlayer = turn;
-
-            $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
-
-            //change turn
-            game.changeTurn();
-            
-        } else {
-            $('.text-box').append('<br>This road must be placed adjacent to one of your existing settlements.');
-        }
-    } else {
-        $('.text-box').append('<br>This is not a valid area to place a road.');
-    }
+    game.players[turn].buildRoad(e);
 });
 
 //event listener for Player Action Buttons

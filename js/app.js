@@ -289,9 +289,10 @@ class Player {
         // game.render();
     }
 
-    buildCity () {
+    buildCity (e) {
         if (this.pieces.city > 0) {
             
+
             this.pieces.city -= 1;
         } else {
             $('.text-box').append(`<br>You don't have anymore city pieces.`);
@@ -618,6 +619,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [0],
             neighbors: [1, 14],
             adjacentRoads: [0, 9]
         },
@@ -627,6 +629,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [0],
             neighbors: [0,2],
             adjacentRoads: [0, 1]
         },
@@ -636,6 +639,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [0, 1],
             neighbors: [1, 3, 12],
             adjacentRoads: [1, 2, 8]
         },
@@ -645,6 +649,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [1],
             neighbors: [2, 4],
             adjacentRoads: [2, 3]
         },
@@ -654,6 +659,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [1, 2],
             neighbors: [3, 10, 5],
             adjacentRoads: [3, 4, 7]
         },
@@ -663,6 +669,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [2],
             neighbors: [4, 6],
             adjacentRoads: [4, 5]
         },
@@ -672,6 +679,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [2],
             neighbors: [5, 8],
             adjacentRoads: [5, 6]
         },
@@ -681,6 +689,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [3],
             neighbors: [8, 25],
             adjacentRoads: [17, 18]
         },
@@ -690,6 +699,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [2, 3],
             neighbors: [6, 7, 9],
             adjacentRoads: [6, 16, 17]
         },
@@ -699,6 +709,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [2, 3, 13],
             neighbors: [8, 23, 10],
             adjacentRoads: [15, 16, 19]
         },
@@ -708,6 +719,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [1, 2, 13],
             neighbors: [4, 9, 11],
             adjacentRoads: [7, 14, 15]
         },
@@ -717,6 +729,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [1, 12, 13],
             neighbors: [10, 12, 21],
             adjacentRoads: [13, 14, 20]
         },
@@ -726,6 +739,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [0, 1, 12],
             neighbors: [2, 11, 13],
             adjacentRoads: [8, 12, 13]
         },
@@ -735,6 +749,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [0, 11, 12],
             neighbors: [12, 14, 19],
             adjacentRoads: [11, 12, 21]
         },
@@ -744,6 +759,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [0, 11],
             neighbors: [0, 13, 15],
             adjacentRoads: [9, 10, 11]
         },
@@ -753,6 +769,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [11],
             neighbors: [14, 17],
             adjacentRoads: [10, 22]
         },
@@ -762,6 +779,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [10],
             neighbors: [17, 37],
             adjacentRoads: [23, 38]
         },
@@ -771,6 +789,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [10, 11],
             neighbors: [15, 16, 18],
             adjacentRoads: [22, 23, 24]
         },
@@ -780,6 +799,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [10, 11, 17],
             neighbors: [17, 19, 35],
             adjacentRoads: [24, 25, 27]
         },
@@ -789,6 +809,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [11, 12, 17],
             neighbors: [13, 18, 20],
             adjacentRoads: [21, 25, 26]
         },
@@ -798,6 +819,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [12, 17, 18],
             neighbors: [19, 21, 33],
             adjacentRoads: [26, 27, 36]
         },
@@ -807,6 +829,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [12, 13, 18],
             neighbors: [11, 20, 22],
             adjacentRoads: [20, 27, 28]
         },
@@ -816,6 +839,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [13, 18, 14],
             neighbors: [21, 23, 31],
             adjacentRoads: [28, 29, 35]
         },
@@ -825,6 +849,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [3, 13, 14],
             neighbors: [9, 22, 24],
             adjacentRoads: [19, 29, 30]
         },
@@ -834,6 +859,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [3, 4, 14],
             neighbors: [23, 29, 25],
             adjacentRoads: [30, 31, 34]
         },
@@ -843,6 +869,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [3, 4],
             neighbors: [7, 24, 26],
             adjacentRoads: [18, 31, 32]
         },
@@ -852,6 +879,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [4],
             neighbors: [25, 27],
             adjacentRoads: [32, 33]
         },
@@ -861,6 +889,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [4],
             neighbors: [26, 28],
             adjacentRoads: [33, 48]
         },
@@ -870,6 +899,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [4, 5],
             neighbors: [27, 29, 46],
             adjacentRoads: [47, 48, 49]
         },
@@ -879,6 +909,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [4, 5, 14],
             neighbors: [24, 28, 30],
             adjacentRoads: [34, 46, 47]
         },
@@ -888,6 +919,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [5, 14, 15],
             neighbors: [29, 31, 44],
             adjacentRoads: [45, 46, 50]
         },
@@ -897,6 +929,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [14, 15, 18],
             neighbors: [22, 30, 32],
             adjacentRoads: [35, 44, 45]
         },
@@ -906,6 +939,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [15, 16, 18],
             neighbors: [31, 33, 42],
             adjacentRoads: [43, 44, 51]
         },
@@ -915,6 +949,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [16, 17, 18],
             neighbors: [20, 32, 34],
             adjacentRoads: [36, 42, 43]
         },
@@ -924,6 +959,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [9, 16, 17],
             neighbors: [33, 35, 40],
             adjacentRoads: [41, 42, 52]
         },
@@ -933,6 +969,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [9, 10, 17],
             neighbors: [18, 34, 36],
             adjacentRoads: [37, 40, 41]
         },
@@ -942,6 +979,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [9, 10],
             neighbors: [35, 37, 38],
             adjacentRoads: [39, 40, 53]
         },
@@ -951,6 +989,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [10],
             neighbors: [16, 36],
             adjacentRoads: [38, 39]
         },
@@ -960,6 +999,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [9],
             neighbors: [36, 39],
             adjacentRoads: [53, 54]
         },
@@ -969,6 +1009,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [8, 9],
             neighbors: [38, 40, 53],
             adjacentRoads: [54, 55, 65]
         },
@@ -978,6 +1019,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [8, 9, 16],
             neighbors: [34, 39, 41],
             adjacentRoads: [52, 55, 56]
         },
@@ -987,6 +1029,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [7, 8, 16],
             neighbors: [40, 42, 51],
             adjacentRoads: [56, 57, 64]
         },
@@ -996,6 +1039,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [7, 15, 16],
             neighbors: [32, 41, 43],
             adjacentRoads: [51, 57, 58]
         },
@@ -1005,6 +1049,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [6, 7, 15],
             neighbors: [42, 44, 49],
             adjacentRoads: [58, 59, 63]
         },
@@ -1014,6 +1059,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [5, 6, 15],
             neighbors: [30, 43, 45],
             adjacentRoads: [50, 59, 60]
         },
@@ -1023,6 +1069,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [5, 6],
             neighbors: [44, 46, 47],
             adjacentRoads: [60, 61, 62]
         },
@@ -1032,6 +1079,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [5],
             neighbors: [28, 45],
             adjacentRoads: [49, 61]
         },
@@ -1041,6 +1089,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [6],
             neighbors: [45, 48],
             adjacentRoads: [62, 71]
         },
@@ -1050,6 +1099,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [6],
             neighbors: [47, 49],
             adjacentRoads: [70, 71]
         },
@@ -1059,6 +1109,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [6, 7],
             neighbors: [43, 48, 50],
             adjacentRoads: [63, 69, 70]
         },
@@ -1068,6 +1119,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [7],
             neighbors: [49, 51],
             adjacentRoads: [68, 69]
         },
@@ -1077,6 +1129,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [7, 8],
             neighbors: [41, 50, 52],
             adjacentRoads: [64, 67, 68]
         },
@@ -1086,6 +1139,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [8],
             neighbors: [51, 53],
             adjacentRoads: [66, 67]
         },
@@ -1095,6 +1149,7 @@ const game = {
             occupied: false,
             canOccupy: true,
             ownedByPlayer: null,
+            adjacentHexes: [8],
             neighbors: [39, 52],
             adjacentRoads: [65, 66]
         }
@@ -1911,11 +1966,17 @@ const game = {
     },
     initialPlacement () {
         if (howManyInitialTurns === initialTurns.length) {
+            //now sets the default property of every settlement on the board to false
+            for (let i = 0; i < game.settlementAreas.length; i++) {
+                game.settlementAreas[i].canOccupy = false;
+            }
+
             game.state = 'inProgress';
             $('.text-box').append(`<br>The game is now in progress <br>${game.players[turn].name}, please decide what you want to do by clicking on an action button above.`);
             $('#player__actions').css('visibility', 'visible');
             return
         }
+
         turn = initialTurns[howManyInitialTurns];
         $('.text-box').append(`<br>${game.players[initialTurns[howManyInitialTurns]].name}, please place a settlement on the board.`);
         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
@@ -1943,7 +2004,13 @@ const game = {
         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
     },
     distributeResources () {
-        this.roundRobin();
+
+        if (game.state === 'initializing') {
+
+        } else {
+            this.roundRobin();
+        }
+        
         
     },
     roundRobin () {
@@ -2002,23 +2069,44 @@ $('#player__actions').on('click', function (e) {
     switch ($(e.target).attr('data-action')) {
       case 'buildRoad':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked buildRoad`);
-        $('.hexes .row .road').on('click', buildRoadClick);
+        if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1) {
+            $('.hexes .row .road').on('click', buildRoadClick);
+        } else {
+            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a road.`);
+        }
         break;
       case 'buildSettlement':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked buildSettlement`);
-        $('.hexes .row .settlement').on('click', buildSettlementClick);
+        if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1 && game.players[turn].resources.wool >= 1 && game.players[turn].resources.grain > 0) {
+            $('.hexes .row .settlement').on('click', buildSettlementClick);
+        } else {
+            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a settlement.`);
+        }
         break;
       case 'buildCity':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked buildCity`);
-        game.players[turn].buildCity();
+        if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
+            // $('.hexes .row .settlement').on('click', buildSettlementClick);
+        } else {
+            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a settlement.`);
+        }
         break;
       case 'trade':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked trade`);
+        if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
+            game.players[turn].buyDevelopmentCard();
+        } else {
+            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to buy a development card.`);
+        }
         game.players[turn].tradeBank();
         break;
       case 'buyDevelopmentCard':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked buyDevelopmentCard`);
-        game.players[turn].buyDevelopmentCard();
+        if (game.players[turn].resources.grain >= 1 && game.players[turn].resources.wool >= 1 && game.players[turn].resources.ore >= 1) {
+            game.players[turn].buyDevelopmentCard();
+        } else {
+            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to buy a development card.`);
+        }
         break;
       case 'changeTurn':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked changeTurn`);

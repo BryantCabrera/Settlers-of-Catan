@@ -504,6 +504,27 @@ main {
             align-items: center;
         }
 
+            input {
+                height: 3rem;
+                width: 3rem;
+                border-radius: 10rem;
+                border: 1px solid var(--color-black-transparent);
+                background-color: var(--dice-color1);
+                background-image: radial-gradient(var(--background-color-medium), var(--color-black-transparent));
+                color: var(--dice-color2);
+                box-shadow: .2rem .2rem .2rem var(--color-black);
+            }
+
+                input:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 1rem 2rem rgba(var(--color-black),.2);
+                }
+
+                    input:hover::after {
+                        transform: scaleX(1.4) scaleY(1.6);
+                        opacity: 0;
+                    }
+
 
     #player__actions {
         grid-area: btns;

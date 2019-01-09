@@ -61,9 +61,9 @@
 /********** Constants **********/
 /******************************/
 class Player {
-    constructor(name) {
+    constructor(name, num) {
         this.name = name;
-        this.player = turn;
+        this.player = num;
         this.victoryPoints = 0;
         this.victoryPointsHidden = 0;
         this.victoryPointsActual = this.victoryPoints + this.victoryPointsHidden;
@@ -74,9 +74,9 @@ class Player {
             largestArmy: false
         }
         this.pieces = {
-            roads: 15,
-            settlements: 5,
-            cities: 4,
+            road: 15,
+            settlement: 5,
+            city: 4,
         };
         this.resources = {
             lumber: 0,
@@ -85,6 +85,7 @@ class Player {
             grain: 0,
             ore: 0
         };
+        this.totalResources = 0;
         this.developmentCards = {
             knight: {
                 quantity: 0,
@@ -163,7 +164,7 @@ class Player {
     }
 
     buildRoad (e) {
-        if (this.pieces.roads > 0) {
+        if (this.pieces.road > 0) {
             if ($(e.target).hasClass('road')) {
                 let id = $(e.target).attr('data-id');
 
@@ -185,7 +186,7 @@ class Player {
                     $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
 
                     //reduce player's road pieces by 1
-                    this.pieces.roads -= 1;
+                    this.pieces.road -= 1;
 
                     //change turn
                     // game.changeTurn();
@@ -224,7 +225,7 @@ class Player {
     }
 
     buildSettlement (e) {
-        if (this.pieces.settlements > 0) {
+        if (this.pieces.settlement > 0) {
             if ($(e.target).hasClass('settlement')) {
                 let id = $(e.target).attr('data-id');
 
@@ -253,7 +254,7 @@ class Player {
                     $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
 
                     //reduces player's settlement pieces by 1
-                    this.pieces.settlements -= 1;
+                    this.pieces.settlement -= 1;
 
                     //change turn
                     // game.changeTurn();
@@ -285,11 +286,11 @@ class Player {
     }
 
     buildCity () {
-        if (this.pieces.cities > 0) {
+        if (this.pieces.city > 0) {
             
-            this.pieces.cities -= 1;
+            this.pieces.city -= 1;
         } else {
-            $('.text-box').append(`<br>You don't have anymore city pieces.`)
+            $('.text-box').append(`<br>You don't have anymore city pieces.`);
         }
         
         game.render();
@@ -314,8 +315,13 @@ class Player {
     }
 
     endTurn () {
-        game.changeTurn();
         game.render();
+        if (this.victoryPointsActual === 0) {
+            $('.text-box').append(`<br><h2>${this.name} HAS WON THE GAME!</h2>`);
+            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+        } else if (this.victoryPointsActual !== 0){
+            game.changeTurn();
+        }
     }
 }
 
@@ -1783,7 +1789,7 @@ const game = {
 
         //generates new players
         for (let i = 0; i < numPlayers; i++) {
-            game.players.push(new Player(i));
+            game.players.push(new Player(i, i));
         }
 
         turn = 0;
@@ -1791,23 +1797,57 @@ const game = {
         //Uncommented below for TESTING purposes
         this.getFirstPlayer();
         this.initialTurns();
-
-
-        // $('#player__actions').css('visibility', 'visible');
     },
     render () {
         //updates dice images
         $('#dice1').html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`);
         $('#dice2').html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`);
 
+        //renders player sections
+        for (let player of game.players) {
+            //renders player's Victory Points
+            $(`.player-${player.player}__vp`).text(`${player.victoryPoints}`);
+
+            //renders player's longest road count
+            $(`#player-${player.player}__road--num`).text(`${player.special.roadSize}`);
+
+            //renders player's largest army count
+            $(`#player-${player.player}__army--num`).text(`${player.special.armySize}`);
+
+            //renders player's piece counts
+            for (let piece in player.pieces) {
+                $(`.player-${player.player}__pieces__${piece}--num`).text(`${player.pieces[piece]}`);
+            }
+
+            //renders player's total resource count
+            $(`#player-${player.player}__resource--num`).text(`${player.totalResources}`);
+
+            //renders player's resource counts
+            for (let resource in player.resources) {
+                $(`.player-${player.player}__resource__${resource}--num`).text(`${player.resources[resource]}`);
+            }
+        }
+
+        //updates bank section
+        for (let resource in catan.resources) {
+            console.log(resource);
+            if (resource !== 'back') {
+                $(`.bank__resource__${resource}--num`).text(`${catan.resources[resource].quantity}`)
+            } 
+        }
+
         //if the player has the Longest Road or the Largest Army, their card will become visible        
         for (let player of game.players) {
             if (player.special.longestRoad === true) {
                 $(`#player-${player.player} .road-card .road--card img`).css('opacity', '1');
+            } else {
+                $(`#player-${player.player} .road-card .road--card img`).css('opacity', '0.5');
             }
 
             if (player.special.largestArmy === true) {
                 $(`#player-${player.player} .army-card .army--card img`).css('opacity', '1');
+            } else {
+                $(`#player-${player.player} .army-card .army--card img`).css('opacity', '0.5');
             }
         }
     },
@@ -1868,7 +1908,8 @@ const game = {
     initialPlacement () {
         if (howManyInitialTurns === initialTurns.length) {
             game.state = 'inProgress';
-            $('.text-box').append('<br>The game is now in progress');
+            $('.text-box').append(`<br>The game is now in progress <br>${game.players[turn].name}, please decide what you want to do by clicking on an action button above.`);
+            $('#player__actions').css('visibility', 'visible');
             return
         }
         turn = initialTurns[howManyInitialTurns];
@@ -1881,13 +1922,13 @@ const game = {
         // game.initialBuildSettlement();
         // game.initialBuildRoad();
     },
-    initialBuildSettlement () {
-        $('.text-box').append(`<br>${game.players[turn].name}, please place a settlement on the board.`);
-            // click to build -> do this   
-    },
-    initialBuildRoad () {
-        $(".text-box").append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-    },
+    // initialBuildSettlement () {
+    //     $('.text-box').append(`<br>${game.players[turn].name}, please place a settlement on the board.`);
+    //         // click to build -> do this   
+    // },
+    // initialBuildRoad () {
+    //     $(".text-box").append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
+    // },
     changeTurn () {
         //change 3 to game.players.length, this is just for TESTING purposes
         turn === 3 ? turn = 0 : turn += 1;

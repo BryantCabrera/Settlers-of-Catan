@@ -430,6 +430,14 @@ main {
         align-items: center;
     }
 
+    .initial-player-creation {
+        grid-area: btns;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+    }
+
     #player__actions {
         grid-area: btns;
         display: grid;

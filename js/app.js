@@ -63,7 +63,7 @@
 class Player {
     constructor(name) {
         this.name = name;
-        this.player = game.players.length - 1;
+        this.player = turn;
         this.victoryPoints = 0;
         this.victoryPointsHidden = 0;
         this.victoryPointsActual = this.victoryPoints + this.victoryPointsHidden;
@@ -141,11 +141,11 @@ class Player {
     roll () {
         //NEED TO ADD: check to see if player has a knight card.  if so, ask if they want to use it.
 
-        dice1 = Math.floor(Math.random() * 7);
-        dice2 = Math.floor(Math.random() * 7);
+        dice1 = Math.floor(Math.random() * 6) + 1;
+        dice2 = Math.floor(Math.random() * 6) + 1;
+        diceTotal = dice1 + dice2;
         game.render();
-
-        console.log(`${this.name} rolled ${diceTotal}.`)
+        $('.text-box').append(`<br>${this.name} rolled ${diceTotal}.`);
 
         if (game.state === 'initializing') {
             return diceTotal
@@ -157,7 +157,7 @@ class Player {
     }
 
     moveRobber () {
-        console.log(`${this.name} must now move the robber.`);
+        $('.text-box').append(`<br>${this.name} must now move the robber.`);
 
         //NEED TO ADD: use mouseover, mouseclick, mousehold, and mouserelease events coupled with my Tic-Tac-Toe floating pointer
     }
@@ -170,7 +170,7 @@ class Player {
 
             this.pieces.roads -= 1;
         } else {
-            console.log(`You don't have anymore road pieces.`)
+            $('.text-box').append(`<br>You don't have anymore road pieces.`)
         }
         
         game.render();
@@ -184,7 +184,7 @@ class Player {
             
             this.pieces.settlements -= 1;
         } else {
-            console.log(`You don't have anymore settlement pieces.`)
+            $('.text-box').append(`<br>You don't have anymore settlement pieces.`)
         }
 
         game.render();
@@ -195,7 +195,7 @@ class Player {
             
             this.pieces.cities -= 1;
         } else {
-            console.log(`You don't have anymore city pieces.`)
+            $('.text-box').append(`<br>You don't have anymore city pieces.`)
         }
         
         game.render();
@@ -345,10 +345,11 @@ let dcDeck = [];
 /******************************/
 /********** App's State (Variables) **********/
 /******************************/
-let dice1, dice2, turn;
 
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
-let diceTotal = dice1 + dice2;
+let dice1, dice2, diceTotal, turn, numPlayers;
+// //for TESTING purposes
+// turn = 0;
 
 //this is a let instead of a const because this needs to be reassigned to a new [] when the game is reinitialized
 let initialTurns = [];
@@ -1645,6 +1646,7 @@ const game = {
         }
     ],
     init () {
+        $('.initial-player-creation').css('visibility', 'hidden');
         //randomly generates the areas for the hexes on the board
         for (let hex of game.hexes) {
             //gets random area from catan.areas
@@ -1675,11 +1677,8 @@ const game = {
             }   
         }
 
-        //NEED TO ADD: Shuffle catan.developmentCards
-
-        //created development card Deck (dcDeck)
+        //creates development card Deck (dcDeck)
         for (let card in catan.developmentCards) {
-            console.log(card);
             while (catan.developmentCards[card].quantity > 0) {
                 let dcObj;
                 dcObj = card;
@@ -1687,13 +1686,27 @@ const game = {
                 catan.developmentCards[card].quantity -= 1;
             }
         }
-        console.log(dcDeck);
+
+        //generate new players
+        for (let i = 0; i < numPlayers; i++) {
+            game.players.push(new Player(i));
+        }
+
+        turn = 0;
 
         //Uncommented below for TESTING purposes
-        // this.getFirstPlayer();
+        this.getFirstPlayer();
         // this.initialPlacement();
+
+
+        // $('#player__actions').css('visibility', 'visible');
     },
     render () {
+        //updates dice images
+        $('#dice1').html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`);
+        $('#dice2').html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`);
+
+        //if the player has the Longest Road or the Largest Army, their card will become visible        
         for (let player of game.players) {
             if (player.special.longestRoad === true) {
                 $(`#player-${player.player} .road-card .road--card img`).css('opacity', '1');
@@ -1711,9 +1724,8 @@ const game = {
 
         //makes each player roll dice and return total
         for (let player of game.players) {
-            diceRolls.push(player.rollDice());
-
-            console.log(`${player.name} rolled a ${diceTotal}`);
+            console.log(player);
+            diceRolls.push(player.roll());
         }
         
         //compares those dice totals from diceRolls array to determine firstPlayer & sets that person as first player
@@ -1724,7 +1736,7 @@ const game = {
             }  
         }
         turn = firstPlayer;
-        console.log(`${game.players[firstPlayer].name} is the first player.`);
+        $('.text-box').append(`<br>${game.players[firstPlayer].name} is the first player.`);
     },
     initialPlacement () {
         //this refers to the 2 initial settlements and roads players can place
@@ -1742,7 +1754,7 @@ const game = {
         }
         
         game.state = 'inProgress';
-        console.log('The game is now in progress');
+        $('.text-box').append('<br>The game is now in progress');
     },
     changeTurn () {
         //change 3 to game.players.length, this is just for TESTING purposes
@@ -1750,7 +1762,7 @@ const game = {
 
         $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
-        console.log(`It is now Player ${turn + 1}'s turn.`);
+        $('.text-box').append(`<br>It is now Player ${turn + 1}'s turn.`);
     },
     distributeResources () {
         this.roundRobin();
@@ -1773,18 +1785,14 @@ const game = {
     }
 };
 
-//for TESTING purposes
-turn = 2;
-
 
 /******************************/
 /********** Event Listeners **********/
 /******************************/
 //event listener for New Game button initializes game
 $('.new-game__button').on('click', function () {
-    game.init();
     $('.new-game__button').css('visibility', 'hidden');
-    $('#player__actions').css('visibility', 'visible');
+    $('.initial-player-creation').css('visibility', 'visible');
 });
 
 //Places current player's appropriate piece on the gameboard
@@ -1886,6 +1894,11 @@ $('#player__actions').on('click', function (e) {
     }
 });
 
+$('.initial-player-creation').on('click', 'input', function (e) {
+    console.log();
+    numPlayers = parseInt($(e.target).val());
+    game.init();
+});
 //individual event listeners
 // $(`#buildRoad`).on('click', function () {
 //     game.players[turn].buildRoad();

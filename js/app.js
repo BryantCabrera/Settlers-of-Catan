@@ -195,7 +195,7 @@ class Player {
                         catan.resources.brick.quantity++;
                     }
 
-                    turns off event listeners for road and settlement divs on gameboard
+                    //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
                     $('.hexes .row .road').off('click', buildRoadClick);
                     

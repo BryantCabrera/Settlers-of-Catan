@@ -2029,6 +2029,7 @@ const game = {
     changeTurn () {
         //change 3 to game.players.length, this is just for TESTING purposes
         turn === 3 ? turn = 0 : turn += 1;
+        game.players[turn].roll();
 
         $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
@@ -2064,6 +2065,28 @@ const game = {
             // }
         } else {
             this.roundRobin();
+
+            for (let i = 0; i < initialTurns.length; i++) {
+                let player = game.players[initialTurns[i]];
+                for (let j = 0; j < game.hexes.length; j++) {
+                    
+                    if ((game.hexes[j].numberToken === diceTotal) && (game.hexes[j].settledBy.includes(player.player))) {
+                        let resource = game.hexes[j].resource;
+
+                        player.resources[resource]++;
+                    }
+                }
+            }
+            //copied from initializing state above
+            // let player = game.players[turn];
+            // let settlement = this.settlementAreas[id];
+            // settlement.adjacentHexes.forEach(function(hexIdx) {
+            //     let hex = game.hexes[hexIdx];
+            //     if (hex.area !== 'desert') {
+            //         player.resources[hex.resource]++;
+            //         catan.resources[hex.resource].quantity--;
+            //     }
+            // });
         }
         
         

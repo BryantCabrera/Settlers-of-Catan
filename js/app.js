@@ -152,7 +152,7 @@ class Player {
             return diceTotal
         }
 
-        if (diceTotal === 7) this.moveRobber();
+        if (diceTotal === 7 && game.state !== 'initializing') this.moveRobber();
 
         game.distributeResources();
     }
@@ -161,6 +161,12 @@ class Player {
         $('.text-box').append(`<br>${this.name} must now move the robber.`);
 
         //NEED TO ADD: use mouseover, mouseclick, mousehold, and mouserelease events coupled with my Tic-Tac-Toe floating pointer
+
+        //hides player action buttons
+        $('#player__actions').css('visibility', 'hidden');
+
+        //adds event listener that lets player click on robber
+        $('.hexes .row .hex').on('click', placeRobber);
     }
 
     buildRoad (e) {
@@ -190,9 +196,15 @@ class Player {
                     if (game.state !== 'initializing') {
                         this.resources.lumber--;
                         this.resources.brick--;
+                        this.totalResources -= 2;
 
                         catan.resources.lumber.quantity++;
                         catan.resources.brick.quantity++;
+
+                        //hides cancel button
+                        $('#cancel').css('visibility', 'hidden');
+                        //shows player action buttons
+                        $('#player__actions').css('visibility', 'visible');
                     }
 
                     //turns off event listeners for road and settlement divs on gameboard
@@ -206,7 +218,7 @@ class Player {
                         // $('.hexes .row .settlement').off('click', buildSettlementClick);
                         howManyInitialTurns++
                         game.initialPlacement();
-                    }
+                    } 
                 } else {
                     $('.text-box').append('<br>This road must be placed adjacent to one of your existing settlements.');
                 }
@@ -283,6 +295,7 @@ class Player {
                         this.resources.brick--;
                         this.resources.wool--;
                         this.resources.grain--;
+                        this.totalResources -= 4;
 
                         catan.resources.lumber.quantity++;
                         catan.resources.brick.quantity++;
@@ -291,6 +304,9 @@ class Player {
                     }
                     //increase player's victory points
                     this.victoryPoints++;
+
+                    //hides cancel button
+                    $('#cancel').css('visibility', 'hidden');
 
                     //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -301,6 +317,11 @@ class Player {
                         
                         $('.hexes .row .road').on('click', buildRoadClick);
                         if (howManyInitialTurns >= initialTurns.length / 2 ) game.distributeResources(id);
+                    } else {
+                        //hides cancel button
+                        $('#cancel').css('visibility', 'hidden');
+                        //shows player action buttons
+                        $('#player__actions').css('visibility', 'visible');
                     }
 
                     game.render();
@@ -335,6 +356,7 @@ class Player {
         if (this.pieces.city > 0) {
             //if the player has clicked an existing settlement that he/she owns and he/she has the appropriate resources
             if (($(e.target).attr('data-type') === 'settlement')) {
+                let id = $(e.target).attr('data-id');
                 if (game.settlementAreas[$(e.target).attr('data-id')].ownedByPlayer === turn) {
                     if (this.resources.grain >= 2 && this.resources.ore >= 3) {
                         //changes the DOM to display that a settlement has turned into a city
@@ -342,6 +364,11 @@ class Player {
 
                         //changes the settlement's data-type to "city"
                         $(e.target).attr('data-type', 'city');
+
+                        //updates hex objects data to include who is settled on it for resource distribution
+                        game.settlementAreas[id].adjacentHexes.forEach(function (hex) {
+                            game.hexes[hex].settledBy.push(turn);
+                        });
 
                         //reduces player's city pieces
                         this.pieces.city -= 1;
@@ -351,10 +378,16 @@ class Player {
                         if (game.state !== 'initializing') {
                             this.resources.grain -= 2;
                             this.resources.ore -= 3;
+                            this.totalResources -= 5;
 
                             catan.resources.grain.quantity += 2;
                             catan.resources.ore.quantity += 3;
                         }
+
+                        //hides cancel button
+                        $('#cancel').css('visibility', 'hidden');
+                        //shows player action buttons
+                        $('#player__actions').css('visibility', 'visible');
 
                         //removes City event listener after it has been built
                         $('.hexes .row .settlement').off('click', buildCityClick);
@@ -1930,7 +1963,7 @@ const game = {
                 hex.numberToken = catan.numberTokens[`${hex['data-id']}`]; 
                 $(`#hex${hex["data-id"]}`).append(`<div><h3>${hex.numberToken}</h3></div>`);
             } else {
-                hex.numberToken = '<img src="resources/imgs/robber/vector/robber.png">';
+                hex.numberToken = '<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber">';
                 $(`#hex${hex["data-id"]}`).append(`<div>${hex.numberToken}</div>`);
                 //at the current index, splice in the string 'robber' so that we can continue assigning the appropriate tokens to the rest of the hexes
                 catan.numberTokens.splice([`${hex["data-id"]}`], 0, 'robber');
@@ -1954,7 +1987,6 @@ const game = {
 
         turn = 0;
 
-        //Uncommented below for TESTING purposes
         this.getFirstPlayer();
         this.initialTurns();
     },
@@ -2153,12 +2185,16 @@ const game = {
                     let hex = game.hexes[j];
 
                     if ((game.hexes[j].numberToken === diceTotal) && (catan.resources[resource].quantity > 0) && (game.hexes[j].settledBy.includes(player.player))) {
-                        //increases player's resource count
-                        player.resources[resource]++;
-                        //increases player's total resource count
-                        player.totalResources++;
-                        //decreases the bank's quantity of that resource
-                        catan.resources[hex.resource].quantity--;
+                        game.hexes[j].settledBy.forEach(function(settler) {
+                            if (settler === player) {
+                                //increases player's resource count
+                                player.resources[resource]++;
+                                //increases player's total resource count
+                                player.totalResources++;
+                                //decreases the bank's quantity of that resource
+                                catan.resources[hex.resource].quantity--;
+                            }
+                        });  
                     }
                 }
             }
@@ -2245,9 +2281,11 @@ let buildCityClick = function (e) {
 
 //the callback function for Player Actions Click
 let buildPlayerActionsClick = function (e) {
-    console.log($(e.target).attr('data-action'));
-    $('#player__actions').css('visibility', 'hidden');
-    $('#cancel').css('visibility', 'visible');
+    let action = $(e.target).attr('data-action')
+    if (action !== 'changeTurn') {
+        $('#player__actions').css('visibility', 'hidden');
+        $('#cancel').css('visibility', 'visible');
+    }
     
     switch ($(e.target).attr('data-action')) {
       case 'buildRoad':
@@ -2271,7 +2309,7 @@ let buildPlayerActionsClick = function (e) {
         if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
             $('.hexes .row .settlement').on('click', buildCityClick);
         } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a settlement.`);
+            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a city.`);
         }
         break;
       case 'trade':
@@ -2312,15 +2350,100 @@ let buildCancelClick = function (e) {
 
     //turns off all of the event listeners on the board
     $('.hexes .row .road').off('click', buildRoadClick);
-    $('.hexes .row .settlement').on('click', buildSettlementClick);
-    $('.hexes .row .settlement').on('click', buildCityClick);
+    $('.hexes .row .settlement').off('click', buildSettlementClick);
+    $('.hexes .row .settlement').off('click', buildCityClick);
 };
 
 //event listener for Cancel Button
 $('#cancel').on('click', buildCancelClick);
 
 
+//callback function for robber event listener
+// let moveRobber = function (e) {
+//     //hides #robber on board
+//     $('#robber').css('visibility', 'hidden');
 
+//     //turns on custom cursor
+//     $('.hexes').css('cursor', 'url(../resources/imgs/robber/vector/robber-cursor.png), auto');
+
+//     //removes event listener that lets player click on robber
+//     $('#robber').off('click', moveRobber);
+
+//     //turns on click on hexes
+//     $('.hexes .row .hex').on('click', placeRobber);
+// };
+// let moveRobber = function (e) {
+//     //hides #robber on board
+//     $('#robber').css('visibility', 'hidden');
+
+//     //turns on custom cursor
+//     $('.hexes').css('cursor', 'url(../resources/imgs/robber/vector/robber-cursor.png), auto');
+
+//     //removes event listener that lets player click on robber
+//     $('#robber').off('click', moveRobber);
+
+//     //turns on click on hexes
+//     $('.hexes .row .hex').on('click', placeRobber);
+// };
+
+//event listener for robber
+// $('#robber').on('click', moveRobber);
+
+//callback function for robber placement event listener
+let placeRobber = function (e) {
+    $('.text-box').append(`<br>Please click on a hex to place the robber.`);
+    let hexIdx = $(e.target).attr('data-id');
+    let hex = game.hexes[hexIdx];
+    if ($(e.target).attr('data-type') === 'hex') {
+        if (hex.area !== 'desert') {
+            for (let i = 0; i < game.hexes.length; i++) {
+                if (game.hexes[i].numberToken === null) {
+                    game.hexes[i].numberToken = robberTemp;
+                    $(`#hex${i} div`).html(`<h3>${game.hexes[i].numberToken}</h3>`);
+                }
+            }
+
+            robberTemp = hex.numberToken;
+            hex.numberToken = null;
+
+            //hides #robber on board
+            $('#robber').css('visibility', 'hidden');
+    
+            //update the DOM so clicked hex now has the robber image on it
+            $(`#hex${hex["data-id"]} div`).html(`<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber">`);
+    
+            //turns off click on hexes
+            $('.hexes .row .hex').off('click', placeRobber);
+    
+            //shows player action buttons
+            $('#player__actions').css('visibility', 'visible');
+        } else {
+            $('.text-box').append(`<br>Please click on a hex that is not a desert.`);
+        }
+    } else {
+        $('.text-box').append(`<br>Please click on a hex.`);
+    }
+}
+// let placeRobber = function (e) {
+//     console.log(e.target);
+//     let hexIdx = $(evt.target).attr('data-id');
+//     let hex = game.hexes[hexIdx];
+//     if (hex.area !== 'desert') {
+//         robberTemp = hex.numberToken;
+
+//         //update the DOM so clicked hex now has the robber image on it
+//         $(`#hex${hex["data-id"]}`).html(`<div><h3><img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber"></h3></div>`);
+
+//         //turns off custom cursor
+//         $('.hexes').css('cursor', 'default');
+
+//         //turns off click on hexes
+//         $('.hexes .row .hex').off('click', placeRobber);
+
+//         //shows player action buttons
+//         $('#player__actions').css('visibility', 'visibile');
+//     }
+// }
 
 //individual event listeners
 // $(`#buildRoad`).on('click', function () {

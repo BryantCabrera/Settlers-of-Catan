@@ -312,6 +312,7 @@ main {
     height: 100%;
     width: 100%;
     z-index: 2;
+    pointer-events: none;
 }
 
 .hex div {
@@ -328,6 +329,7 @@ main {
     box-shadow: .2rem .2rem .2rem rgba(0, 0, 0, .7);
     color: var(--color-black);
     z-index: 2;
+    pointer-events: none;
 }
 
 .hex div h3 {

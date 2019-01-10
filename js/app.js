@@ -2103,7 +2103,7 @@ const game = {
     // },
     changeTurn () {
         //change 3 to game.players.length, this is just for TESTING purposes
-        turn === 3 ? turn = 0 : turn += 1;
+        turn === (game.players.length - 1) ? turn = 0 : turn += 1;
         game.players[turn].roll();
 
         $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);

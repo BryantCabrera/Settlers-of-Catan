@@ -52,12 +52,12 @@
 		7. On a player's turn, the **DICE** will automatically roll for you and the 
 ### 4. Next Steps
 	1. Unsolved problems
-		- [ ] 1. Resource distribution should only occur if that resource's quantity is greater than 0 in bank
+		- [ ] Resource distribution should only occur if that resource's quantity is greater than 0 in bank
 	2. Planned features
-		- [ ] 1. Ability to rename player
-		- [ ] 2. Ability to move the robber when a 7 is rolled
-		- [ ] 2. change clip path of settlements and cities placed on board
-		- [ ] 3. Harbor areas that change trade rates with the bank
+		- [ ] Ability to rename player
+		- [ ] Ability to move the robber when a 7 is rolled
+		- [ ] change clip path of settlements and cities placed on board
+		- [ ] Harbor areas that change trade rates with the bank
         	1. Harbor images on the DOM
         	2. Randomize harbor areas
-		- [ ] 4. Development Card methods
+		- [ ] Development Card methods

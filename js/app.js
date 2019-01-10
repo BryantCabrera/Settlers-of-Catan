@@ -276,6 +276,8 @@ class Player {
                         catan.resources.wool.quantity++;
                         catan.resources.grain.quantity++;
                     }
+                    //increase player's victory points
+                    this.victoryPoints++;
 
                     //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -1895,7 +1897,7 @@ const game = {
         //renders player sections
         for (let player of game.players) {
             //renders player's Victory Points
-            $(`.player-${player.player}__vp`).text(`${player.victoryPoints}`);
+            $(`#player-${player.player}__vp`).text(`${player.victoryPoints}`);
 
             //renders player's longest road count
             $(`#player-${player.player}__road--num`).text(`${player.special.roadSize}`);

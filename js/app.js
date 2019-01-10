@@ -188,12 +188,10 @@ class Player {
                     //reduce player's road pieces by 1
                     this.pieces.road -= 1;
 
-                    //change turn
-                    // game.changeTurn();
+                    //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
                     $('.hexes .row .road').off('click', buildRoadClick);
-                    //change turns
-                    //function that would 
+                    
                     game.render();
                     if (game.state === 'initializing') {
                         $('.hexes .row .settlement').on('click', buildSettlementClick);
@@ -260,15 +258,17 @@ class Player {
                     //reduces player's settlement pieces by 1
                     this.pieces.settlement -= 1;
 
-                    //change turn
-                    // game.changeTurn();
+                    //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
+
                     if (game.state === 'initializing') {
                         $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
                         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
                         
                         $('.hexes .row .road').on('click', buildRoadClick);
                     }
+
+                    if (howManyInitialTurns >= initialTurns.length / 2 ) game.distributeResources(id);
                     game.render();
                 } else {
                     $('.text-box').append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
@@ -366,7 +366,7 @@ const catan = {
             area: 'mountain',
             quantity: 3,
             img: 'resources/imgs/hexes/vector/mountain.png',
-            resource: 'mountain'
+            resource: 'ore'
         }
     ],
     numberTokens: [5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11],
@@ -452,7 +452,7 @@ let dcDeck = [];
 /******************************/
 
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
-let dice1, dice2, diceTotal, turn, numPlayers;
+let dice1, dice2, diceTotal, turn, numPlayers, currentSet;
 // //for TESTING purposes
 // turn = 0;
 
@@ -1820,6 +1820,9 @@ const game = {
                 catan.areas.splice(randomArea, 1);
             } 
 
+            //assign the resource of the assigned Area to that hex
+            hex.resource = chosenArea.resource;
+
             $(`#hex${hex['data-id']}`).append(`<img src="${chosenArea.img}">`);
             hex.area = chosenArea.area;
             hex.resource = chosenArea.resource;
@@ -2003,10 +2006,26 @@ const game = {
         $('.text-box').append(`<br>It is now Player ${turn}'s turn.`);
         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
     },
-    distributeResources () {
+    distributeResources (id) {
 
         if (game.state === 'initializing') {
 
+            let player = game.players[turn];
+            let settlement = this.settlementAreas[id];
+            settlement.adjacentHexes.forEach(function(hexIdx) {
+                let hex = game.hexes[hexIdx];
+                if (hex.area !== 'desert') player.resources[hex.resource]++;
+            });
+
+            // if () {
+                // currentSett = $(e.target).attr('data-id');
+                // for (let i = 0; i < game.settlementAreas[currentSett].adjacentHexes.length; i++) {
+                //     if (game.hexes[game.settlementAreas[currentSett].adjacentHexes[i]].area !== 'desert') {
+                //         game.players[turn].resources[game.hexes[game.settlementAreas[currentSett].adjacentHexes[i]].resource] += 1;
+                //     }
+                // }
+            // }
+            
         } else {
             this.roundRobin();
         }

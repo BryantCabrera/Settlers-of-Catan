@@ -34,6 +34,7 @@
     4. ternaries
     5. callbacks
     6. closures
+    7. slice, splice
 4. jQuery
     1. event listeners
     2. value retrieval

@@ -195,13 +195,14 @@ class Player {
                         catan.resources.brick.quantity++;
                     }
 
-                    // //turns off event listeners for road and settlement divs on gameboard
+                    //turns off event listeners for road and settlement divs on gameboard
                     // $('.hexes .row .settlement').off('click', buildSettlementClick);
                     // $('.hexes .row .road').off('click', buildRoadClick);
                     
-                    // game.render();
+                    game.render();
 
                     if (game.state === 'initializing') {
+                        $('.hexes .row .road').off('click', buildRoadClick);
                         $('.hexes .row .settlement').on('click', buildSettlementClick);
                         howManyInitialTurns++
                         game.initialPlacement();
@@ -219,8 +220,10 @@ class Player {
         }
 
         //turns off event listeners for road and settlement divs on gameboard
-        $('.hexes .row .settlement').off('click', buildSettlementClick);
-        $('.hexes .row .road').off('click', buildRoadClick);
+        if (game.state !== 'initializing') {
+            $('.hexes .row .settlement').off('click', buildSettlementClick);
+            $('.hexes .row .road').off('click', buildRoadClick);
+        }
         
         game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -236,6 +239,7 @@ class Player {
     }
 
     buildSettlement (e) {
+        debugger
         if (this.pieces.settlement > 0) {
             if ($(e.target).hasClass('settlement')) {
                 let id = $(e.target).attr('data-id');
@@ -289,17 +293,17 @@ class Player {
                     //increase player's victory points
                     this.victoryPoints++;
 
-                    // //turns off event listeners for road and settlement divs on gameboard
-                    // $('.hexes .row .settlement').off('click', buildSettlementClick);
+                    //turns off event listeners for road and settlement divs on gameboard
+                    $('.hexes .row .settlement').off('click', buildSettlementClick);
 
                     if (game.state === 'initializing') {
                         $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
                         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
                         
                         $('.hexes .row .road').on('click', buildRoadClick);
+                        if (howManyInitialTurns >= initialTurns.length / 2 ) game.distributeResources(id);
                     }
 
-                    if (howManyInitialTurns >= initialTurns.length / 2 ) game.distributeResources(id);
                     game.render();
                 } else {
                     $('.text-box').append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
@@ -312,8 +316,10 @@ class Player {
         }
 
         //turns off event listeners for road and settlement divs on gameboard
-        $('.hexes .row .settlement').off('click', buildSettlementClick);
-        $('.hexes .row .road').off('click', buildRoadClick);
+        if (game.state !== 'initializing') {
+            $('.hexes .row .settlement').off('click', buildSettlementClick);
+            $('.hexes .row .road').off('click', buildRoadClick);
+        }
         
         game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -369,7 +375,8 @@ class Player {
 
     buyDevelopmentCard () {
         let randomCardIdx = Math.floor(Math.random() * dcDeck.length);
-        this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
+        this.developmentCards[(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0])].quantity++;
+        // this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
         console.log(this.developmentCards);
     }
 
@@ -382,15 +389,21 @@ class Player {
     }
 
     playDevelopmentCard () {
-
+        //if the player played a "knight" card, increase the player's army size by 1
+        // if (_____ === 'knight') {
+        //     this.special.armySize++;
+        // }
     }
 
     endTurn () {
         game.render();
-        if (this.victoryPointsActual === 0) {
+        //check win logic: if this player has 10 actual victory points (actual = shown + hidden) at the end of his/her turn, he/she has won the game
+        if (this.victoryPointsActual === 10) {
             $('.text-box').append(`<br><h2>${this.name} HAS WON THE GAME!</h2>`);
             $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
-        } else if (this.victoryPointsActual !== 0){
+
+            game.endGame();
+        } else if (this.victoryPointsActual !== 10){
             game.changeTurn();
         }
     }
@@ -2130,12 +2143,16 @@ const game = {
             this.roundRobin();
 
             for (let i = 0; i < initialTurns.length; i++) {
+                //loops through initialTurns array to distribute resources to each player starting from the current player
                 let player = game.players[initialTurns[i]];
+                //loops through game.hexes to see if that hex's numberToken was rolled and to capture what resource it produces, distributing that resource to the players settled on it
                 for (let j = 0; j < game.hexes.length; j++) {
                     let resource = game.hexes[j].resource;
+                    let hex = game.hexes[j];
 
                     if ((game.hexes[j].numberToken === diceTotal) && (catan.resources[resource].quantity > 0) && (game.hexes[j].settledBy.includes(player.player))) {
                         player.resources[resource]++;
+                        //decreases the bank's quantity of that resource
                         catan.resources[hex.resource].quantity--;
                     }
                 }
@@ -2169,6 +2186,12 @@ const game = {
             initialTurns.push(j);
             j++;
         }
+    },
+    endGame () {
+        //turns off all event listeners in the switch statement below
+
+        //makes the player action buttons invisible
+        $('#player__actions').css('visibility', 'hidden');
     }
 };
 

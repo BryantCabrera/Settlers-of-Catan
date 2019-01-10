@@ -605,7 +605,17 @@ main {
         }
 
 
-
+    #cancel {
+        grid-area: btns;
+        justify-self: center;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        height: 100%;
+        width: 9rem;
+    }
 /********** Players Section **********/
 .player {
     display: grid;

@@ -221,9 +221,9 @@ class Player {
 
         //turns off event listeners for road and settlement divs on gameboard
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
-        if (game.state !== 'initializing') {
-            $('.hexes .row .road').off('click', buildRoadClick);
-        }
+        // if (game.state !== 'initializing') {
+        //     $('.hexes .row .road').off('click', buildRoadClick);
+        // }
         
         game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -315,10 +315,10 @@ class Player {
         }
 
         //turns off event listeners for road and settlement divs on gameboard
-        if (game.state !== 'initializing') {
-            $('.hexes .row .settlement').off('click', buildSettlementClick);
-            // $('.hexes .row .road').off('click', buildRoadClick);
-        }
+        // if (game.state !== 'initializing') {
+        //     $('.hexes .row .settlement').off('click', buildSettlementClick);
+        //     // $('.hexes .row .road').off('click', buildRoadClick);
+        // }
         
         game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -334,7 +334,7 @@ class Player {
     buildCity (e) {
         if (this.pieces.city > 0) {
             //if the player has clicked an existing settlement that he/she owns and he/she has the appropriate resources
-            if (($(e.target).attr('data-type') === settlement)) {
+            if (($(e.target).attr('data-type') === 'settlement')) {
                 if (game.settlementAreas[$(e.target).attr('data-id')].ownedByPlayer === turn) {
                     if (this.resources.grain >= 2 && this.resources.ore >= 3) {
                         //changes the DOM to display that a settlement has turned into a city
@@ -355,6 +355,9 @@ class Player {
                             catan.resources.grain.quantity += 2;
                             catan.resources.ore.quantity += 3;
                         }
+
+                        //removes City event listener after it has been built
+                        $('.hexes .row .settlement').off('click', buildCityClick);
                     } else {
                         $('.text-box').append(`<br>You don't have the proper resources to build a city.  A city requires 2 grain and 3 ore to build.`);
                     }
@@ -368,7 +371,6 @@ class Player {
             $('.text-box').append(`<br>You don't have anymore city pieces.`);
         }
         
-        $('.hexes .row .settlement').off('click', buildCityClick);
         game.render();
     }
 
@@ -529,7 +531,7 @@ let dcDeck = [];
 /******************************/
 
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
-let dice1, dice2, diceTotal, turn, numPlayers, currentSet;
+let dice1, dice2, diceTotal, turn, numPlayers, currentSet, robberTemp;
 // //for TESTING purposes
 // turn = 0;
 
@@ -706,7 +708,7 @@ const game = {
             resource: null,
             numberToken: 7,
             settledBy: []
-        },
+        }
     ],
     settlementAreas: [
         {
@@ -2117,7 +2119,11 @@ const game = {
             settlement.adjacentHexes.forEach(function(hexIdx) {
                 let hex = game.hexes[hexIdx];
                 if (hex.area !== 'desert') {
+                    //increase player's resource count
                     player.resources[hex.resource]++;
+                    //increases player's total resource count
+                    player.totalResources++;
+                    //decreases the bank's quantity of that resource
                     catan.resources[hex.resource].quantity--;
                 }
             });
@@ -2147,7 +2153,10 @@ const game = {
                     let hex = game.hexes[j];
 
                     if ((game.hexes[j].numberToken === diceTotal) && (catan.resources[resource].quantity > 0) && (game.hexes[j].settledBy.includes(player.player))) {
+                        //increases player's resource count
                         player.resources[resource]++;
+                        //increases player's total resource count
+                        player.totalResources++;
                         //decreases the bank's quantity of that resource
                         catan.resources[hex.resource].quantity--;
                     }
@@ -2201,6 +2210,12 @@ $('.new-game__button').on('click', function () {
     $('.initial-player-creation').css('visibility', 'visible');
 });
 
+//event listener for initial player creation
+$('.initial-player-creation').on('click', 'input', function (e) {
+    numPlayers = parseInt($(e.target).val());
+    game.init();
+});
+
 //the callback function for the buildRoad event listener
 let buildRoadClick = function(e) {
     game.players[turn].buildRoad(e);
@@ -2228,10 +2243,11 @@ let buildCityClick = function (e) {
 //     game.players[turn].buildCity(e);
 // });
 
-//event listener for Player Action Buttons
-$('#player__actions').on('click', function (e) {
+//the callback function for Player Actions Click
+let buildPlayerActionsClick = function (e) {
     console.log($(e.target).attr('data-action'));
-
+    $('#player__actions').css('visibility', 'hidden');
+    $('#cancel').css('visibility', 'visible');
     
     switch ($(e.target).attr('data-action')) {
       case 'buildRoad':
@@ -2280,12 +2296,32 @@ $('#player__actions').on('click', function (e) {
         game.changeTurn();
         break;
     }
-});
+};
 
-$('.initial-player-creation').on('click', 'input', function (e) {
-    numPlayers = parseInt($(e.target).val());
-    game.init();
-});
+//event listener for Player Action Buttons
+$('#player__actions').on('click', buildPlayerActionsClick);
+
+
+//the callback function for the buildCity event listener
+let buildCancelClick = function (e) {
+    //hides cancel button
+    $('#cancel').css('visibility', 'hidden');
+
+    //shows player action buttons
+    $('#player__actions').css('visibility', 'visible');
+
+    //turns off all of the event listeners on the board
+    $('.hexes .row .road').off('click', buildRoadClick);
+    $('.hexes .row .settlement').on('click', buildSettlementClick);
+    $('.hexes .row .settlement').on('click', buildCityClick);
+};
+
+//event listener for Cancel Button
+$('#cancel').on('click', buildCancelClick);
+
+
+
+
 //individual event listeners
 // $(`#buildRoad`).on('click', function () {
 //     game.players[turn].buildRoad();

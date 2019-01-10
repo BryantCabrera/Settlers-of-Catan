@@ -195,11 +195,12 @@ class Player {
                         catan.resources.brick.quantity++;
                     }
 
-                    //turns off event listeners for road and settlement divs on gameboard
-                    $('.hexes .row .settlement').off('click', buildSettlementClick);
-                    $('.hexes .row .road').off('click', buildRoadClick);
+                    // //turns off event listeners for road and settlement divs on gameboard
+                    // $('.hexes .row .settlement').off('click', buildSettlementClick);
+                    // $('.hexes .row .road').off('click', buildRoadClick);
                     
-                    game.render();
+                    // game.render();
+
                     if (game.state === 'initializing') {
                         $('.hexes .row .settlement').on('click', buildSettlementClick);
                         howManyInitialTurns++
@@ -217,6 +218,11 @@ class Player {
             $('.hexes .row .road').off('click', buildRoadClick);
         }
 
+        //turns off event listeners for road and settlement divs on gameboard
+        $('.hexes .row .settlement').off('click', buildSettlementClick);
+        $('.hexes .row .road').off('click', buildRoadClick);
+        
+        game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
         // $('.hexes .row .road').off('click', buildRoadClick);
         // //change turns
@@ -283,8 +289,8 @@ class Player {
                     //increase player's victory points
                     this.victoryPoints++;
 
-                    //turns off event listeners for road and settlement divs on gameboard
-                    $('.hexes .row .settlement').off('click', buildSettlementClick);
+                    // //turns off event listeners for road and settlement divs on gameboard
+                    // $('.hexes .row .settlement').off('click', buildSettlementClick);
 
                     if (game.state === 'initializing') {
                         $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
@@ -304,6 +310,12 @@ class Player {
         } else {
             $('.text-box').append(`<br>You don't have anymore settlement pieces.`)
         }
+
+        //turns off event listeners for road and settlement divs on gameboard
+        $('.hexes .row .settlement').off('click', buildSettlementClick);
+        $('.hexes .row .road').off('click', buildRoadClick);
+        
+        game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
         // if (game.state === 'initializing') {
         //     $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
@@ -316,21 +328,42 @@ class Player {
 
     buildCity (e) {
         if (this.pieces.city > 0) {
-            
-            //reduces player's city pieces
-            this.pieces.city -= 1;
-            //changes resource amounts for player & bank
-            if (game.state !== 'initializing') {
-                this.resources.grain -= 2;
-                this.resources.ore -= 3;
+            //if the player has clicked an existing settlement that he/she owns and he/she has the appropriate resources
+            if (($(e.target).attr('data-type') === settlement)) {
+                if (game.settlementAreas[$(e.target).attr('data-id')].ownedByPlayer === turn) {
+                    if (this.resources.grain >= 2 && this.resources.ore >= 3) {
+                        //changes the DOM to display that a settlement has turned into a city
+                        $(e.target).text('C');
 
-                catan.resources.grain.quantity += 2;
-                catan.resources.ore.quantity += 3;
+                        //changes the settlement's data-type to "city"
+                        $(e.target).attr('data-type', 'city');
+
+                        //reduces player's city pieces
+                        this.pieces.city -= 1;
+                        //increases player's points by 2
+                        this.victoryPoints += 2;
+                        //changes resource amounts for player & bank
+                        if (game.state !== 'initializing') {
+                            this.resources.grain -= 2;
+                            this.resources.ore -= 3;
+
+                            catan.resources.grain.quantity += 2;
+                            catan.resources.ore.quantity += 3;
+                        }
+                    } else {
+                        $('.text-box').append(`<br>You don't have the proper resources to build a city.  A city requires 2 grain and 3 ore to build.`);
+                    }
+                } else {
+                    $('.text-box').append(`<br>Please click on a settlement that you own.`);
+                }
+            } else {
+                $('.text-box').append(`<br>Please click on a settlement.`);
             }
         } else {
             $('.text-box').append(`<br>You don't have anymore city pieces.`);
         }
         
+        $('.hexes .row .settlement').off('click', buildCityClick);
         game.render();
     }
 
@@ -2099,10 +2132,9 @@ const game = {
             for (let i = 0; i < initialTurns.length; i++) {
                 let player = game.players[initialTurns[i]];
                 for (let j = 0; j < game.hexes.length; j++) {
-                    
-                    if ((game.hexes[j].numberToken === diceTotal) && (game.hexes[j].settledBy.includes(player.player))) {
-                        let resource = game.hexes[j].resource;
+                    let resource = game.hexes[j].resource;
 
+                    if ((game.hexes[j].numberToken === diceTotal) && (catan.resources[resource].quantity > 0) && (game.hexes[j].settledBy.includes(player.player))) {
                         player.resources[resource]++;
                         catan.resources[hex.resource].quantity--;
                     }
@@ -2150,26 +2182,32 @@ $('.new-game__button').on('click', function () {
     $('.initial-player-creation').css('visibility', 'visible');
 });
 
-//Places current player's appropriate piece on the gameboard
-
-let buildSettlementClick = function (e) {
-    game.players[turn].buildSettlement(e);
-};
-
-// $('.hexes .row .settlement').on('click', buildSettlementClick);
-// $('.hexes .row .settlement').on('click', function (e) {
-//     game.players[turn].buildSettlement(e);
-// });
-
+//the callback function for the buildRoad event listener
 let buildRoadClick = function(e) {
     game.players[turn].buildRoad(e);
 };
-
 // $('.hexes .row .road').on('click', buildRoadClick);
 // $('.hexes .row .road').on('click', function (e) {
 //     game.players[turn].buildRoad(e);
 // });
 
+//the callback function for the buildSettlement event listener
+let buildSettlementClick = function (e) {
+    game.players[turn].buildSettlement(e);
+};
+// $('.hexes .row .settlement').on('click', buildSettlementClick);
+// $('.hexes .row .settlement').on('click', function (e) {
+//     game.players[turn].buildSettlement(e);
+// });
+
+//the callback function for the buildCity event listener
+let buildCityClick = function (e) {
+    game.players[turn].buildCity(e);
+};
+// $('.hexes .row .settlement').on('click', buildCityClick);
+// $('.hexes .row .settlement').on('click', function (e) {
+//     game.players[turn].buildCity(e);
+// });
 
 //event listener for Player Action Buttons
 $('#player__actions').on('click', function (e) {
@@ -2196,7 +2234,7 @@ $('#player__actions').on('click', function (e) {
       case 'buildCity':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked buildCity`);
         if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
-            // $('.hexes .row .settlement').on('click', buildSettlementClick);
+            $('.hexes .row .settlement').on('click', buildCityClick);
         } else {
             $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a settlement.`);
         }

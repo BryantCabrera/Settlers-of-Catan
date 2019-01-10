@@ -239,7 +239,6 @@ class Player {
     }
 
     buildSettlement (e) {
-        debugger
         if (this.pieces.settlement > 0) {
             if ($(e.target).hasClass('settlement')) {
                 let id = $(e.target).attr('data-id');

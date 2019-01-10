@@ -183,7 +183,7 @@ class Player {
                     game.roadAreas[id].canOccupy = false;
                     game.roadAreas[id].ownedByPlayer = turn;
 
-                    $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)");
+                    $(e.target).css('background-color', `var(--player-${turn}-color1)`).css('opacity', '1').css('box-shadow', '.2rem .2rem .2rem rgba(0, 0, 0, .7)');
 
                     //reduce player's road pieces by 1
                     this.pieces.road -= 1;
@@ -260,10 +260,10 @@ class Player {
                         game.hexes[hex].settledBy.push(turn);
                     });
 
-                    $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)").text('S');
+                    $(e.target).css('background-color', `var(--player-${turn}-color1)`).css('opacity', '1').css('box-shadow', '.2rem .2rem .2rem rgba(0, 0, 0, .7)').text('S');
 
                     if (turn === 3) {
-                        $(e.target).css("color", "black");
+                        $(e.target).css('color', 'black');
                     }
 
                     //reduces player's settlement pieces by 1

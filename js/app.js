@@ -196,14 +196,14 @@ class Player {
                     }
 
                     //turns off event listeners for road and settlement divs on gameboard
-                    $('.hexes .row .settlement').off('click', buildSettlementClick);
+                    // $('.hexes .row .settlement').off('click', buildSettlementClick);
                     $('.hexes .row .road').off('click', buildRoadClick);
                     
                     game.render();
 
                     if (game.state === 'initializing') {
-                        $('.hexes .row .road').off('click', buildRoadClick);
-                        $('.hexes .row .settlement').on('click', buildSettlementClick);
+                        // $('.hexes .row .road').off('click', buildRoadClick);
+                        // $('.hexes .row .settlement').off('click', buildSettlementClick);
                         howManyInitialTurns++
                         game.initialPlacement();
                     }
@@ -216,12 +216,12 @@ class Player {
 
         } else {
             $('.text-box').append(`<br>You don't have anymore road pieces.`);
-            $('.hexes .row .road').off('click', buildRoadClick);
+            // $('.hexes .row .road').off('click', buildRoadClick);
         }
 
         //turns off event listeners for road and settlement divs on gameboard
+        // $('.hexes .row .settlement').off('click', buildSettlementClick);
         if (game.state !== 'initializing') {
-            $('.hexes .row .settlement').off('click', buildSettlementClick);
             $('.hexes .row .road').off('click', buildRoadClick);
         }
         
@@ -297,7 +297,7 @@ class Player {
 
                     if (game.state === 'initializing') {
                         $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-                        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+                        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
                         
                         $('.hexes .row .road').on('click', buildRoadClick);
                         if (howManyInitialTurns >= initialTurns.length / 2 ) game.distributeResources(id);
@@ -317,14 +317,14 @@ class Player {
         //turns off event listeners for road and settlement divs on gameboard
         if (game.state !== 'initializing') {
             $('.hexes .row .settlement').off('click', buildSettlementClick);
-            $('.hexes .row .road').off('click', buildRoadClick);
+            // $('.hexes .row .road').off('click', buildRoadClick);
         }
         
         game.render();
         // $('.hexes .row .settlement').off('click', buildSettlementClick);
         // if (game.state === 'initializing') {
         //     $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-        //     $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+        //     $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
 
         //     $('.hexes .row .road').on('click', buildRoadClick);
         // }
@@ -376,7 +376,6 @@ class Player {
         let randomCardIdx = Math.floor(Math.random() * dcDeck.length);
         this.developmentCards[(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0])].quantity++;
         // this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
-        console.log(this.developmentCards);
     }
 
     tradePlayer () {
@@ -399,7 +398,7 @@ class Player {
         //check win logic: if this player has 10 actual victory points (actual = shown + hidden) at the end of his/her turn, he/she has won the game
         if (this.victoryPointsActual === 10) {
             $('.text-box').append(`<br><h2>${this.name} HAS WON THE GAME!</h2>`);
-            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
 
             game.endGame();
         } else if (this.victoryPointsActual !== 10){
@@ -1989,7 +1988,6 @@ const game = {
 
         //updates bank section
         for (let resource in catan.resources) {
-            console.log(resource);
             if (resource !== 'back') {
                 $(`.bank__resource__${resource}--num`).text(`${catan.resources[resource].quantity}`)
             } 
@@ -2010,7 +2008,7 @@ const game = {
             }
         }
 
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
     },
     getFirstPlayer () {
         let diceRolls = [];
@@ -2019,7 +2017,6 @@ const game = {
 
         //makes each player roll dice and return total
         for (let player of game.players) {
-            console.log(player);
             diceRolls.push(player.roll());
         }
         
@@ -2079,14 +2076,14 @@ const game = {
             //makes player actions buttons visible
             $('#player__actions').css('visibility', 'visible');
 
-            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
 
             return
         }
 
         turn = initialTurns[howManyInitialTurns];
         $('.text-box').append(`<br>${game.players[initialTurns[howManyInitialTurns]].name}, please place a settlement on the board.`);
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
 
         $('.hexes .row .settlement').on('click', buildSettlementClick);
         // $('.text-box').append(`<br>${game.players[turn].name}, please place a settlement on the board.`);
@@ -2109,7 +2106,7 @@ const game = {
         $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
         $('.text-box').append(`<br>It is now Player ${turn}'s turn.`);
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
     },
     distributeResources (id) {
 
@@ -2286,7 +2283,6 @@ $('#player__actions').on('click', function (e) {
 });
 
 $('.initial-player-creation').on('click', 'input', function (e) {
-    console.log();
     numPlayers = parseInt($(e.target).val());
     game.init();
 });

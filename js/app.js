@@ -255,6 +255,10 @@ class Player {
                     game.settlementAreas[id].occupied = true;
                     game.settlementAreas[id].canOccupy = false;
                     game.settlementAreas[id].ownedByPlayer = turn;
+                    //updates hex objects data to include who is settled on it for resource distribution
+                    game.settlementAreas[id].adjacentHexes.forEach(function (hex) {
+                        game.hexes[hex].settledBy.push(turn);
+                    });
 
                     $(e.target).css("background-color", `var(--player-${turn}-color1)`).css("opacity", "1").css("box-shadow", ".2rem .2rem .2rem rgba(0, 0, 0, .7)").text('S');
 
@@ -512,133 +516,152 @@ const game = {
             'data-id': 0,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 1,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 2,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 3,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 4,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 5,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 6,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 7,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 8,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 9,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 10,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 11,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 12,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 13,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 14,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 15,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 16,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 17,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
         {
             'data-type': 'hex',
             'data-id': 18,
             area: 'desert',
             resource: null,
-            numberToken: 7
+            numberToken: 7,
+            settledBy: []
         },
     ],
     settlementAreas: [
@@ -1941,6 +1964,8 @@ const game = {
                 $(`#player-${player.player} .army-card .army--card img`).css('opacity', '0.5');
             }
         }
+
+        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
     },
     getFirstPlayer () {
         let diceRolls = [];
@@ -2005,7 +2030,12 @@ const game = {
 
             game.state = 'inProgress';
             $('.text-box').append(`<br>The game is now in progress <br>${game.players[turn].name}, please decide what you want to do by clicking on an action button above.`);
+
+            //makes player actions buttons visible
             $('#player__actions').css('visibility', 'visible');
+
+            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 500);
+
             return
         }
 
@@ -2074,6 +2104,7 @@ const game = {
                         let resource = game.hexes[j].resource;
 
                         player.resources[resource]++;
+                        catan.resources[hex.resource].quantity--;
                     }
                 }
             }
@@ -2089,7 +2120,7 @@ const game = {
             // });
         }
         
-        
+        game.render();
         
     },
     roundRobin () {

@@ -187,6 +187,13 @@ class Player {
 
                     //reduce player's road pieces by 1
                     this.pieces.road -= 1;
+                    if (game.state !== 'initializing') {
+                        this.resources.lumber--;
+                        this.resources.brick--;
+
+                        catan.resources.lumber.quantity++;
+                        catan.resources.brick.quantity++;
+                    }
 
                     //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -257,6 +264,18 @@ class Player {
 
                     //reduces player's settlement pieces by 1
                     this.pieces.settlement -= 1;
+                    //changes resource amounts
+                    if (game.state !== 'initializing') {
+                        this.resources.lumber--;
+                        this.resources.brick--;
+                        this.resources.wool--;
+                        this.resources.grain--;
+
+                        catan.resources.lumber.quantity++;
+                        catan.resources.brick.quantity++;
+                        catan.resources.wool.quantity++;
+                        catan.resources.grain.quantity++;
+                    }
 
                     //turns off event listeners for road and settlement divs on gameboard
                     $('.hexes .row .settlement').off('click', buildSettlementClick);
@@ -292,8 +311,16 @@ class Player {
     buildCity (e) {
         if (this.pieces.city > 0) {
             
-
+            //reduces player's city pieces
             this.pieces.city -= 1;
+            //changes resource amounts for player & bank
+            if (game.state !== 'initializing') {
+                this.resources.grain -= 2;
+                this.resources.ore -= 3;
+
+                catan.resources.grain.quantity += 2;
+                catan.resources.ore.quantity += 3;
+            }
         } else {
             $('.text-box').append(`<br>You don't have anymore city pieces.`);
         }
@@ -2014,7 +2041,10 @@ const game = {
             let settlement = this.settlementAreas[id];
             settlement.adjacentHexes.forEach(function(hexIdx) {
                 let hex = game.hexes[hexIdx];
-                if (hex.area !== 'desert') player.resources[hex.resource]++;
+                if (hex.area !== 'desert') {
+                    player.resources[hex.resource]++;
+                    catan.resources[hex.resource].quantity--;
+                }
             });
 
             // if () {
@@ -2025,10 +2055,15 @@ const game = {
                 //     }
                 // }
             // }
-            
+            // for (let resource in catan.resources) {
+            //     if (resource !== 'back') {
+            //         $(`bank__resource__${resource}--num`).text(`${resource.quantity}`);
+            //     }
+            // }
         } else {
             this.roundRobin();
         }
+        
         
         
     },

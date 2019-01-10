@@ -2,6 +2,8 @@
 
 ### 1. Images
 	1. Wireframe
+		1. ![Image of Wireframe](prototype/Settlers_of_Catan_Wireframe.png)
+		2. ![Image of Yaktocat](prototype/Settlers_of_Catan_Wireframe--Player_Section.png)
 	2. Uninitialized boardgame
 	2. Initialized boardgame
 		1.  Randomized hex areas

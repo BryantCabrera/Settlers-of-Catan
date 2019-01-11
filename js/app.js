@@ -2045,15 +2045,38 @@ const game = {
             }
         }
 
-        //if it is the current player's turn, remove the background-image, else make the background-img mask gray
-
         for (let i = 0; i < 4; i++) {
             if (i !== turn) {
+                //if it is the current player's turn, remove the background-image, else make the background-img mask gray
                 $(`#player-${i}`).css('background-image', 'linear-gradient(to right bottom, var(--background-color-light), var(--background-color-medium))').css('opacity', '0.5');
+
+                //hide other players' resource imgs & counts from current player
+                for (let resource in catan.resources) {
+                    if (resource !== 'back') {
+                        //resource images turn to back
+                        $(`.player-${i}__resource__${resource}--pic img`).attr('src', `${catan.resources.back.img}`);
+
+                        //resource counts become invisible
+                        $(`.player-${i}__resource__${resource}--num`).css('visibility', 'hidden');
+                    }
+                }
             } else {
+                //make current player's section opaque and unmasked
                 $(`#player-${i}`).css('background-image', 'none').css('opacity', '1');
+
+                //reveal current player's resource counts and card images
+                for (let resource in game.players[i].resources) {
+                    //resource images repopulate
+                    $(`.player-${i}__resource__${resource}--pic img`).attr('src', `resources/imgs/resources/vector/resources--${resource}.png`);
+
+                    //resource counts become invisible
+                    $(`.player-${i}__resource__${resource}--num`).css('visibility', 'visible');
+                }
             }
         }
+
+        
+    
 
         //scrolls text box to bottom of content
         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
@@ -2154,7 +2177,7 @@ const game = {
         turn === (game.players.length - 1) ? turn = 0 : turn += 1;
         game.players[turn].roll();
 
-        $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
+        // $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
 
         $('.text-box').append(`<br>It is now Player ${turn}'s turn.`);
         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);

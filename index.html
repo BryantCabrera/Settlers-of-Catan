@@ -15,27 +15,6 @@
     <title>Bryant's Settlers of Catan</title>
 </head>
 <body>
-    <!--
-        Pseudo-Code: HTML/CSS
-
-
-        1. create hexagons with divs & clip-paths
-        2. create road areas with divs
-        3. create settlement & port areas with divs
-        4. create board area
-        5. create player areas
-            5a. name
-            5b. points
-            5c. pieces
-            5d. hand
-            5e. development cards
-            5f. special victory point cards
-        6. create buttons
-        7. create dice
-        8. create building cheat sheet
-        9. create header & footer
-
-    -->
     <header>
         <img src="resources/imgs/logo/settlers-of-catan-logo.png" alt="Settlers of Catan Logo" title="Settlers of Catan Logo">
         <h1>Bryant Cabrera</h1>
@@ -65,10 +44,6 @@
                         <input type="submit" value="4">
                     </div>
                 </div>
-                <!-- <div class="player-names">
-                    <label for="player-names">Name Your Players</label>
-                    <input type="text" id="player-name" maxlength="12" minlength="1" placeholder="Enter player name 1-2 chars" size="12" required>
-                </div> -->
                 
                 <div id="player__actions">
                     <div id="buildRoad" class="btn" data-action="buildRoad">
@@ -104,11 +79,11 @@
 
                     <div class="trading trade-player">
                         <p>Giving:</p>
-                        <input type="number" value="0" data-trade="lumber" placeholder="lumber">
-                        <input type="number" value="0" data-trade="brick" placeholder="brick">
-                        <input type="number" value="0" data-trade="wool" placeholder="wool">
-                        <input type="number" value="0" data-trade="grain" placeholder="grain">
-                        <input type="number" value="0" data-trade="ore" placeholder="ore">
+                        <input type="number" value="0" data-trade="lumber" placeholder="lumber" min="0">
+                        <input type="number" value="0" data-trade="brick" placeholder="brick" min="0">
+                        <input type="number" value="0" data-trade="wool" placeholder="wool" min="0">
+                        <input type="number" value="0" data-trade="grain" placeholder="grain" min="0">
+                        <input type="number" value="0" data-trade="ore" placeholder="ore" min="0">
                     </div>
                     <div class="trading trade-labels">
                         <div>Resource:</div>
@@ -118,13 +93,13 @@
                         <div><img src="resources/imgs/resources/vector/resources--grain.png"></div>
                         <div><img src="resources/imgs/resources/vector/resources--ore.png"></div>
                     </div>
-                    <div class="trading trade-other">
+                    <div class="trading trade-partner">
                         <p>Receiving:</p>
-                        <input type="number" value="0" data-trade="lumber" placeholder="lumber">
-                        <input type="number" value="0" data-trade="brick" placeholder="brick">
-                        <input type="number" value="0" data-trade="wool" placeholder="wool">
-                        <input type="number" value="0" data-trade="grain" placeholder="grain">
-                        <input type="number" value="0" data-trade="ore" placeholder="ore">
+                        <input type="number" value="0" data-trade="lumber" placeholder="lumber" min="0">
+                        <input type="number" value="0" data-trade="brick" placeholder="brick" min="0">
+                        <input type="number" value="0" data-trade="wool" placeholder="wool" min="0">
+                        <input type="number" value="0" data-trade="grain" placeholder="grain" min="0">
+                        <input type="number" value="0" data-trade="ore" placeholder="ore" min="0">
                     </div>
                 </div>
 
@@ -133,7 +108,6 @@
                 </div>
             </div>
         </section>
-
 
         <section id="boardgame">
             <div class="text-box">
@@ -333,7 +307,6 @@
                 </div>
             </div>
         </section>
-        
 
         <section id="player-0" class="player">
             <div class="name player-0__name"><h2>Player 0</h2></div>
@@ -388,7 +361,6 @@
                 <div class="text dc--num player-0__dc--num">0</div>
             </div> 
         </section>
-
 
         <section id="player-1" class="player">
             <div class="name player-1__name"><h2>Player 1</h2></div>
@@ -552,11 +524,9 @@
             </div>
         </section>
 
-
         <section id="building-costs">
             <img src="resources/imgs/building_costs_cards/vector/building_costs.png">
         </section>
-
 
         <section id="bank">
             <h3>Bank</h3>

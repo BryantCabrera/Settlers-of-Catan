@@ -110,6 +110,7 @@ More info about the game can be found on the [Official Settlers of Catan Website
 2. Planned features
     - [ ] Ability to rename player
     - [ ] When 7 is rolled, players with over 7 totalResource cards must discard half of their cards rounded down
+    - [ ] Check Longest Road & Largest Army game methods
     - [ ] change clip path of settlements and cities placed on board
     - [ ] proper trade rates with bank (4 of the same of 1 of your resources for any 1 from the bank)
     - [ ] cannot trade nothing away in exchange for something (must at least be a 1:1 trade)

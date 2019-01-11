@@ -828,7 +828,7 @@ main {
 
             .player .road-card .road--card img:hover {
                 transform: scale(4);
-                opacity: 1;
+                opacity: 1 !important;
                 z-index: 4;
             }
 
@@ -854,7 +854,7 @@ main {
 
         .player .army-card .army--card img:hover {
             transform: scale(4);
-            opacity: 1;
+            opacity: 1 !important;
             z-index: 4;
         }
 

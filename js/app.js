@@ -437,7 +437,7 @@ class Player {
     endTurn () {
         game.render();
         //check win logic: if this player has 10 actual victory points (actual = shown + hidden) at the end of his/her turn, he/she has won the game
-        if (this.victoryPointsActual === 10) {
+        if (this.victoryPointsActual >= 10) {
             $('.text-box').append(`<br><h2>${this.name} HAS WON THE GAME!</h2>`);
             $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
 
@@ -576,7 +576,7 @@ let dcDeck = [];
 /******************************/
 
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
-let dice1, dice2, diceTotal, turn, numPlayers, currentSet, robberTemp;
+let dice1, dice2, diceTotal, turn, numPlayers, currentSet, robberTemp, tradingPartner;
 // //for TESTING purposes
 // turn = 0;
 
@@ -2116,6 +2116,9 @@ const game = {
                 game.settlementAreas[i].canOccupy = false;
             }
 
+            //lets first player roll
+            game.players[turn].roll();
+
             game.state = 'inProgress';
             $('.text-box').append(`<br>The game is now in progress <br>${game.players[turn].name}, please decide what you want to do by clicking on an action button above.`);
 
@@ -2188,17 +2191,17 @@ const game = {
         } else {
             this.roundRobin();
 
-            for (let i = 0; i < initialTurns.length; i++) {
-                //loops through initialTurns array to distribute resources to each player starting from the current player
-                let player = game.players[initialTurns[i]];
-                //loops through game.hexes to see if that hex's numberToken was rolled and to capture what resource it produces, distributing that resource to the players settled on it
-                for (let j = 0; j < game.hexes.length; j++) {
-                    let resource = game.hexes[j].resource;
-                    let hex = game.hexes[j];
+            //loops through game.hexes to see if that hex's numberToken was rolled and to capture what resource it produces, distributing that resource to the players settled on it
+            for (let j = 0; j < game.hexes.length; j++) {
+                let resource = game.hexes[j].resource;
+                let hex = game.hexes[j];
 
-                    if ((game.hexes[j].numberToken === diceTotal) && (catan.resources[resource].quantity > 0) && (game.hexes[j].settledBy.includes(player.player))) {
-                        game.hexes[j].settledBy.forEach(function(settler) {
-                            if (settler === player) {
+                if ((hex.numberToken === diceTotal) && (catan.resources[resource].quantity > 0)) {
+                    hex.settledBy.forEach(function(settler) {
+                        //loops through initialTurns array to distribute resources to each player starting from the current player
+                        for (let i = 0; i < initialTurns.length; i++) {
+                            let player = game.players[initialTurns[i]];
+                            if (hex.settledBy.includes(player.player)) {
                                 //increases player's resource count
                                 player.resources[resource]++;
                                 //increases player's total resource count
@@ -2206,20 +2209,11 @@ const game = {
                                 //decreases the bank's quantity of that resource
                                 catan.resources[hex.resource].quantity--;
                             }
-                        });  
-                    }
+                        }
+                    });  
                 }
+                
             }
-            //copied from initializing state above
-            // let player = game.players[turn];
-            // let settlement = this.settlementAreas[id];
-            // settlement.adjacentHexes.forEach(function(hexIdx) {
-            //     let hex = game.hexes[hexIdx];
-            //     if (hex.area !== 'desert') {
-            //         player.resources[hex.resource]++;
-            //         catan.resources[hex.resource].quantity--;
-            //     }
-            // });
         }
         
         game.render();
@@ -2245,6 +2239,8 @@ const game = {
 
         //makes the player action buttons invisible
         $('#player__actions').css('visibility', 'hidden');
+        $('.text-box').append(`<br>~~~~~Thank youf or playing!~~~~~<br>Please refresh the page to start a new game.`);
+        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
     }
 };
 
@@ -2291,21 +2287,20 @@ let buildCityClick = function (e) {
 //     game.players[turn].buildCity(e);
 // });
 
-let buildTradeClick = function () {
-    //hides player action buttons
-    $('#player__actions').css('visibility', 'hidden');
+// let buildTradeClick = function () {
+//     //hides player action buttons
+//     $('#player__actions').css('visibility', 'hidden');
 
-    //shows trade-who of every player except current player
-    $('.trade-who').css('visibility', 'visible');
-    for (let i = 0; i < game.players.length; i++) {
-        if (i !== turn) {
-            $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
-        }
-    }
-}
+//     //shows trade-who of every player except current player
+//     $('.trade-who').css('visibility', 'visible');
+//     for (let i = 0; i < game.players.length; i++) {
+//         if (i !== turn) {
+//             $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
+//         }
+//     }
+// }
 
 let buildTradeWhoClick = function (e) {
-
     //hides all trade-who player buttons
     for (let i = 0; i < game.players.length; i++) {
         if (i !== turn) {
@@ -2314,7 +2309,22 @@ let buildTradeWhoClick = function (e) {
     }
 
     //hides trade-who
-    $('trade-who').css('visibility', 'hidden');
+    $('.trade-who').css('visibility', 'hidden');
+
+    if ($(e.target).val() === 'bank') {
+        tradingPartner = catan;
+    } else {
+        tradingPartner = parseInt($(e.target).val());
+    }
+
+    //updates the maximumValues for each trade partner based on his/her resources
+    let player = game.players[turn];
+    for (let resource in player.resources) {
+        if (player.resources[resource] > 0) {
+            //if that player has resources equal to or greater than the value specified, the new max input is that value
+            $(`.trade-player input[data-trade="${resource}"]`).attr('max', `${player.resources[resource]}`);
+        }
+    }
 
     //shows trade-what
     $('.trade-what').css('visibility', 'visible');
@@ -2355,12 +2365,26 @@ let buildPlayerActionsClick = function (e) {
         break;
       case 'trade':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked trade`);
+
         if (game.players[turn].totalResources > 0) {
-            $('#trade').on('click', buildTradeClick);
+            //hides player action buttons
+            $('#player__actions').css('visibility', 'hidden');
+
+            //shows trade-who of every player except current player
+            $('.trade-who').css('visibility', 'visible');
+            for (let i = 0; i < game.players.length; i++) {
+                if (i !== turn) {
+                    $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
+                }
+            }
         } else {
             $('.text-box').append(`<br>${game.players[turn].name} does not have any resources to trade.`);
         }
-        game.players[turn].tradeBank();
+        // if (game.players[turn].totalResources > 0) {
+        //     $('#trade').on('click', buildTradeClick);
+        // } else {
+        //     $('.text-box').append(`<br>${game.players[turn].name} does not have any resources to trade.`);
+        // }
         break;
       case 'buyDevelopmentCard':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked buyDevelopmentCard`);
@@ -2398,8 +2422,81 @@ let buildCancelClick = function (e) {
 //event listener for Cancel Button
 $('#cancel').on('click', buildCancelClick);
 
+// //event listener for trade button
+// $('#trade').on('click', buildTradeClick);
+
 //event listener for trade-who button
-$('trade-who').on('click', buildTradeWhoClick);
+$('.trade-who').on('click', buildTradeWhoClick);
+
+let buildTradeWhatClick = function (e) {
+    // let giveLumber = $('trade-player input[data-trade="lumber"]').val();
+    // let giveBrick = $('trade-player input[data-trade="brick"]').val();
+    // let giveWool = $('trade-player input[data-trade="wool"]').val();
+    // let giveGrain = $('trade-player input[data-trade="grain"]').val();
+    // let giveOre = $('trade-player input[data-trade="ore"]').val();
+    // let receiveLumber = $('trade-player input[data-trade="lumber"]').val();
+    // let receiveBrick = $('trade-player input[data-trade="brick"]').val();
+    // let receiveWool = $('trade-player input[data-trade="wool"]').val();
+    // let receiveGrain = $('trade-player input[data-trade="grain"]').val();
+    // let receiveOre = $('trade-player input[data-trade="ore"]').val();
+    // let give = [giveLumber, giveBrick, giveWool, giveGrain, giveOre];
+    // let receive = [receiveLumber, receiveBrick, receiveWool, receiveGrain, receiveOre];
+
+    let player = game.players[turn];
+    for (let resource in player.resources) {
+        if (player.resources[resource] > 0) {
+            //if current player has resources equal to or greater than the value specified, reduce current player's quantity of that resource and increase the trading partner's quantity
+            player.resources[resource] -= $(`.trade-player input[data-trade="${resource}"]`).val();
+
+            if (tradingPartner === catan) {
+                catan.resources[resource].quantity += $(`.trade-player input[data-trade="${resource}"]`).val();
+            } else {
+                game.players[tradingPartner][resource] += $(`.trade-player input[data-trade="${resource}"]`).val();
+            }
+            
+            // player.resources[resource] += $(`trade-partner input[data-trade="${resource}"]`).val();
+        }
+    }
+
+    let partner;
+    if (tradingPartner === catan) {
+        partner = catan;
+        for (let resource in partner.resources) {
+            if (partner.resources[resource].quantity > 0 && resource !== 'back') {
+                //if the bank has resources equal to or greater than the value specified, decrease the traded amount from bank and increase current player's amount by that much
+                player.resources[resource].quantity -= $(`.trade-partner input[data-trade="${resource}"]`).val();
+                player.resources[resource] += $(`.trade-partner input[data-trade="${resource}"]`).val();
+                // player.resources[resource].quantity += $(`trade-player input[data-trade="${resource}"]`).val();
+            }
+        }
+    } else {
+        partner = game.players[tradingPartner];
+        for (let resource in partner.resources) {
+            if (partner.resources[resource] > 0) {
+                //if trading partner has resources equal to or greater than the value specified, decrease the traded amount from partner and increase current player's amount by that much
+                player.resources[resource] -= $(`.trade-partner input[data-trade="${resource}"]`).val();
+                player.resources[resource] += $(`.trade-partner input[data-trade="${resource}"]`).val();
+                // player.resources[resource] += $(`trade-player input[data-trade="${resource}"]`).val();
+            }
+        }
+    }
+    
+
+    //resets tradingPartner
+    tradingPartner = null;
+
+    //updates DOM
+    game.render();
+
+    //hides trade-what
+    $('.trade-what').css('visibility', 'hidden');
+
+    //brings back the player-actions panel in controls section
+    $('#player__actions').css('visibility', 'visible');
+}
+
+//event listener for trade-what button
+$('#trade-submit').on('click', buildTradeWhatClick);
 
 
 //callback function for robber event listener

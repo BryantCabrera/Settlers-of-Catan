@@ -177,7 +177,7 @@ main {
     align-items: center; */
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 1fr 3fr;
     grid-template-areas: "text"
                          "hexes";
     background-color: var(--ocean-color2);
@@ -536,12 +536,21 @@ main {
 
     #player__actions {
         grid-area: btns;
+        justify-self: flex-start;
+        align-self: center;
         display: grid;
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: 1fr;
         grid-template-areas: "road sett city trade dc end";
         visibility: hidden;
+        height: 6rem;
+        width: 6rem;
     }
+
+        #player__actions div {
+            height: 6rem;
+            width: 6rem;
+        }
 
         #player__actions div:not(:first-child) {
             border: 1px solid rgba(0, 0, 0, .7);
@@ -616,6 +625,7 @@ main {
         justify-content: center;
         align-items: center;
         visibility: hidden; 
+        height: 6rem;
     }
 
         .trade-who p {
@@ -666,6 +676,7 @@ main {
         justify-content: center;
         align-items: center;
         visibility: hidden;
+        height: 15rem;
     }
 
         .trade-what p {
@@ -728,7 +739,7 @@ main {
                     justify-self: center;
                 }
 
-        .trade-other {
+        .trade-partner {
             grid-area: receive;
         }
 

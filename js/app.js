@@ -2469,7 +2469,6 @@ let buildTradeWhatClick = function () {
     // let receiveOre = $('trade-player input[data-trade="ore"]').val();
     // let give = [giveLumber, giveBrick, giveWool, giveGrain, giveOre];
     // let receive = [receiveLumber, receiveBrick, receiveWool, receiveGrain, receiveOre];
-
     //giving
     let player = game.players[turn];
     for (let resource in player.resources) {
@@ -2480,7 +2479,7 @@ let buildTradeWhatClick = function () {
             if (tradingPartner === catan) {
                 catan.resources[resource].quantity += parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
             } else {
-                game.players[tradingPartner][resource] += parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
+                game.players[tradingPartner].resources[resource] += parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
             }
             
             // player.resources[resource] += $(`trade-partner input[data-trade="${resource}"]`).val();

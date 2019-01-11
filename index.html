@@ -86,6 +86,51 @@
                         <img src="resources/imgs/dcs/vector/dcs__back.png" data-action="buyDevelopmentCard"></div>
                     <div id="endTurn" class="btn" data-action="changeTurn">End Turn</div>
                 </div>
+
+                <div class="trade-who">
+                    <p>Who do you want to<br> trade with?</p>
+
+                    <div class="traders">
+                        <input type="submit" value="0">
+                        <input type="submit" value="1">
+                        <input type="submit" value="2">
+                        <input type="submit" value="3">
+                        <input type="submit" value="bank">
+                    </div>
+                </div>
+
+                <div class="trade-what">
+                    <p>What do you want to trade? <a href="#" id="trade-submit">Submit</a></p>
+
+                    <div class="trading trade-player">
+                        <p>Giving:</p>
+                        <input type="number" value="0" data-trade="lumber" placeholder="lumber">
+                        <input type="number" value="0" data-trade="brick" placeholder="brick">
+                        <input type="number" value="0" data-trade="wool" placeholder="wool">
+                        <input type="number" value="0" data-trade="grain" placeholder="grain">
+                        <input type="number" value="0" data-trade="ore" placeholder="ore">
+                    </div>
+                    <div class="trading trade-labels">
+                        <div>Resource:</div>
+                        <div><img src="resources/imgs/resources/vector/resources--lumber.png"></div>
+                        <div><img src="resources/imgs/resources/vector/resources--brick.png"></div>
+                        <div><img src="resources/imgs/resources/vector/resources--wool.png"></div>
+                        <div><img src="resources/imgs/resources/vector/resources--grain.png"></div>
+                        <div><img src="resources/imgs/resources/vector/resources--ore.png"></div>
+                    </div>
+                    <div class="trading trade-other">
+                        <p>Receiving:</p>
+                        <input type="number" value="0" data-trade="lumber" placeholder="lumber">
+                        <input type="number" value="0" data-trade="brick" placeholder="brick">
+                        <input type="number" value="0" data-trade="wool" placeholder="wool">
+                        <input type="number" value="0" data-trade="grain" placeholder="grain">
+                        <input type="number" value="0" data-trade="ore" placeholder="ore">
+                    </div>
+                </div>
+
+                <div id="cancel" class="btn" data-action="cancel">
+                    Cancel
+                </div>
             </div>
         </section>
 

@@ -60,16 +60,18 @@
     ![Image of Number of Player Buttons](README_imgs/Settlers-of-Catan_num-players.png)
     5. Read the **"MESSAGE WINDOW"** (light grey, slightly opaque background on top of the light blue background) right underneath the "CONTROLS" section to figure out which player gets to be first.
     ![Image of Message-Box](README_imgs/Settlers-of-Catan_message-box.png)
-    6. You are now in the **"INITIAL PHASE"** of the game.  Follow the instructions **"MESSAGE WINDOW"**.  Players will place 1 settlement and 1 road each starting from the first player until every player gets to do this.  This happens a second time, but then starts with the last player who placed until it reaches the 1st player.  After this phase, the **"MESSAGE WINDOW"** will tell you when the game is **"IN PROGRESS"**.
-    7. On a player's turn, the **DICE** will automatically roll for you and   
-        > Based on what number was rolled, players with settlements on the hex whose number was rolled will get the corresponding resource to that area
+    6. You are now in the **"INITIAL PHASE"** of the game.  Follow the instructions in the **"MESSAGE WINDOW"**.  Players will place 1 settlement and 1 road each starting from the first player until every player gets to do this.  This happens a second time, but then starts with the last player who placed until it reaches the 1st player.  After this phase, the **"MESSAGE WINDOW"** will tell you when the game is **"IN PROGRESS"**.
+    7. On a player's turn, the **DICE** will automatically roll for him/her.   
+        > Based on what number was rolled, players with settlements on the hex whose number was rolled will get the corresponding resource to that area.
+            > Forests produce *lumber*, Hills produce *brick*, Pastures produce *wool*, Fields produce *grain*, and Mountains produce *ore*.
+        ![Image of Resources](README_imgs/Settlers-of-Catan_resources.png)
 
-        > if a 7 was rolled, the player must select where to place the robber before the turn can continue.  For anywhere except the desert, the robber blocks any settlement touching his/her hex from producing resources on the given roll value.  If the robber is moved to a different hex, the original number token will be placed back onto the hex he is departing from.
+        > If a 7 was rolled, the player must select where to place the robber before the turn can continue.  For anywhere except the desert, the robber blocks any settlement touching his/her hex from producing resources on the given roll value.  If the robber is moved to a different hex, the original number token will be placed back onto the hex he is departing from.
         ![Image of Robber 1](README_imgs/Settlers-of-Catan_robber1.png)
         ![Image of Robber 2](README_imgs/Settlers-of-Catan_robber2.png)
         ![Image of Robber 3](README_imgs/Settlers-of-Catan_robber3.png)
 
-        > the **"CONTROLS"** section will change to show the player's action buttons.
+        > The **"CONTROLS"** section will change to show the **"Player's Action Section"**.
         ![Image of Player Action Buttons](README_imgs/Settlers-of-Catan_player-actions.png)
     8.  The player has the following actions available to them:
         -  Build Road
@@ -90,8 +92,9 @@
         -  End Turn
     9.  At anytime, the player can cancel the current action selection by clicking the **"CANCEL"** button that populates in the **"CONTROLS"** section
     ![Image of Cancel Button](README_imgs/Settlers-of-Catan_cancel.png)
-    10.  When the player hits the **"END TURN"** button in the player actions section, the turn is changed.
+    10.  When the player hits the **"END TURN"** button in the **"Player's Action Section"**, the turn is changed.
     11.  Gameplay continues until someone reaches 10 victory points.  If a player has 10 actual victory points (visible points + hidden points) after ending his/her turn, he/she wins the game.
+        > Hidden victory points are earned from development cards (*feature not yet implemented*) and are kept secret from other players.
     ![Image of Win](README_imgs/Settlers-of-Catan_win.png)
 ### D. Next Steps
 1. Unsolved problems
@@ -102,6 +105,6 @@
     - [ ] change clip path of settlements and cities placed on board
     - [ ] proper trade rates with bank (4 of the same of 1 of your resources for any 1 from the bank)
     - [ ] Harbor areas that change trade rates with the bank
-        1. Harbor images on the DOM
-        2. Randomize harbor areas
+        - [ ] Harbor images on the DOM
+        - [ ] Randomize harbor areas
     - [ ] Development Card methods

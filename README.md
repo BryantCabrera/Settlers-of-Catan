@@ -43,9 +43,10 @@
     1. event listeners
     2. value retrieval
     3. animations
-5. Velocity
+5. jQuery Modal
+6. Velocity
     1. animations
-6. IonIcons
+7. IonIcons
     1. link icons
 ### C. Getting Started
 1. Link to deployed game:

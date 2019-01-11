@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <link rel="stylesheet" href="https://use.typekit.net/ojm8stc.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.ui.js"></script>
@@ -20,9 +22,70 @@
         <h1>Bryant Cabrera</h1>
         <ul>
             <li><a href="#controls">Game</a></li>
-            <li><a href="#instructions">Instructions</a></li>
+            <li><a href="#instructions" rel="modal:open">Instructions</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
+
+        <div id="instructions" class="modal">
+            <p>
+                <h4>Welcome to Bryant Cabrera's Settler's of Catan Game</h4><br>
+                <ol>
+                    <li>
+                        In the header, in the links on the top right, click <strong>"CONTACT"</strong> to find out more about the developer of this program, Bryant Cabrera.
+                    </li>
+                    <li>
+                        In the header, in the links on the top right, click <strong>"GAME"</strong> to be taken to the <strong>"CONTROLS"</strong> section (top middle of the main section with a light brown background) of the game.
+                    </li>
+                    <li>
+                        In the <strong>"CONTROLS"</strong> section, click the <strong>"NEW GAME"</strong> button to initialize the boardgame.
+                    </li>
+                    <li>
+                        In the <strong>"CONTROLS"</strong> section , click on the number of players you want to play the game.
+                    </li>
+                    <li>
+                        Read the <strong>"MESSAGE WINDOW"</strong> (light grey, slightly opaque background on top of the light blue background) right underneath the "CONTROLS" section to figure out which player gets to be first.
+                    </li>
+                    <li>
+                        You are now in the <strong>"INITIAL PHASE"</strong> of the game.  Follow the instructions in the <strong>"MESSAGE WINDOW"</strong>.  Players will place 1 settlement and 1 road each starting from the first player until every player gets to do this.  This happens a second time, but then starts with the last player who placed until it reaches the 1st player.  After this phase, the <strong>"MESSAGE WINDOW"</strong> will tell you when the game is <strong>"IN PROGRESS"</strong>.
+                    </li>
+                    <li>
+                        On a player's turn, the <strong>DICE<strong> will automatically roll for him/her.   
+                        <br>Based on what number was rolled, players with settlements on the hex whose number was rolled will get the corresponding resource to that area.
+                        <ul>
+                            <li>Forests produce *lumber*, Hills produce *brick*, Pastures produce *wool*, Fields produce *grain*, and Mountains produce *ore*.</li>
+                            <li>If a 7 was rolled, the player must select where to place the robber before the turn can continue.  For anywhere except the desert, the robber blocks any settlement touching his/her hex from producing resources on the given roll value.  If the robber is moved to a different hex, the original number token will be placed back onto the hex he is departing from.</li>
+                            <li>>The <strong>"CONTROLS"</strong> section will change to show the <strong>"Player's Action Section"</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        The player has the following actions available to them:
+                        <ul>
+                            <li>Build Road
+                                <br>> A road can only be built next to one of your existing settlements/cities or roads.</li>
+                            <li>Build Settlement (Worth 1 VP, denoted by an S)</li>
+                            <li>Build City (Worth 2 VP, denoted by a C)</li>
+                            <li>Trade
+                                    <br>> Select which player you want to trade with
+                                    <br>> Select what you want to trade</li>
+                            <li>Buy/Use Development Card
+                                    <br>> Feature not implemented yet</li>
+                            <li>End Turn</li>
+                        </ul>
+                    </li>
+                    <li>
+                        At anytime, the player can cancel the current action selection by clicking the <strong>"CANCEL"</strong> button that populates in the <strong>"CONTROLS"</strong> section
+                    </li>
+                    <li>
+                        When the player hits the <strong>"END TURN"</strong> button in the <strong>"Player's Action Section"</strong>, the turn is changed.
+                    </li>
+                    <li>
+                        Gameplay continues until someone reaches 10 victory points.  If a player has 10 actual victory points (visible points + hidden points) after ending his/her turn, he/she wins the game.
+                        > Hidden victory points are earned from development cards (*feature not yet implemented*) and are kept secret from other players.
+                    </li> 
+                </ol>   
+            </p>
+            <a href="#" rel="modal:close">Close</a>
+        </div>
     </header>
 
     <main>

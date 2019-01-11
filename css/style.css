@@ -154,6 +154,19 @@ header {
                 border-bottom: 1px solid var(--dice-color2);
             }
 
+#instructions {
+    background-color: var(--dice-color1);
+    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent));
+    color: var(--dice-color2);
+    font-size: 1rem;
+}
+
+    #instructions a {
+        color: var(--dice-color2);
+        text-decoration: none;
+    }
+
+
 /******************************/
 /********** Main **********/
 /******************************/
@@ -810,7 +823,14 @@ main {
             height: 10rem;
             width: auto;
             opacity: 0.5;
+            transition: all .2s;
         }
+
+            .player .road-card .road--card img:hover {
+                transform: scale(4);
+                opacity: 1;
+                z-index: 4;
+            }
 
 .player .army-card {
     grid-area: army;
@@ -829,6 +849,13 @@ main {
             height: 10rem;
             width: auto;
             opacity: 0.5;
+            transition: all .2s;
+        }
+
+        .player .army-card .army--card img:hover {
+            transform: scale(4);
+            opacity: 1;
+            z-index: 4;
         }
 
     .player .army-card .army--num {
@@ -1072,7 +1099,14 @@ main {
 #building-costs img {
     height: 10rem;
     width: auto;
+    transition: all .2s;
 }
+
+    #building-costs img:hover {
+        transform: scale(4);
+        opacity: 1;
+        z-index: 4;
+    }
 
 /********** Bank Section **********/
 #bank {

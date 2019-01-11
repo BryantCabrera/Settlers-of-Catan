@@ -1,6 +1,11 @@
 # Bryant Cabrera's Settlers of Catan
 
-### A. Images
+### A. Description
+Bryant Cabrera's Settlers of Catan is a web-based adaptation of the popular boardgame "Settlers of Catan" by Klaus Teuber.  The game is a multiplayer, turn-based strategy, resource management boardgame.  Players' logic, management, and negotiation skills will be tested.  Welcome to Catan!
+
+More info about the game can be found at the [Official Settlers of Catan Website](https://www.catan.com/game/catan).
+
+### B. Images
 1. Wireframe
 ![Image of Overall Wireframe](README_imgs/Settlers-of-Catan_wireframe.png)
 ![Image of Player Section Wireframe](README_imgs/Settlers-of-Catan_wireframe-player_section.png)
@@ -11,7 +16,7 @@
     1.  Randomized hex areas
     2.  Ordered number tokens that skip over the desert
 
-### B. Technologies Used
+### C. Technologies Used
 1. HTML
     1. Block__Element--Method (BEM) class naming methodology
 2. CSS
@@ -48,7 +53,8 @@
     1. animations
 7. IonIcons
     1. link icons
-### C. Getting Started
+
+### D. Getting Started
 1. Link to deployed game:
 [GitHub Pages Deployed Game](https://bryantcabrera.github.io/Settlers-of-Catan/#)
 2. Instructions
@@ -97,7 +103,8 @@
     11.  Gameplay continues until someone reaches 10 victory points.  If a player has 10 actual victory points (visible points + hidden points) after ending his/her turn, he/she wins the game.
         > Hidden victory points are earned from development cards (*feature not yet implemented*) and are kept secret from other players.
     ![Image of Win](README_imgs/Settlers-of-Catan_win.png)
-### D. Next Steps
+
+### E. Next Steps
 1. Unsolved problems
     - [ ] Resizing for certain mobile devices causes elements to overlap rather than overflow
 2. Planned features

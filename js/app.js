@@ -2026,7 +2026,6 @@ const game = {
         for (let i = initialTurns.length - 1; i >= 0; i--) {
             initialTurns.push(initialTurns[i]);
         }
-        console.log(initialTurns);
 
         //loops through initialTurns array to let the appropriate players build 1 settlement & 1 road using the initial turn order described above
         this.initialPlacement();

@@ -370,7 +370,9 @@ class Player {
                         });
 
                         //reduces player's city pieces
-                        this.pieces.city -= 1;
+                        this.pieces.city--;
+                        //increased player's settlement pieces by 1
+                        this.pieces.settlement++;
                         //increases player's points by 2
                         this.victoryPoints += 2;
                         //changes resource amounts for player & bank
@@ -424,16 +426,7 @@ class Player {
         // }
     }
 
-    tradePlayer () {
-
-    }
-
-    tradeBank () {
-
-    }
-
     
-
     endTurn () {
         game.render();
         //check win logic: if this player has 10 actual victory points (actual = shown + hidden) at the end of his/her turn, he/she has won the game
@@ -577,8 +570,6 @@ let dcDeck = [];
 
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
 let dice1, dice2, diceTotal, turn, numPlayers, currentSet, robberTemp, tradingPartner;
-// //for TESTING purposes
-// turn = 0;
 
 //this is a let instead of a const because this needs to be reassigned to a new [] when the game is reinitialized
 let initialTurns = [];
@@ -2054,6 +2045,17 @@ const game = {
             }
         }
 
+        //if it is the current player's turn, remove the background-image, else make the background-img mask gray
+
+        for (let i = 0; i < 4; i++) {
+            if (i !== turn) {
+                $(`#player-${i}`).css('background-image', 'linear-gradient(to right bottom, var(--background-color-light), var(--background-color-medium))').css('opacity', '0.5');
+            } else {
+                $(`#player-${i}`).css('background-image', 'none').css('opacity', '1');
+            }
+        }
+
+        //scrolls text box to bottom of content
         $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
     },
     getFirstPlayer () {

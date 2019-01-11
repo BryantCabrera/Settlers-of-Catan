@@ -86,7 +86,7 @@ class Player {
         diceTotal = dice1 + dice2;
 
         //animates dice
-        gameDice1.html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`).velocity({
+        gameDice1.html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png" alt="Dice 1 Image" title="Dice 1 Image">`).velocity({
             rotateX: '360deg',
             rotateY: '360deg'
         },{
@@ -94,7 +94,7 @@ class Player {
             loop: 1,
             easing:'linear'
         });
-        gameDice2.html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`).velocity({
+        gameDice2.html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png" alt="Dice 2 Image" title="Dice 2 Image">`).velocity({
             rotateX: '360deg',
             rotateY: '360deg'
         },{
@@ -1879,7 +1879,7 @@ const game = {
             //assign the resource of the assigned Area to that hex
             hex.resource = chosenArea.resource;
 
-            $(`#hex${hex['data-id']}`).append(`<img src="${chosenArea.img}">`);
+            $(`#hex${hex['data-id']}`).append(`<img src="${chosenArea.img}" alt="Hex Area" title="Hex Area">`);
             hex.area = chosenArea.area;
             hex.resource = chosenArea.resource;
 
@@ -1888,7 +1888,7 @@ const game = {
                 hex.numberToken = catan.numberTokens[`${hex['data-id']}`]; 
                 $(`#hex${hex["data-id"]}`).append(`<div><h3>${hex.numberToken}</h3></div>`);
             } else {
-                hex.numberToken = '<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber">';
+                hex.numberToken = '<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber" alt="Robber" title="Robber">';
                 $(`#hex${hex["data-id"]}`).append(`<div>${hex.numberToken}</div>`);
                 //at the current index, splice in the string 'robber' so that we can continue assigning the appropriate tokens to the rest of the hexes
                 catan.numberTokens.splice([`${hex["data-id"]}`], 0, 'robber');
@@ -1917,8 +1917,8 @@ const game = {
     },
     render () {
         //updates dice images
-        gameDice1.html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`);
-        gameDice2.html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`);
+        gameDice1.html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png" alt="Dice 1 Image" title="Dice 1 Image">`);
+        gameDice2.html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png" alt="Dice 2 Image" title="Dice 2 Image">`);
 
         //renders player sections
         for (let player of game.players) {
@@ -2366,7 +2366,7 @@ let placeRobber = function (e) {
             $('#robber').css('visibility', 'hidden');
     
             //update the DOM so clicked hex now has the robber image on it
-            $(`#hex${hex["data-id"]} div`).html(`<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber">`);
+            $(`#hex${hex["data-id"]} div`).html(`<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber" alt="Robber" title="Robber">`);
     
             //turns off click on hexes
             gameHex.off('click', placeRobber);

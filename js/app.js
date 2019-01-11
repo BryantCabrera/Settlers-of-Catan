@@ -442,7 +442,7 @@ class Player {
             $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
 
             game.endGame();
-        } else if (this.victoryPointsActual !== 10){
+        } else if (this.victoryPointsActual < 10){
             game.changeTurn();
         }
     }
@@ -2396,7 +2396,7 @@ let buildPlayerActionsClick = function (e) {
         break;
       case 'changeTurn':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked changeTurn`);
-        game.changeTurn();
+        game.players[turn].endTurn();
         break;
     }
 };
@@ -2441,7 +2441,7 @@ let buildTradeWhatClick = function (e) {
     // let receiveOre = $('trade-player input[data-trade="ore"]').val();
     // let give = [giveLumber, giveBrick, giveWool, giveGrain, giveOre];
     // let receive = [receiveLumber, receiveBrick, receiveWool, receiveGrain, receiveOre];
-
+debugger
     let player = game.players[turn];
     for (let resource in player.resources) {
         if (player.resources[resource] > 0) {
@@ -2464,7 +2464,7 @@ let buildTradeWhatClick = function (e) {
         for (let resource in partner.resources) {
             if (partner.resources[resource].quantity > 0 && resource !== 'back') {
                 //if the bank has resources equal to or greater than the value specified, decrease the traded amount from bank and increase current player's amount by that much
-                player.resources[resource].quantity -= $(`.trade-partner input[data-trade="${resource}"]`).val();
+                partner.resources[resource].quantity -= $(`.trade-partner input[data-trade="${resource}"]`).val();
                 player.resources[resource] += $(`.trade-partner input[data-trade="${resource}"]`).val();
                 // player.resources[resource].quantity += $(`trade-player input[data-trade="${resource}"]`).val();
             }
@@ -2474,7 +2474,7 @@ let buildTradeWhatClick = function (e) {
         for (let resource in partner.resources) {
             if (partner.resources[resource] > 0) {
                 //if trading partner has resources equal to or greater than the value specified, decrease the traded amount from partner and increase current player's amount by that much
-                player.resources[resource] -= $(`.trade-partner input[data-trade="${resource}"]`).val();
+                partner.resources[resource] -= $(`.trade-partner input[data-trade="${resource}"]`).val();
                 player.resources[resource] += $(`.trade-partner input[data-trade="${resource}"]`).val();
                 // player.resources[resource] += $(`trade-player input[data-trade="${resource}"]`).val();
             }

@@ -2325,8 +2325,34 @@ let buildTradeWhoClick = function (e) {
         if (player.resources[resource] > 0) {
             //if that player has resources equal to or greater than the value specified, the new max input is that value
             $(`.trade-player input[data-trade="${resource}"]`).attr('max', `${player.resources[resource]}`);
+        } else {
+            $(`.trade-player input[data-trade="${resource}"]`).attr('max', '0');
         }
     }
+
+    let partner;
+    if (tradingPartner === catan) {
+        partner = catan
+        for (let resource in partner.resources) {
+            if (partner.resources[resource].quantity > 0) {
+                //if that player has resources equal to or greater than the value specified, the new max input is that value
+                $(`.trade-partner input[data-trade="${resource}"]`).attr('max', `${partner.resources[resource].quantity}`);
+            } else {
+                $(`.trade-partner input[data-trade="${resource}"]`).attr('max', '0');
+            }
+        }
+    } else {
+        partner = game.players[tradingPartner];
+        for (let resource in partner.resources) {
+            if (partner.resources[resource] > 0) {
+                //if that player has resources equal to or greater than the value specified, the new max input is that value
+                $(`.trade-partner input[data-trade="${resource}"]`).attr('max', `${partner.resources[resource]}`);
+            } else {
+                $(`.trade-partner input[data-trade="${resource}"]`).attr('max', '0');
+            }
+        }
+    }
+    
 
     //shows trade-what
     $('.trade-what').css('visibility', 'visible');
@@ -2430,7 +2456,7 @@ $('#cancel').on('click', buildCancelClick);
 //event listener for trade-who button
 $('.trade-who').on('click', buildTradeWhoClick);
 
-let buildTradeWhatClick = function (e) {
+let buildTradeWhatClick = function () {
     // let giveLumber = $('trade-player input[data-trade="lumber"]').val();
     // let giveBrick = $('trade-player input[data-trade="brick"]').val();
     // let giveWool = $('trade-player input[data-trade="wool"]').val();
@@ -2443,32 +2469,40 @@ let buildTradeWhatClick = function (e) {
     // let receiveOre = $('trade-player input[data-trade="ore"]').val();
     // let give = [giveLumber, giveBrick, giveWool, giveGrain, giveOre];
     // let receive = [receiveLumber, receiveBrick, receiveWool, receiveGrain, receiveOre];
-debugger
+
+    //giving
     let player = game.players[turn];
     for (let resource in player.resources) {
         if (player.resources[resource] > 0) {
             //if current player has resources equal to or greater than the value specified, reduce current player's quantity of that resource and increase the trading partner's quantity
-            player.resources[resource] -= $(`.trade-player input[data-trade="${resource}"]`).val();
+            player.resources[resource] -= parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
 
             if (tradingPartner === catan) {
-                catan.resources[resource].quantity += $(`.trade-player input[data-trade="${resource}"]`).val();
+                catan.resources[resource].quantity += parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
             } else {
-                game.players[tradingPartner][resource] += $(`.trade-player input[data-trade="${resource}"]`).val();
+                game.players[tradingPartner][resource] += parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
             }
             
             // player.resources[resource] += $(`trade-partner input[data-trade="${resource}"]`).val();
+
+            //resets value back to 0
+            $(`.trade-player input[data-trade="${resource}"]`).val('0');
         }
     }
 
+    //receiving
     let partner;
     if (tradingPartner === catan) {
         partner = catan;
         for (let resource in partner.resources) {
             if (partner.resources[resource].quantity > 0 && resource !== 'back') {
                 //if the bank has resources equal to or greater than the value specified, decrease the traded amount from bank and increase current player's amount by that much
-                partner.resources[resource].quantity -= $(`.trade-partner input[data-trade="${resource}"]`).val();
-                player.resources[resource] += $(`.trade-partner input[data-trade="${resource}"]`).val();
+                partner.resources[resource].quantity -= parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
+                player.resources[resource] += parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
                 // player.resources[resource].quantity += $(`trade-player input[data-trade="${resource}"]`).val();
+
+                //resets value back to 0
+                $(`.trade-partner input[data-trade="${resource}"]`).val('0');
             }
         }
     } else {
@@ -2476,9 +2510,12 @@ debugger
         for (let resource in partner.resources) {
             if (partner.resources[resource] > 0) {
                 //if trading partner has resources equal to or greater than the value specified, decrease the traded amount from partner and increase current player's amount by that much
-                partner.resources[resource] -= $(`.trade-partner input[data-trade="${resource}"]`).val();
-                player.resources[resource] += $(`.trade-partner input[data-trade="${resource}"]`).val();
+                partner.resources[resource] -= parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
+                player.resources[resource] += parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
                 // player.resources[resource] += $(`trade-player input[data-trade="${resource}"]`).val();
+
+                //resets value back to 0
+                $(`.trade-partner input[data-trade="${resource}"]`).val('0');
             }
         }
     }
@@ -2607,8 +2644,3 @@ let placeRobber = function (e) {
 // $(`#endTurn`).on('click', function () {
 //     game.changeTurn();
 // });
-
-//implement later
-// function updateScroll () {
-//     $('.text-box').scrollHeight
-// }

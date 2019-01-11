@@ -53,7 +53,7 @@
 }
 
 html {
-    font-size: 55.125%;
+    font-size: 62.5%; /*55.125%*/
 }
 
 body {
@@ -62,6 +62,7 @@ body {
     font-style: normal;
     font-size: 1.6rem;
     color: var(--color-white);
+    background-image: linear-gradient(to bottom, var(--background-color-medium), var(--color-black-transparent));
 }
 
 /******************************/

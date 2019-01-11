@@ -48,7 +48,8 @@
 6. IonIcons
     1. link icons
 ### C. Getting Started
-1. Link to deployed game
+1. Link to deployed game:
+[GitHub Pages Deployed Game](https://bryantcabrera.github.io/Settlers-of-Catan/#)
 2. Instructions
     1. In the header, in the links on the top right, click **"INSTRUCTIONS"** to learn how to play Settlers of Catan
     ![Image of Header](README_imgs/Settlers-of-Catan_header.png)
@@ -60,16 +61,32 @@
     5. Read the **"MESSAGE WINDOW"** (light grey, slightly opaque background on top of the light blue background) right underneath the "CONTROLS" section to figure out which player gets to be first.
     ![Image of Message-Box](README_imgs/Settlers-of-Catan_message-box.png)
     6. You are now in the **"INITIAL PHASE"** of the game.  Follow the instructions **"MESSAGE WINDOW"**.  Players will place 1 settlement and 1 road each starting from the first player until every player gets to do this.  This happens a second time, but then starts with the last player who placed until it reaches the 1st player.  After this phase, the **"MESSAGE WINDOW"** will tell you when the game is **"IN PROGRESS"**.
-    7. On a player's turn, the **DICE** will automatically roll for you and the **"CONTROLS"** section will change to show the player's action buttons.  
-    ![Image of Player Action Buttons](README_imgs/Settlers-of-Catan_player-actions.png)
+    7. On a player's turn, the **DICE** will automatically roll for you and   
+        > Based on what number was rolled, players with settlements on the hex whose number was rolled will get the corresponding resource to that area
+
+        > if a 7 was rolled, the player must select where to place the robber before the turn can continue.  For anywhere except the desert, the robber blocks any settlement touching his/her hex from producing resources on the given roll value.  If the robber is moved to a different hex, the original number token will be placed back onto the hex he is departing from.
+        ![Image of Robber 1](README_imgs/Settlers-of-Catan_robber1.png)
+        ![Image of Robber 2](README_imgs/Settlers-of-Catan_robber2.png)
+        ![Image of Robber 3](README_imgs/Settlers-of-Catan_robber3.png)
+
+        > the **"CONTROLS"** section will change to show the player's action buttons.
+        ![Image of Player Action Buttons](README_imgs/Settlers-of-Catan_player-actions.png)
     8.  The player has the following actions available to them:
         -  Build Road
+            > A road can only be built next to one of your existing settlements/cities or roads.
+            ![Image of Road-Settlement](README_imgs/Settlers-of-Catan_road.png)
+            ![Image of Road-Road](README_imgs/Settlers-of-Catan_road2.png)
         -  Build Settlement (Worth 1 VP, denoted by an S)
         ![Image of Settlements](README_imgs/Settlers-of-Catan_settlement.png)
         -  Build City (Worth 2 VP, denoted by a C)
         ![Image of City](README_imgs/Settlers-of-Catan_city.png)
         -  Trade
+            > Select which player you want to trade with
+            ![Image of Trade-Who](README_imgs/Settlers-of-Catan_trade1.png)
+            > Select what you want to trade
+            ![Image of Trade-What](README_imgs/Settlers-of-Catan_trade2.png)
         -  Buy/Use Development Card
+            > Feature not implemented yet
         -  End Turn
     9.  At anytime, the player can cancel the current action selection by clicking the **"CANCEL"** button that populates in the **"CONTROLS"** section
     ![Image of Cancel Button](README_imgs/Settlers-of-Catan_cancel.png)
@@ -78,7 +95,7 @@
     ![Image of Win](README_imgs/Settlers-of-Catan_win.png)
 ### D. Next Steps
 1. Unsolved problems
-    - [ ] Resource distribution should only occur if that resource's quantity is greater than 0 in bank
+    - [ ] Resizing for certain mobile devices causes elements to overlap rather than overflow
 2. Planned features
     - [ ] Ability to rename player
     - [ ] When 7 is rolled, players with over 7 totalResource cards must discard half of their cards rounded down

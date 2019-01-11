@@ -752,7 +752,7 @@ main {
         justify-content: center;
         align-items: center;
         visibility: hidden;
-        height: 100%;
+        height: 9rem;
         width: 9rem;
     }
 /********** Players Section **********/

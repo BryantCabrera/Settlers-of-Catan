@@ -482,7 +482,6 @@ let dcDeck = [];
 /******************************/
 /********** App's State (Variables) **********/
 /******************************/
-
 //this is a let instead of a const because the "Knight" development card can reassign the diceTotal to 7
 let dice1, dice2, diceTotal, turn, numPlayers, currentSet, robberTemp, tradingPartner;
 
@@ -2137,21 +2136,6 @@ const game = {
 };
 
 
-/******************************/
-/********** Event Listeners **********/
-/******************************/
-//event listener for New Game button initializes game
-$('.new-game__button').on('click', function () {
-    $('.new-game__button').css('visibility', 'hidden');
-    $('.initial-player-creation').css('visibility', 'visible');
-});
-
-//event listener for initial player creation
-$('.initial-player-creation').on('click', 'input', function (e) {
-    numPlayers = parseInt($(e.target).val());
-    game.init();
-});
-
 //the callback function for the buildRoad event listener
 let buildRoadClick = function(e) {
     game.players[turn].buildRoad(e);
@@ -2233,10 +2217,6 @@ let buildPlayerActionsClick = function (e) {
     }
 };
 
-//event listener for Player Action Buttons
-playerActions.on('click', buildPlayerActionsClick);
-
-
 //the callback function for the Cancel Button event listener
 let buildCancelClick = function (e) {
     //hides cancel button
@@ -2250,10 +2230,6 @@ let buildCancelClick = function (e) {
     gameSettlement.off('click', buildSettlementClick);
     gameSettlement.off('click', buildCityClick);
 };
-
-//event listener for Cancel Button
-cancel.on('click', buildCancelClick);
-
 //the callback function for the trade-who event listener
 let buildTradeWhoClick = function (e) {
     //hides all trade-who player buttons
@@ -2309,9 +2285,7 @@ let buildTradeWhoClick = function (e) {
     tradeWhat.css('visibility', 'visible');
 }
 
-//event listener for trade-who button
-tradeWho.on('click', buildTradeWhoClick);
-
+//callback for trade what event listener
 let buildTradeWhatClick = function () {
     let player = game.players[turn];
     for (let resource in player.resources) {
@@ -2371,9 +2345,6 @@ let buildTradeWhatClick = function () {
     playerActions.css('visibility', 'visible');
 }
 
-//event listener for trade-what button
-$('#trade-submit').on('click', buildTradeWhatClick);
-
 //callback function for robber placement event listener
 let placeRobber = function (e) {
     textBox.append(`<br>Please click on a hex to place the robber.`);
@@ -2409,3 +2380,32 @@ let placeRobber = function (e) {
         textBox.append(`<br>Please click on a hex.`);
     }
 }
+
+
+
+/******************************/
+/********** Event Listeners **********/
+/******************************/
+//event listener for New Game button initializes game
+$('.new-game__button').on('click', function () {
+    $('.new-game__button').css('visibility', 'hidden');
+    $('.initial-player-creation').css('visibility', 'visible');
+});
+
+//event listener for initial player creation
+$('.initial-player-creation').on('click', 'input', function (e) {
+    numPlayers = parseInt($(e.target).val());
+    game.init();
+});
+
+//event listener for Player Action Buttons
+playerActions.on('click', buildPlayerActionsClick);
+
+//event listener for Cancel Button
+cancel.on('click', buildCancelClick);
+
+//event listener for trade-who button
+tradeWho.on('click', buildTradeWhoClick);
+
+//event listener for trade-what button
+$('#trade-submit').on('click', buildTradeWhatClick);

@@ -104,6 +104,7 @@
     - [ ] When 7 is rolled, players with over 7 totalResource cards must discard half of their cards rounded down
     - [ ] change clip path of settlements and cities placed on board
     - [ ] proper trade rates with bank (4 of the same of 1 of your resources for any 1 from the bank)
+    - [ ] cannot trade nothing away in exchange for something (must at least be a 1:1 trade)
     - [ ] Harbor areas that change trade rates with the bank
         - [ ] Harbor images on the DOM
         - [ ] Randomize harbor areas

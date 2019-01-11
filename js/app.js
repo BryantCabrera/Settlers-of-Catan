@@ -1,63 +1,4 @@
 /******************************/
-/********** Pseudocode **********/
-/******************************/
-//JavaScript
-/*
-1. add event listeners to all road areas, settlement & port areas, buttons, robber, hexes, and cards
-2. initialize the state
-    2a. define players (#, name, etc.) 
-    2b. decide turn order
-    2c. set player victory points to 0
-    2d. refill deck
-3. call render
-4. initial turn
-    4a. players click board to place initial settlements and roads
-    4b. store settlement/port areas, road areas taken
-    4c. distribute initial hand based on initial settlement placement
-    4d. update remaining cards in deck
-5. prompt dice roll
-    5a. store dice roll value
-    5b. check dice roll value
-            5bi. if 7
-                5bi.i. check player's hand amounts.
-                    5bi.i.i. if >7, prompt to discard Math.floor(hand/2)
-                5bi.ii. display areas where current player can move robber
-                5bi.iii. prompt who current player can steal from
-                5bi.iv. remove chosen card from opponent's hand and place it into player's hand.
-                5bi.v. update class of settlements on robbed land to "robbed"
-            5bii. if not 7 
-                5bii.i. check value against stored settlement/port area values
-                5bii.ii. distribute resource cards accordingly
-    5d. update remaining cards in deck
-    5e. prompt user for build, purchase, trade, or end turn
-        5ei. if build
-            5ei.i. check player's current resources
-            5ei.ii. display build options
-            5ei.iii. on click, display possible areas to build
-            5ei.iv. store player's choice
-            5ei.v. update player resources
-        5eii. if purchase
-            5eii.i. check player's current resources
-            5eii.ii. display possible purchase options
-            5eii.iii. update player's resources
-        5eiii. if trade
-            5eiii.i. display trade rates
-            5eiii.ii. store player's choice
-            5eiii.iii. update player's resources & remaining deck
-        5eiv. if end turn, continue to step 5f.
-    5f.check special condition fulfillment
-        5fi. if yes allot victory points & distribute cards accordingly
-        5fii. if no continue to 5g
-    5g. allot victory points accordingly
-    5h. calculate if there is winner
-        5hi. if yes, find winner & end game
-        5hii. if no continue
-6. change player turn
-    6a. repeat step 5
-
-*/
-
-/******************************/
 /********** Constants **********/
 /******************************/
 class Player {
@@ -85,6 +26,7 @@ class Player {
             ore: 0
         };
         this.totalResources = 0;
+        this.totalDevelopmentCards = 0;
         this.developmentCards = {
             knight: {
                 quantity: 0,
@@ -139,13 +81,30 @@ class Player {
     }
 
     roll () {
-        //NEED TO ADD: check to see if player has a knight card.  if so, ask if they want to use it.
-
         dice1 = Math.floor(Math.random() * 6) + 1;
         dice2 = Math.floor(Math.random() * 6) + 1;
         diceTotal = dice1 + dice2;
+
+        //animates dice
+        gameDice1.html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`).velocity({
+            rotateX: '360deg',
+            rotateY: '360deg'
+        },{
+            duration: 100,
+            loop: 1,
+            easing:'linear'
+        });
+        gameDice2.html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`).velocity({
+            rotateX: '360deg',
+            rotateY: '360deg'
+        },{
+            duration: 100,
+            loop: 1,
+            easing:'linear'
+        });
+
         game.render();
-        $('.text-box').append(`<br>${this.name} rolled ${diceTotal}.`);
+        textBox.append(`<br>${this.name} rolled ${diceTotal}.`);
 
         if (game.state === 'initializing') {
             return diceTotal
@@ -157,15 +116,13 @@ class Player {
     }
 
     moveRobber () {
-        $('.text-box').append(`<br>${this.name} must now move the robber.`);
-
-        //NEED TO ADD: use mouseover, mouseclick, mousehold, and mouserelease events coupled with my Tic-Tac-Toe floating pointer
+        textBox.append(`<br>${this.name} must now move the robber.`);
 
         //hides player action buttons
-        $('#player__actions').css('visibility', 'hidden');
+        playerActions.css('visibility', 'hidden');
 
         //adds event listener that lets player click on robber
-        $('.hexes .row .hex').on('click', placeRobber);
+        gameHex.on('click', placeRobber);
     }
 
     buildRoad (e) {
@@ -182,7 +139,7 @@ class Player {
 
                 //changes clicked area to current player's color
                 if (game.roadAreas[id].canOccupy === true && game.roadAreas[id].occupied === false) {
-                    $('.text-box').append(`<br>Player ${turn} just placed a road.`);
+                    textBox.append(`<br>Player ${turn} just placed a road.`);
 
                     game.roadAreas[id].occupied = true;
                     game.roadAreas[id].canOccupy = false;
@@ -201,52 +158,32 @@ class Player {
                         catan.resources.brick.quantity++;
 
                         //hides cancel button
-                        $('#cancel').css('visibility', 'hidden');
+                        cancel.css('visibility', 'hidden');
                         //shows player action buttons
-                        $('#player__actions').css('visibility', 'visible');
+                        playerActions.css('visibility', 'visible');
                     }
 
                     //turns off event listeners for road and settlement divs on gameboard
-                    // $('.hexes .row .settlement').off('click', buildSettlementClick);
-                    $('.hexes .row .road').off('click', buildRoadClick);
+                    gameRoad.off('click', buildRoadClick);
                     
                     game.render();
 
                     if (game.state === 'initializing') {
-                        // $('.hexes .row .road').off('click', buildRoadClick);
-                        // $('.hexes .row .settlement').off('click', buildSettlementClick);
                         howManyInitialTurns++
                         game.initialPlacement();
                     } 
                 } else {
-                    $('.text-box').append('<br>This road must be placed adjacent to one of your existing settlements.');
+                    textBox.append('<br>This road must be placed adjacent to one of your existing settlements.');
                 }
             } else {
-                $('.text-box').append('<br>This is not a valid area to place a road.');
+                textBox.append('<br>This is not a valid area to place a road.');
             }
 
         } else {
-            $('.text-box').append(`<br>You don't have anymore road pieces.`);
-            // $('.hexes .row .road').off('click', buildRoadClick);
+            textBox.append(`<br>You don't have anymore road pieces.`);
         }
-
-        //turns off event listeners for road and settlement divs on gameboard
-        // $('.hexes .row .settlement').off('click', buildSettlementClick);
-        // if (game.state !== 'initializing') {
-        //     $('.hexes .row .road').off('click', buildRoadClick);
-        // }
         
         game.render();
-        // $('.hexes .row .settlement').off('click', buildSettlementClick);
-        // $('.hexes .row .road').off('click', buildRoadClick);
-        // //change turns
-        // //function that would 
-        // game.render();
-        // if (game.state === 'initializing') {
-        //     $('.hexes .row .settlement').on('click', buildSettlementClick);
-        //     howManyInitialTurns++
-        //     game.initialPlacement();
-        // }
     }
 
     buildSettlement (e) {
@@ -270,7 +207,7 @@ class Player {
 
                 //changes clicked area to current player's color
                 if (game.settlementAreas[id].canOccupy === true && game.settlementAreas[id].occupied === false) {
-                    $('.text-box').append(`<br>Player ${turn} just placed a settlement.`);
+                    textBox.append(`<br>Player ${turn} just placed a settlement.`);
 
                     game.settlementAreas[id].occupied = true;
                     game.settlementAreas[id].canOccupy = false;
@@ -305,50 +242,36 @@ class Player {
                     this.victoryPoints++;
 
                     //hides cancel button
-                    $('#cancel').css('visibility', 'hidden');
+                    cancel.css('visibility', 'hidden');
 
                     //turns off event listeners for road and settlement divs on gameboard
-                    $('.hexes .row .settlement').off('click', buildSettlementClick);
+                    gameSettlement.off('click', buildSettlementClick);
 
                     if (game.state === 'initializing') {
-                        $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-                        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+                        textBox.append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
+                        textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
                         
-                        $('.hexes .row .road').on('click', buildRoadClick);
+                        gameRoad.on('click', buildRoadClick);
                         if (howManyInitialTurns >= initialTurns.length / 2 ) game.distributeResources(id);
                     } else {
                         //hides cancel button
-                        $('#cancel').css('visibility', 'hidden');
+                        cancel.css('visibility', 'hidden');
                         //shows player action buttons
-                        $('#player__actions').css('visibility', 'visible');
+                        playerActions.css('visibility', 'visible');
                     }
 
                     game.render();
                 } else {
-                    $('.text-box').append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
+                    textBox.append('<br>This settlement cannot be placed within 1 vertex of another already-placed settlement.');
                 }
             } else {
-                $('.text-box').append('<br>This is not a valid area to place a settlement.');
+                textBox.append('<br>This is not a valid area to place a settlement.');
             }
         } else {
-            $('.text-box').append(`<br>You don't have anymore settlement pieces.`)
+            textBox.append(`<br>You don't have anymore settlement pieces.`)
         }
-
-        //turns off event listeners for road and settlement divs on gameboard
-        // if (game.state !== 'initializing') {
-        //     $('.hexes .row .settlement').off('click', buildSettlementClick);
-        //     // $('.hexes .row .road').off('click', buildRoadClick);
-        // }
         
         game.render();
-        // $('.hexes .row .settlement').off('click', buildSettlementClick);
-        // if (game.state === 'initializing') {
-        //     $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-        //     $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
-
-        //     $('.hexes .row .road').on('click', buildRoadClick);
-        // }
-        // game.render();
     }
 
     buildCity (e) {
@@ -374,7 +297,7 @@ class Player {
                         //increased player's settlement pieces by 1
                         this.pieces.settlement++;
                         //increases player's points by 2
-                        this.victoryPoints += 2;
+                        this.victoryPoints++;
                         //changes resource amounts for player & bank
                         if (game.state !== 'initializing') {
                             this.resources.grain -= 2;
@@ -386,23 +309,23 @@ class Player {
                         }
 
                         //hides cancel button
-                        $('#cancel').css('visibility', 'hidden');
+                        cancel.css('visibility', 'hidden');
                         //shows player action buttons
-                        $('#player__actions').css('visibility', 'visible');
+                        playerActions.css('visibility', 'visible');
 
                         //removes City event listener after it has been built
-                        $('.hexes .row .settlement').off('click', buildCityClick);
+                        gameSettlement.off('click', buildCityClick);
                     } else {
-                        $('.text-box').append(`<br>You don't have the proper resources to build a city.  A city requires 2 grain and 3 ore to build.`);
+                        textBox.append(`<br>You don't have the proper resources to build a city.  A city requires 2 grain and 3 ore to build.`);
                     }
                 } else {
-                    $('.text-box').append(`<br>Please click on a settlement that you own.`);
+                    textBox.append(`<br>Please click on a settlement that you own.`);
                 }
             } else {
-                $('.text-box').append(`<br>Please click on a settlement.`);
+                textBox.append(`<br>Please click on a settlement.`);
             }
         } else {
-            $('.text-box').append(`<br>You don't have anymore city pieces.`);
+            textBox.append(`<br>You don't have anymore city pieces.`);
         }
         
         game.render();
@@ -412,27 +335,19 @@ class Player {
         if (dcDeck.length > 0) {
             let randomCardIdx = Math.floor(Math.random() * dcDeck.length);
             this.developmentCards[(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0])].quantity++;
-            // this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
+            this.totalDevelopmentCards++;
         } else {
-            $('.text-box').append(`<br>There are no more development cards in the deck.`);
+            textBox.append(`<br>There are no more development cards in the deck.`);
         }
         
     }
     
-    playDevelopmentCard () {
-        //if the player played a "knight" card, increase the player's army size by 1
-        // if (_____ === 'knight') {
-        //     this.special.armySize++;
-        // }
-    }
-
-    
     endTurn () {
         game.render();
-        //check win logic: if this player has 10 actual victory points (actual = shown + hidden) at the end of his/her turn, he/she has won the game
+        //checks win logic: if this player has 10 actual victory points (actual = shown + hidden) at the end of his/her turn, he/she has won the game
         if (this.victoryPointsActual >= 10) {
-            $('.text-box').append(`<br><h2>${this.name} HAS WON THE GAME!</h2>`);
-            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+            textBox.append(`<br><h2>${this.name} HAS WON THE GAME!</h2>`);
+            textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
 
             game.endGame();
         } else if (this.victoryPointsActual < 10){
@@ -580,8 +495,16 @@ let howManyInitialTurns = 0;
 /******************************/
 /********** Cached Element References **********/
 /******************************/
-
-
+const textBox = $('.text-box');
+const gameHex = $('.hexes .row .hex');
+const gameRoad = $('.hexes .row .road');
+const gameSettlement = $('.hexes .row .settlement');
+const gameDice1 = $('#dice1');
+const gameDice2 = $('#dice2');
+const playerActions = $('#player__actions');
+const cancel = $('#cancel');
+const tradeWho = $('.trade-who');
+const tradeWhat = $('.trade-what');
 
 
 
@@ -592,7 +515,7 @@ const game = {
     state: 'initializing',
     players: [],
     hexes: [
-        //numberTokens are initialized to 7 because those do not produce any resources
+        //numberTokens are initialized to 7 because 7s do not produce any resources
         {
             'data-type': 'hex',
             'data-id': 0,
@@ -1995,8 +1918,8 @@ const game = {
     },
     render () {
         //updates dice images
-        $('#dice1').html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`);
-        $('#dice2').html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`);
+        gameDice1.html(`<img src="resources/imgs/dice/vector/dice-${dice1}.png">`);
+        gameDice2.html(`<img src="resources/imgs/dice/vector/dice-${dice2}.png">`);
 
         //renders player sections
         for (let player of game.players) {
@@ -2074,12 +1997,8 @@ const game = {
                 }
             }
         }
-
-        
-    
-
         //scrolls text box to bottom of content
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+        textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
     },
     getFirstPlayer () {
         let diceRolls = [];
@@ -2099,7 +2018,7 @@ const game = {
             }  
         }
         turn = firstPlayer;
-        $('.text-box').append(`<br>${game.players[firstPlayer].name} is the first player.`);
+        textBox.append(`<br>${game.players[firstPlayer].name} is the first player.`);
     },
     initialTurns () {
         //this refers to the 2 initial settlements and roads players can place
@@ -2112,27 +2031,6 @@ const game = {
 
         //loops through initialTurns array to let the appropriate players build 1 settlement & 1 road using the initial turn order described above
         this.initialPlacement();
-        // $('.text-box').append(`<br>${game.players[initialTurns[0]].name}, please place a settlement on the board.`);
-        // $('.hexes .row .settlement').on('click', buildSettlementClick);
-        // for (let i = 0; i < initialTurns.length; i++) {
-        //     // this.initialTurn();
-        //     // turn = initialTurns[howManyTurns];
-        //     // game.initialBuildSettlement();
-        //     // game.initialBuildRoad();
-        //     $('.text-box').append(`<br>${game.players[initialTurns[i]].name}, please place a settlement on the board.`);
-        //     // game.players[initialTurns[i]].buildSettlement();
-        //     if (game.players[initialTurns[i]].pieces.settlements === 5) {
-        //         $('.hexes .row .settlement').on('click', buildSettlementClick);
-
-        //         s
-        //     }
-
-        //     $('.text-box').append(`<br>${game.players[initialTurns[i]].name}, please place a road on the board adjacent to the settlement you just placed.`);
-        //     // game.players[initialTurns[i]].buildRoad();
-        // }
-        
-        // game.state = 'inProgress';
-        // $('.text-box').append('<br>The game is now in progress');
     },
     initialPlacement () {
         if (howManyInitialTurns === initialTurns.length) {
@@ -2145,45 +2043,30 @@ const game = {
             game.players[turn].roll();
 
             game.state = 'inProgress';
-            $('.text-box').append(`<br>The game is now in progress <br>${game.players[turn].name}, please decide what you want to do by clicking on an action button above.`);
+            textBox.append(`<br>The game is now in progress <br>${game.players[turn].name}, please decide what you want to do by clicking on an action button above.`);
 
             //makes player actions buttons visible
-            $('#player__actions').css('visibility', 'visible');
+            playerActions.css('visibility', 'visible');
 
-            $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+            textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
 
             return
         }
 
         turn = initialTurns[howManyInitialTurns];
-        $('.text-box').append(`<br>${game.players[initialTurns[howManyInitialTurns]].name}, please place a settlement on the board.`);
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+        textBox.append(`<br>${game.players[initialTurns[howManyInitialTurns]].name}, please place a settlement on the board.`);
+        textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
 
-        $('.hexes .row .settlement').on('click', buildSettlementClick);
-        // $('.text-box').append(`<br>${game.players[turn].name}, please place a settlement on the board.`);
-        // $('.text-box').append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-        // game.initialBuildSettlement();
-        // game.initialBuildRoad();
+        gameSettlement.on('click', buildSettlementClick);
     },
-    // initialBuildSettlement () {
-    //     $('.text-box').append(`<br>${game.players[turn].name}, please place a settlement on the board.`);
-    //         // click to build -> do this   
-    // },
-    // initialBuildRoad () {
-    //     $(".text-box").append(`<br>${game.players[turn].name}, please place a road on the board adjacent to the settlement you just placed.`);
-    // },
     changeTurn () {
-        //change 3 to game.players.length, this is just for TESTING purposes
         turn === (game.players.length - 1) ? turn = 0 : turn += 1;
         game.players[turn].roll();
 
-        // $('.road--vertical:hover, .road--left:hover, .road--right:hover, .settlement--side:hover, .settlement--top:hover').css('background-color', `var(--player-${turn}-color1)`);
-
-        $('.text-box').append(`<br>It is now Player ${turn}'s turn.`);
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+        textBox.append(`<br>It is now Player ${turn}'s turn.`);
+        textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
     },
     distributeResources (id) {
-
         if (game.state === 'initializing') {
 
             let player = game.players[turn];
@@ -2200,19 +2083,6 @@ const game = {
                 }
             });
 
-            // if () {
-                // currentSett = $(e.target).attr('data-id');
-                // for (let i = 0; i < game.settlementAreas[currentSett].adjacentHexes.length; i++) {
-                //     if (game.hexes[game.settlementAreas[currentSett].adjacentHexes[i]].area !== 'desert') {
-                //         game.players[turn].resources[game.hexes[game.settlementAreas[currentSett].adjacentHexes[i]].resource] += 1;
-                //     }
-                // }
-            // }
-            // for (let resource in catan.resources) {
-            //     if (resource !== 'back') {
-            //         $(`bank__resource__${resource}--num`).text(`${resource.quantity}`);
-            //     }
-            // }
         } else {
             this.roundRobin();
 
@@ -2241,8 +2111,7 @@ const game = {
             }
         }
         
-        game.render();
-        
+        game.render();  
     },
     roundRobin () {
         //this goes through all players, starting from the current player
@@ -2260,12 +2129,10 @@ const game = {
         }
     },
     endGame () {
-        //turns off all event listeners in the switch statement below
-
         //makes the player action buttons invisible
-        $('#player__actions').css('visibility', 'hidden');
-        $('.text-box').append(`<br>~~~~~Thank youf or playing!~~~~~<br>Please refresh the page to start a new game.`);
-        $('.text-box').animate({ scrollTop: $('.text-box').prop('scrollHeight') - $('.text-box').height() }, 1);
+        playerActions.css('visibility', 'hidden');
+        textBox.append(`<br>~~~~~Thank youf or playing!~~~~~<br>Please refresh the page to start a new game.`);
+        textBox.animate({ scrollTop: textBox.prop('scrollHeight') - textBox.height() }, 1);
     }
 };
 
@@ -2289,42 +2156,105 @@ $('.initial-player-creation').on('click', 'input', function (e) {
 let buildRoadClick = function(e) {
     game.players[turn].buildRoad(e);
 };
-// $('.hexes .row .road').on('click', buildRoadClick);
-// $('.hexes .row .road').on('click', function (e) {
-//     game.players[turn].buildRoad(e);
-// });
 
 //the callback function for the buildSettlement event listener
 let buildSettlementClick = function (e) {
     game.players[turn].buildSettlement(e);
 };
-// $('.hexes .row .settlement').on('click', buildSettlementClick);
-// $('.hexes .row .settlement').on('click', function (e) {
-//     game.players[turn].buildSettlement(e);
-// });
 
 //the callback function for the buildCity event listener
 let buildCityClick = function (e) {
     game.players[turn].buildCity(e);
 };
-// $('.hexes .row .settlement').on('click', buildCityClick);
-// $('.hexes .row .settlement').on('click', function (e) {
-//     game.players[turn].buildCity(e);
-// });
 
-// let buildTradeClick = function () {
-//     //hides player action buttons
-//     $('#player__actions').css('visibility', 'hidden');
+//the callback function for Player Actions Click
+let buildPlayerActionsClick = function (e) {
+    let action = $(e.target).attr('data-action')
+    if (action !== 'changeTurn' && action !== 'trade') {
+        playerActions.css('visibility', 'hidden');
+        cancel.css('visibility', 'visible');
+    }
+    
+    switch ($(e.target).attr('data-action')) {
+        case 'buildRoad':
+            textBox.append(`<br>${game.players[turn].name} has clicked buildRoad.`);
+            if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1) {
+                gameRoad.on('click', buildRoadClick);
+            } else {
+                textBox.append(`<br>${game.players[turn].name} does not have the proper resources to build a road.`);
+            }
+            break;
+        case 'buildSettlement':
+            textBox.append(`<br>${game.players[turn].name} has clicked buildSettlement`);
+            if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1 && game.players[turn].resources.wool >= 1 && game.players[turn].resources.grain > 0) {
+                gameSettlement.on('click', buildSettlementClick);
+            } else {
+                textBox.append(`<br>${game.players[turn].name} does not have the proper resources to build a settlement.`);
+            }
+            break;
+        case 'buildCity':
+            textBox.append(`<br>${game.players[turn].name} has clicked buildCity`);
+            if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
+                gameSettlement.on('click', buildCityClick);
+            } else {
+                textBox.append(`<br>${game.players[turn].name} does not have the proper resources to build a city.`);
+            }
+            break;
+        case 'trade':
+            textBox.append(`<br>${game.players[turn].name} has clicked trade`);
 
-//     //shows trade-who of every player except current player
-//     $('.trade-who').css('visibility', 'visible');
-//     for (let i = 0; i < game.players.length; i++) {
-//         if (i !== turn) {
-//             $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
-//         }
-//     }
-// }
+            if (game.players[turn].totalResources > 0) {
+                //hides player action buttons
+                playerActions.css('visibility', 'hidden');
 
+                //shows trade-who of every player except current player
+                tradeWho.css('visibility', 'visible');
+                for (let i = 0; i < game.players.length; i++) {
+                    if (i !== turn) {
+                        $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
+                    }
+                }
+            } else {
+                textBox.append(`<br>${game.players[turn].name} does not have any resources to trade.`);
+            }
+            break;
+        case 'buyDevelopmentCard':
+            textBox.append(`<br>${game.players[turn].name} has clicked buyDevelopmentCard`);
+            if (game.players[turn].resources.grain >= 1 && game.players[turn].resources.wool >= 1 && game.players[turn].resources.ore >= 1) {
+                game.players[turn].buyDevelopmentCard();
+            } else {
+                textBox.append(`<br>${game.players[turn].name} does not have the proper resources to buy a development card.`);
+            }
+            break;
+        case 'changeTurn':
+            textBox.append(`<br>${game.players[turn].name} has clicked changeTurn`);
+            game.players[turn].endTurn();
+            break;
+    }
+};
+
+//event listener for Player Action Buttons
+playerActions.on('click', buildPlayerActionsClick);
+
+
+//the callback function for the Cancel Button event listener
+let buildCancelClick = function (e) {
+    //hides cancel button
+    cancel.css('visibility', 'hidden');
+
+    //shows player action buttons
+    playerActions.css('visibility', 'visible');
+
+    //turns off all of the event listeners on the board
+    gameRoad.off('click', buildRoadClick);
+    gameSettlement.off('click', buildSettlementClick);
+    gameSettlement.off('click', buildCityClick);
+};
+
+//event listener for Cancel Button
+cancel.on('click', buildCancelClick);
+
+//the callback function for the trade-who event listener
 let buildTradeWhoClick = function (e) {
     //hides all trade-who player buttons
     for (let i = 0; i < game.players.length; i++) {
@@ -2334,7 +2264,7 @@ let buildTradeWhoClick = function (e) {
     }
 
     //hides trade-who
-    $('.trade-who').css('visibility', 'hidden');
+    tradeWho.css('visibility', 'hidden');
 
     if ($(e.target).val() === 'bank') {
         tradingPartner = catan;
@@ -2375,124 +2305,14 @@ let buildTradeWhoClick = function (e) {
             }
         }
     }
-    
-
     //shows trade-what
-    $('.trade-what').css('visibility', 'visible');
+    tradeWhat.css('visibility', 'visible');
 }
 
-//the callback function for Player Actions Click
-let buildPlayerActionsClick = function (e) {
-    let action = $(e.target).attr('data-action')
-    if (action !== 'changeTurn' && action !== 'trade') {
-        $('#player__actions').css('visibility', 'hidden');
-        $('#cancel').css('visibility', 'visible');
-    }
-    
-    switch ($(e.target).attr('data-action')) {
-      case 'buildRoad':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildRoad.`);
-        if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1) {
-            $('.hexes .row .road').on('click', buildRoadClick);
-        } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a road.`);
-        }
-        break;
-      case 'buildSettlement':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildSettlement`);
-        if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1 && game.players[turn].resources.wool >= 1 && game.players[turn].resources.grain > 0) {
-            $('.hexes .row .settlement').on('click', buildSettlementClick);
-        } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a settlement.`);
-        }
-        break;
-      case 'buildCity':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildCity`);
-        if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
-            $('.hexes .row .settlement').on('click', buildCityClick);
-        } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to build a city.`);
-        }
-        break;
-      case 'trade':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked trade`);
-
-        if (game.players[turn].totalResources > 0) {
-            //hides player action buttons
-            $('#player__actions').css('visibility', 'hidden');
-
-            //shows trade-who of every player except current player
-            $('.trade-who').css('visibility', 'visible');
-            for (let i = 0; i < game.players.length; i++) {
-                if (i !== turn) {
-                    $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
-                }
-            }
-        } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have any resources to trade.`);
-        }
-        // if (game.players[turn].totalResources > 0) {
-        //     $('#trade').on('click', buildTradeClick);
-        // } else {
-        //     $('.text-box').append(`<br>${game.players[turn].name} does not have any resources to trade.`);
-        // }
-        break;
-      case 'buyDevelopmentCard':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked buyDevelopmentCard`);
-        if (game.players[turn].resources.grain >= 1 && game.players[turn].resources.wool >= 1 && game.players[turn].resources.ore >= 1) {
-            game.players[turn].buyDevelopmentCard();
-        } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to buy a development card.`);
-        }
-        break;
-      case 'changeTurn':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked changeTurn`);
-        game.players[turn].endTurn();
-        break;
-    }
-};
-
-//event listener for Player Action Buttons
-$('#player__actions').on('click', buildPlayerActionsClick);
-
-
-//the callback function for the buildCity event listener
-let buildCancelClick = function (e) {
-    //hides cancel button
-    $('#cancel').css('visibility', 'hidden');
-
-    //shows player action buttons
-    $('#player__actions').css('visibility', 'visible');
-
-    //turns off all of the event listeners on the board
-    $('.hexes .row .road').off('click', buildRoadClick);
-    $('.hexes .row .settlement').off('click', buildSettlementClick);
-    $('.hexes .row .settlement').off('click', buildCityClick);
-};
-
-//event listener for Cancel Button
-$('#cancel').on('click', buildCancelClick);
-
-// //event listener for trade button
-// $('#trade').on('click', buildTradeClick);
-
 //event listener for trade-who button
-$('.trade-who').on('click', buildTradeWhoClick);
+tradeWho.on('click', buildTradeWhoClick);
 
 let buildTradeWhatClick = function () {
-    // let giveLumber = $('trade-player input[data-trade="lumber"]').val();
-    // let giveBrick = $('trade-player input[data-trade="brick"]').val();
-    // let giveWool = $('trade-player input[data-trade="wool"]').val();
-    // let giveGrain = $('trade-player input[data-trade="grain"]').val();
-    // let giveOre = $('trade-player input[data-trade="ore"]').val();
-    // let receiveLumber = $('trade-player input[data-trade="lumber"]').val();
-    // let receiveBrick = $('trade-player input[data-trade="brick"]').val();
-    // let receiveWool = $('trade-player input[data-trade="wool"]').val();
-    // let receiveGrain = $('trade-player input[data-trade="grain"]').val();
-    // let receiveOre = $('trade-player input[data-trade="ore"]').val();
-    // let give = [giveLumber, giveBrick, giveWool, giveGrain, giveOre];
-    // let receive = [receiveLumber, receiveBrick, receiveWool, receiveGrain, receiveOre];
-    //giving
     let player = game.players[turn];
     for (let resource in player.resources) {
         if (player.resources[resource] > 0) {
@@ -2504,8 +2324,6 @@ let buildTradeWhatClick = function () {
             } else {
                 game.players[tradingPartner].resources[resource] += parseInt($(`.trade-player input[data-trade="${resource}"]`).val());
             }
-            
-            // player.resources[resource] += $(`trade-partner input[data-trade="${resource}"]`).val();
 
             //resets value back to 0
             $(`.trade-player input[data-trade="${resource}"]`).val('0');
@@ -2521,7 +2339,6 @@ let buildTradeWhatClick = function () {
                 //if the bank has resources equal to or greater than the value specified, decrease the traded amount from bank and increase current player's amount by that much
                 partner.resources[resource].quantity -= parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
                 player.resources[resource] += parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
-                // player.resources[resource].quantity += $(`trade-player input[data-trade="${resource}"]`).val();
 
                 //resets value back to 0
                 $(`.trade-partner input[data-trade="${resource}"]`).val('0');
@@ -2534,7 +2351,6 @@ let buildTradeWhatClick = function () {
                 //if trading partner has resources equal to or greater than the value specified, decrease the traded amount from partner and increase current player's amount by that much
                 partner.resources[resource] -= parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
                 player.resources[resource] += parseInt($(`.trade-partner input[data-trade="${resource}"]`).val());
-                // player.resources[resource] += $(`trade-player input[data-trade="${resource}"]`).val();
 
                 //resets value back to 0
                 $(`.trade-partner input[data-trade="${resource}"]`).val('0');
@@ -2542,7 +2358,6 @@ let buildTradeWhatClick = function () {
         }
     }
     
-
     //resets tradingPartner
     tradingPartner = null;
 
@@ -2550,50 +2365,18 @@ let buildTradeWhatClick = function () {
     game.render();
 
     //hides trade-what
-    $('.trade-what').css('visibility', 'hidden');
+    tradeWhat.css('visibility', 'hidden');
 
     //brings back the player-actions panel in controls section
-    $('#player__actions').css('visibility', 'visible');
+    playerActions.css('visibility', 'visible');
 }
 
 //event listener for trade-what button
 $('#trade-submit').on('click', buildTradeWhatClick);
 
-
-//callback function for robber event listener
-// let moveRobber = function (e) {
-//     //hides #robber on board
-//     $('#robber').css('visibility', 'hidden');
-
-//     //turns on custom cursor
-//     $('.hexes').css('cursor', 'url(../resources/imgs/robber/vector/robber-cursor.png), auto');
-
-//     //removes event listener that lets player click on robber
-//     $('#robber').off('click', moveRobber);
-
-//     //turns on click on hexes
-//     $('.hexes .row .hex').on('click', placeRobber);
-// };
-// let moveRobber = function (e) {
-//     //hides #robber on board
-//     $('#robber').css('visibility', 'hidden');
-
-//     //turns on custom cursor
-//     $('.hexes').css('cursor', 'url(../resources/imgs/robber/vector/robber-cursor.png), auto');
-
-//     //removes event listener that lets player click on robber
-//     $('#robber').off('click', moveRobber);
-
-//     //turns on click on hexes
-//     $('.hexes .row .hex').on('click', placeRobber);
-// };
-
-//event listener for robber
-// $('#robber').on('click', moveRobber);
-
 //callback function for robber placement event listener
 let placeRobber = function (e) {
-    $('.text-box').append(`<br>Please click on a hex to place the robber.`);
+    textBox.append(`<br>Please click on a hex to place the robber.`);
     let hexIdx = $(e.target).attr('data-id');
     let hex = game.hexes[hexIdx];
     if ($(e.target).attr('data-type') === 'hex') {
@@ -2615,54 +2398,14 @@ let placeRobber = function (e) {
             $(`#hex${hex["data-id"]} div`).html(`<img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber">`);
     
             //turns off click on hexes
-            $('.hexes .row .hex').off('click', placeRobber);
+            gameHex.off('click', placeRobber);
     
             //shows player action buttons
-            $('#player__actions').css('visibility', 'visible');
+            playerActions.css('visibility', 'visible');
         } else {
-            $('.text-box').append(`<br>Please click on a hex that is not a desert.`);
+            textBox.append(`<br>Please click on a hex that is not a desert.`);
         }
     } else {
-        $('.text-box').append(`<br>Please click on a hex.`);
+        textBox.append(`<br>Please click on a hex.`);
     }
 }
-// let placeRobber = function (e) {
-//     console.log(e.target);
-//     let hexIdx = $(evt.target).attr('data-id');
-//     let hex = game.hexes[hexIdx];
-//     if (hex.area !== 'desert') {
-//         robberTemp = hex.numberToken;
-
-//         //update the DOM so clicked hex now has the robber image on it
-//         $(`#hex${hex["data-id"]}`).html(`<div><h3><img src="resources/imgs/robber/vector/robber.png" id="robber" data-type="numberToken" data-id="robber"></h3></div>`);
-
-//         //turns off custom cursor
-//         $('.hexes').css('cursor', 'default');
-
-//         //turns off click on hexes
-//         $('.hexes .row .hex').off('click', placeRobber);
-
-//         //shows player action buttons
-//         $('#player__actions').css('visibility', 'visibile');
-//     }
-// }
-
-//individual event listeners
-// $(`#buildRoad`).on('click', function () {
-//     game.players[turn].buildRoad();
-// });
-// $(`#buildSettlement`).on('click', function () {
-//     game.players[turn].buildSettlement();
-// });
-// $(`#buildCity`).on('click', function () {
-//     game.players[turn].buildCity();
-// });
-// $(`#trade`).on('click', function () {
-//     game.players[turn].tradeBank();
-// });
-// $(`#buyDevelopmentCard`).on('click', function () {
-//     game.players[turn].buyDevelopmentCard();
-// });
-// $(`#endTurn`).on('click', function () {
-//     game.changeTurn();
-// });

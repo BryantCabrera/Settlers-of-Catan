@@ -3,7 +3,7 @@
 ### A. Description
 Bryant Cabrera's Settlers of Catan is a web-based adaptation of the popular boardgame "Settlers of Catan" by Klaus Teuber.  The game is a multiplayer, turn-based strategy, resource management boardgame.  Players' logic, management, and negotiation skills will be tested.  Welcome to Catan!
 
-More info about the game can be found at the [Official Settlers of Catan Website](https://www.catan.com/game/catan).
+More info about the game can be found on the [Official Settlers of Catan Website](https://www.catan.com/game/catan).
 
 ### B. Images
 1. Wireframe

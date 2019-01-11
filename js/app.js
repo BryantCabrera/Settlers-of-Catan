@@ -66,7 +66,6 @@ class Player {
         this.player = num;
         this.victoryPoints = 0;
         this.victoryPointsHidden = 0;
-        this.victoryPointsActual = this.victoryPoints + this.victoryPointsHidden;
         this.special = {
             roadSize: 0,
             longestRoad: false,
@@ -408,9 +407,21 @@ class Player {
     }
 
     buyDevelopmentCard () {
-        let randomCardIdx = Math.floor(Math.random() * dcDeck.length);
-        this.developmentCards[(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0])].quantity++;
-        // this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
+        if (dcDeck.length > 0) {
+            let randomCardIdx = Math.floor(Math.random() * dcDeck.length);
+            this.developmentCards[(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0])].quantity++;
+            // this.developmentCards.push(dcDeck.slice(randomCardIdx, randomCardIdx + 1)[0]);
+        } else {
+            $('.text-box').append(`<br>There are no more development cards in the deck.`);
+        }
+        
+    }
+    
+    playDevelopmentCard () {
+        //if the player played a "knight" card, increase the player's army size by 1
+        // if (_____ === 'knight') {
+        //     this.special.armySize++;
+        // }
     }
 
     tradePlayer () {
@@ -421,12 +432,7 @@ class Player {
 
     }
 
-    playDevelopmentCard () {
-        //if the player played a "knight" card, increase the player's army size by 1
-        // if (_____ === 'knight') {
-        //     this.special.armySize++;
-        // }
-    }
+    
 
     endTurn () {
         game.render();
@@ -441,6 +447,12 @@ class Player {
         }
     }
 }
+
+Object.defineProperties(Player.prototype, {
+    victoryPointsActual: {
+        get: function() { return this.victoryPoints + this.victoryPointsHidden; }
+    }
+});
 
 const catan = {
     areas: [
@@ -2279,17 +2291,46 @@ let buildCityClick = function (e) {
 //     game.players[turn].buildCity(e);
 // });
 
+let buildTradeClick = function () {
+    //hides player action buttons
+    $('#player__actions').css('visibility', 'hidden');
+
+    //shows trade-who of every player except current player
+    $('.trade-who').css('visibility', 'visible');
+    for (let i = 0; i < game.players.length; i++) {
+        if (i !== turn) {
+            $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'visible');
+        }
+    }
+}
+
+let buildTradeWhoClick = function (e) {
+
+    //hides all trade-who player buttons
+    for (let i = 0; i < game.players.length; i++) {
+        if (i !== turn) {
+            $(`.trade-who .traders input[value="${i}"]`).css('visibility', 'hidden');
+        }
+    }
+
+    //hides trade-who
+    $('trade-who').css('visibility', 'hidden');
+
+    //shows trade-what
+    $('.trade-what').css('visibility', 'visible');
+}
+
 //the callback function for Player Actions Click
 let buildPlayerActionsClick = function (e) {
     let action = $(e.target).attr('data-action')
-    if (action !== 'changeTurn') {
+    if (action !== 'changeTurn' && action !== 'trade') {
         $('#player__actions').css('visibility', 'hidden');
         $('#cancel').css('visibility', 'visible');
     }
     
     switch ($(e.target).attr('data-action')) {
       case 'buildRoad':
-        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildRoad`);
+        $('.text-box').append(`<br>${game.players[turn].name} has clicked buildRoad.`);
         if (game.players[turn].resources.lumber >= 1 && game.players[turn].resources.brick >= 1) {
             $('.hexes .row .road').on('click', buildRoadClick);
         } else {
@@ -2314,10 +2355,10 @@ let buildPlayerActionsClick = function (e) {
         break;
       case 'trade':
         $('.text-box').append(`<br>${game.players[turn].name} has clicked trade`);
-        if (game.players[turn].resources.grain >= 2 && game.players[turn].resources.ore >= 3) {
-            game.players[turn].buyDevelopmentCard();
+        if (game.players[turn].totalResources > 0) {
+            $('#trade').on('click', buildTradeClick);
         } else {
-            $('.text-box').append(`<br>${game.players[turn].name} does not have the proper resources to buy a development card.`);
+            $('.text-box').append(`<br>${game.players[turn].name} does not have any resources to trade.`);
         }
         game.players[turn].tradeBank();
         break;
@@ -2356,6 +2397,9 @@ let buildCancelClick = function (e) {
 
 //event listener for Cancel Button
 $('#cancel').on('click', buildCancelClick);
+
+//event listener for trade-who button
+$('trade-who').on('click', buildTradeWhoClick);
 
 
 //callback function for robber event listener

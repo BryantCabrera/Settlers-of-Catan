@@ -102,6 +102,7 @@ More info about the game can be found on the [Official Settlers of Catan Website
     10.  When the player hits the **"END TURN"** button in the **"Player's Action Section"**, the turn is changed.
     11.  Gameplay continues until someone reaches 10 victory points.  If a player has 10 actual victory points (visible points + hidden points) after ending his/her turn, he/she wins the game.
         > Hidden victory points are earned from development cards (*feature not yet implemented*) and are kept secret from other players.
+        > A player can only win on his/her turn, so no ties are possible.
     ![Image of Win](README_imgs/Settlers-of-Catan_win.png)
 
 ### E. Next Steps
